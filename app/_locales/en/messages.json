@@ -1,10 +1,10 @@
 {
   "appName": {
-    "message": "mcm chrome ext",
+    "message": "MC Demo",
     "description": "The name of the application"
   },
   "appDescription": {
-    "message": "mc chrome ext",
+    "message": "Magento Cloud Demo Enhancements",
     "description": "The description of the application"
   }
 }

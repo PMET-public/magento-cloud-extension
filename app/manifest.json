@@ -1,6 +1,7 @@
 {
   "name": "__MSG_appName__",
-  "version": "0.0.1",
+  "short_name": "__MSG_appName__",
+  "version": "0.0.3",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -16,8 +17,7 @@
   },
   "permissions": [
     "tabs",
-    "http://*/*",
-    "https://*/*",
+    "https://*.magentosite.cloud/*",
     "background",
     "bookmarks",
     "clipboardRead",
@@ -43,10 +43,7 @@
     "alarms",
     "autotestPrivate",
     "bookmarkManagerPrivate",
-    "brailleDisplayPrivate",
     "browsingData",
-    "cast",
-    "cast.streaming",
     "chromePrivate",
     "chromeosInfoPrivate",
     "cloudPrintPrivate",
@@ -61,17 +58,9 @@
     "dial",
     "enterprise.platformKeys",
     "enterprise.platformKeysPrivate",
-    "experimental",
     "feedbackPrivate",
     "fileBrowserHandler",
     "fileBrowserPrivate",
-    {
-      "fileSystem": [
-        "write",
-        "retainEntries",
-        "directory"
-      ]
-    },
     "fontSettings",
     "gcm",
     "geolocation",
@@ -94,9 +83,7 @@
     "privacy",
     "processes",
     "proxy",
-    "pushMessaging",
     "readingListPrivate",
-    "rtcPrivate",
     "sessions",
     "streamsPrivate",
     "system.cpu",
@@ -106,18 +93,11 @@
     "systemPrivate",
     "tabCapture",
     "terminalPrivate",
-    "tts",
-    "ttsEngine",
     "unlimitedStorage",
     "virtualKeyboardPrivate",
-    "webrtcAudioPrivate",
-    "webrtcLoggingPrivate",
     "webstorePrivate",
-    "webview",
-    "power",
     "printerProvider",
-    "storage",
-    "vpnProvider"
+    "storage"
   ],
   "options_ui": {
     "page": "options.html",
@@ -126,8 +106,7 @@
   "content_scripts": [
     {
       "matches": [
-        "http://*/*",
-        "https://*/*"
+        "https://*.magentosite.cloud/*"
       ],
       "js": [
         "scripts/contentscript.js"
@@ -149,31 +128,6 @@
   },
   "web_accessible_resources": [
     "images/icon-48.png"
-  ],
-  "tts_engine": {
-    "voices": [
-      {
-        "voice_name": "Alice",
-        "lang": "en-US",
-        "gender": "female",
-        "event_types": [
-          "start",
-          "marker",
-          "end"
-        ]
-      }
-    ]
-  },
-  "webview": {
-    "partitions": [
-      {
-        "name": "static",
-        "accessible_resources": [
-          "header.html",
-          "footer.html",
-          "static.png"
-        ]
-      }
-    ]
-  }
+  ]
+
 }

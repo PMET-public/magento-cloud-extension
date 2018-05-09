@@ -109,6 +109,7 @@
         "https://*.magentosite.cloud/*"
       ],
       "js": [
+        "scripts/jquery-3.3.1.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_end",

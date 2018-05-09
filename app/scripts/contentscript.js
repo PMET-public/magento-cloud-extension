@@ -1,3 +1,6 @@
 'use strict';
 
-console.log('\'Allo \'Allo! Content script');
+console.log('MC Demo Content script');
+
+$('#back span').text('Back')
+

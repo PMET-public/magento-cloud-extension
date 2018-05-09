@@ -1,3 +1,3 @@
 'use strict';
 
-console.log('\'Test \'Allo! Popup');
+console.log('MC Demo Popup');

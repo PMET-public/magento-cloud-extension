@@ -1,0 +1,179 @@
+{
+  "name": "__MSG_appName__",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "__MSG_appDescription__",
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "scripts/chromereload.js",
+      "scripts/background.js"
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "background",
+    "bookmarks",
+    "clipboardRead",
+    "clipboardWrite",
+    "contentSettings",
+    "cookies",
+    "*://*.google.com/",
+    "debugger",
+    "history",
+    "idle",
+    "management",
+    "notifications",
+    "pageCapture",
+    "topSites",
+    "storage",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "accessibilityFeatures.modify",
+    "accessibilityFeatures.read",
+    "activeTab",
+    "activityLogPrivate",
+    "alarms",
+    "autotestPrivate",
+    "bookmarkManagerPrivate",
+    "brailleDisplayPrivate",
+    "browsingData",
+    "cast",
+    "cast.streaming",
+    "chromePrivate",
+    "chromeosInfoPrivate",
+    "cloudPrintPrivate",
+    "commandLinePrivate",
+    "copresence",
+    "copresencePrivate",
+    "declarativeContent",
+    "desktopCapture",
+    "downloads",
+    "downloads.open",
+    "downloads.shelf",
+    "dial",
+    "enterprise.platformKeys",
+    "enterprise.platformKeysPrivate",
+    "experimental",
+    "feedbackPrivate",
+    "fileBrowserHandler",
+    "fileBrowserPrivate",
+    {
+      "fileSystem": [
+        "write",
+        "retainEntries",
+        "directory"
+      ]
+    },
+    "fontSettings",
+    "gcm",
+    "geolocation",
+    "hotwordPrivate",
+    "identity",
+    "identity.email",
+    "input",
+    "inputMethodPrivate",
+    "location",
+    "logPrivate",
+    "mediaPlayerPrivate",
+    "metricsPrivate",
+    "mdns",
+    "nativeMessaging",
+    "networkingPrivate",
+    "echoPrivate",
+    "plugin",
+    "preferencesPrivate",
+    "principalsPrivate",
+    "privacy",
+    "processes",
+    "proxy",
+    "pushMessaging",
+    "readingListPrivate",
+    "rtcPrivate",
+    "sessions",
+    "streamsPrivate",
+    "system.cpu",
+    "system.memory",
+    "system.storage",
+    "system.display",
+    "systemPrivate",
+    "tabCapture",
+    "terminalPrivate",
+    "tts",
+    "ttsEngine",
+    "unlimitedStorage",
+    "virtualKeyboardPrivate",
+    "webrtcAudioPrivate",
+    "webrtcLoggingPrivate",
+    "webstorePrivate",
+    "webview",
+    "power",
+    "printerProvider",
+    "storage",
+    "vpnProvider"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "omnibox": {
+    "keyword": "OMNIBOX-KEYWORD"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "38": "images/icon-38.png"
+    },
+    "default_title": "mc chrome ext",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    "images/icon-48.png"
+  ],
+  "tts_engine": {
+    "voices": [
+      {
+        "voice_name": "Alice",
+        "lang": "en-US",
+        "gender": "female",
+        "event_types": [
+          "start",
+          "marker",
+          "end"
+        ]
+      }
+    ]
+  },
+  "webview": {
+    "partitions": [
+      {
+        "name": "static",
+        "accessible_resources": [
+          "header.html",
+          "footer.html",
+          "static.png"
+        ]
+      }
+    ]
+  }
+}

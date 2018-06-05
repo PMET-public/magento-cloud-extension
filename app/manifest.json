@@ -1,7 +1,7 @@
 {
   "name": "__MSG_appName__",
   "short_name": "__MSG_appName__",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -58,6 +58,17 @@
       ],
       "run_at": "document_end",
       "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*/sales/order/view/order_id/*",
+        "http://*/sales/order/view/order_id/*"
+      ],
+      "js": [
+        "scripts/jquery-3.3.1.js",
+        "scripts/forrester-b2b-b2c.js"
+      ],
+      "run_at": "document_end"
     }
   ],
   "omnibox": {

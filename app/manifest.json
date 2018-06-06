@@ -68,6 +68,9 @@
         "scripts/jquery-3.3.1.js",
         "scripts/forrester-b2b-b2c.js"
       ],
+      "css": [
+        "css/forrester-b2b-b2c.css"
+      ],
       "run_at": "document_end"
     }
   ],

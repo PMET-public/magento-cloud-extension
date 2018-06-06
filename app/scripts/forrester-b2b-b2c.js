@@ -1,5 +1,38 @@
-$( ".order-actions-toolbar .actions" ).append( "<a id=\"edit-order\">Edit</a>" );
+$(".order-actions-toolbar .actions").append("<a id=\"edit-order\">Edit</a>");
 
 $(document).on("click", "#edit-order", function(){
-  $("ul.items-qty").css( "border", "3px double red" );
+  $("ul.items-qty").replaceWith("<input id=\"items-qty\" class=\"items-qty\" type=\"number\" value=\"1\">");
+  $("#my-orders-table").before("<a id=\"add-item\">Add Product</a>");
+  $("strong.product.name.product-item-name").append("<a id=\"del-item\"></a>");
+  $("#edit-order").replaceWith("<a id=\"save-order\">Save</a>");
+});
+
+$(document).on("click", "#add-item", function(){
+  $("tr[id^='order-item-row']").after("<tr id=\"order-item-new-row\"><td class=\"col name\"><input id=\"items-sku\" class=\"items-sku\" type=\"text\" value=\"Search Name or SKU\"  onfocus=\"this.value=''\"><a id=\"del-item\"></a></td><td class=\"col sku\"> </td><td class=\"col price\"> </td><td class=\"col qty\"> </td><td class=\"col subtotal\"> </td></tr>");
+});
+
+$(document).on("click", "#del-item", function(){
+  $(this).closest('tr').remove();
+});
+
+$(document).on("click", "#items-sku", function(){
+  var validcode = "ABC123";
+  $("#items-sku").keyup(function () {
+      var code = $(this).val();
+      if (code === validcode) {
+          $("tr#order-item-new-row").replaceWith("<tr id=\"order-item-new-row\"><td class=\"col name\"><strong class=\"product name product-item-name\">Alphabet Shirt<a id=\"del-item\"></a></strong></td><td class=\"col sku\">ABC-123</td><td class=\"col price\"><span class=\"price\">$19.99</span></td><td class=\"col qty\"><input id=\"items-qty\" class=\"items-qty\" type=\"number\" value=\"1\"></td><td class=\"col subtotal\"><span class=\"price\">$19.99</span></td></tr>");
+          $("#my-orders-table > tfoot > tr.subtotal > td > span").replaceWith("$64.99");
+          $("#my-orders-table > tfoot > tr.grand_total > td > strong > span").replaceWith("$89.99");
+      } else {
+        //
+      }
+  });
+});
+
+$(document).on("click", "#save-order", function(){
+  alert("Updated Order Saved!");
+  $("#save-order").replaceWith("<a id=\"edit-order\">Edit</a>");
+  $("input[id^='items-qty']").replaceWith( "<span>1</span>" );
+  $("#maincontent > div.columns > div.column.main > div.page-title-wrapper > span").replaceWith("<span class=\"order-status\">Edited (Pending)</span>");
+  $("#add-item").remove();
 });

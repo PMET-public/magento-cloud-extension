@@ -30,9 +30,10 @@ $(document).on("click", "#items-sku", function(){
 });
 
 $(document).on("click", "#save-order", function(){
-  alert("Updated Order Saved!");
+  $("#maincontent > div.page.messages").append("<div data-bind=\"scope: 'messages'\"><div role=\"alert\" data-bind=\" \" class=\"messages\"><div class=\"message-success success message\" data-ui-id=\"message-success\"><div data-bind=\"\">You saved the order.</div></div></div></div>")
   $("#save-order").replaceWith("<a id=\"edit-order\">Edit</a>");
   $("input[id^='items-qty']").replaceWith( "<span>1</span>" );
   $("#maincontent > div.columns > div.column.main > div.page-title-wrapper > span").replaceWith("<span class=\"order-status\">Edited (Pending)</span>");
   $("#add-item").remove();
+  $("#del-item").remove();
 });

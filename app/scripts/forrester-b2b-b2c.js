@@ -17,13 +17,13 @@ $(document).on("click", "#del-item", function(){
 });
 
 $(document).on("click", "#items-sku", function(){
-  var validcode = "ABC123";
+  var validcode = "MIL230622";
   $("#items-sku").keyup(function () {
       var code = $(this).val();
       if (code === validcode) {
-          $("tr#order-item-new-row").replaceWith("<tr id=\"order-item-new-row\"><td class=\"col name\"><strong class=\"product name product-item-name\">Alphabet Shirt<a id=\"del-item\"></a></strong></td><td class=\"col sku\">ABC-123</td><td class=\"col price\"><span class=\"price\">$19.99</span></td><td class=\"col qty\"><input id=\"items-qty\" class=\"items-qty\" type=\"number\" value=\"1\"></td><td class=\"col subtotal\"><span class=\"price\">$19.99</span></td></tr>");
-          $("#my-orders-table > tfoot > tr.subtotal > td > span").replaceWith("$64.99");
-          $("#my-orders-table > tfoot > tr.grand_total > td > strong > span").replaceWith("$89.99");
+          $("tr#order-item-new-row").replaceWith("<tr id=\"order-item-new-row\"><td class=\"col name\"><strong class=\"product name product-item-name\">Milwaukee M12 Hammervac Universal Dust Extractor Kit<a id=\"del-item\"></a></strong></td><td class=\"col sku\">MIL230622</td><td class=\"col price\"><span class=\"price\">$305.45</span></td><td class=\"col qty\"><input id=\"items-qty\" class=\"items-qty\" type=\"number\" value=\"1\"></td><td class=\"col subtotal\"><span class=\"price\">$305.45</span></td></tr>");
+          $("#my-orders-table > tfoot > tr.subtotal > td > span").replaceWith("$350.45");
+          $("#my-orders-table > tfoot > tr.grand_total > td > strong > span").replaceWith("$375.45");
       } else {
         //
       }

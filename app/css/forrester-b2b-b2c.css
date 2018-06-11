@@ -12,7 +12,7 @@ input#items-sku {
 }
 #del-item::before {
   content: '\e604';
-  font-family: 'luma-icons';
+  font-family: 'icons-blank-theme';
   font-size: 18px;
   line-height: 20px;
   color: #757575;

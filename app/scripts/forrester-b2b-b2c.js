@@ -5,6 +5,7 @@ $(document).on("click", "#edit-order", function(){
   $("#my-orders-table").before("<a id=\"add-item\">Add Product</a>");
   $("strong.product.name.product-item-name").append("<a id=\"del-item\"></a>");
   $("#edit-order").replaceWith("<a id=\"save-order\">Save</a>");
+  $("#maincontent > div.page.messages > div > div > div").remove();
 });
 
 $(document).on("click", "#add-item", function(){

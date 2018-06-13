@@ -50,10 +50,12 @@
   "content_scripts": [
     {
       "matches": [
-        "https://*.magentosite.cloud/*"
+        "https://*.magentosite.cloud/*",
+        "https://*.the1umastory.com/*"
       ],
       "js": [
         "scripts/jquery-3.3.1.js",
+        "scripts/jquery.tablesorter.js",
         "scripts/contentscript.js"
       ],
       "run_at": "document_end",
@@ -61,8 +63,21 @@
     },
     {
       "matches": [
-        "https://*/sales/order/view/order_id/*",
-        "http://*/sales/order/view/order_id/*"
+        "https://*.magentosite.cloud/admin/*",
+        "https://*.the1umastory.com/admin/*"
+      ],
+      "js": [
+        "scripts/jquery-3.3.1.js",
+        "scripts/jquery.tablesorter.js",
+        "scripts/admin/index.js",
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*/sales/order/view/order_id/*"
       ],
       "js": [
         "scripts/jquery-3.3.1.js",

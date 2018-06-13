@@ -1,5 +1,3 @@
-'use strict';
+'use strict'
 
-console.log('MC Demo Content script');
-
-$('#back span').text('Back')
+console.log('MC Demo Content script')

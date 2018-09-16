@@ -23,10 +23,9 @@ connection.onmessage = function (e) {
     var data = JSON.parse(e.data);
     if (data && data.command === 'reload') {
       if (lastReload && currentTime - lastReload > 60000) {
-	// don't reload more than once a minute
-	chrome.runtime.reload();
-	chrome.developerPrivate.reload(chrome.runtime.id, 
-				       {failQuietly: true});
+        // don't reload more than once a minute
+        chrome.runtime.reload();
+        chrome.developerPrivate.reload(chrome.runtime.id, {failQuietly: true});
       }
     }
   }

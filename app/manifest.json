@@ -32,6 +32,7 @@
     "geolocation",
     "history",
     "https://*.magentosite.cloud/*",
+    "https://github.com/*",
     "notifications",
     "pageCapture",
     "proxy",

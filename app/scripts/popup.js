@@ -1,65 +1,97 @@
-const cuEl = document.getElementById('css-url')
+const cssUrlInput = $('#css-url-input'),
+  cssUrlSave = $('#css-url-save')
 
-chrome.storage.sync.get(['cssUrls'], function(result) {
-    const cssUrls = result['cssUrls']
-    if (cssUrls === null) return
-    let mostRecent = null
-    Object.keys(cssUrls).forEach([key, obj] => {
-        if (mostRecent === null) {
-            mostRecent = key
-        } else {
-            if (obj.timestamp > cssUrls.mostRecentUrl.timestamp) {
-              mostRecent = key
-            }
-        }
-    });
-    cuEl.value = cssUrls.mostRecent.rawUrl
-}); 
-
-function testAndLoadCSS(val) {
-    if (/https:\/\//i.test(val)) {
-        chrome.tabs.executeScript(null, {code: "window.MCExt.loadCSS('" + val + "')"});
-        chrome.storage.sync.set({'css-url': val});
-    } else if (!val) {
-        chrome.tabs.executeScript(null, {code: "window.MCExt.removeCSS()"});
-        chrome.storage.sync.set({'css-url': val});
-    }
+function getRawUrl(url) {
+  const rawUrl = url.replace(/(https:\/\/github.com.*\/)blob\//,'$1raw\/');
+  return rawUrl
+  // $.ajax({
+  //   url: url,
+  //   type: 'GET',
+  //   success: data => {
+  //     data
+  //   }
+  // })
 }
 
-cuEl.addEventListener('change', function (ev) {
-    ev.target.value = ev.target.value.trim()
-    testAndLoadCSS(ev.target.value)
-});
+function initInput(result) {
+  const cssUrls = result['cssUrls']
+  if (typeof cssUrls === 'undefined') return
+  let mostRecent = null
+  Object.entries(cssUrls).forEach(([key, obj]) => {
+      if (mostRecent === null) {
+          mostRecent = key
+      } else {
+          if (obj.timestamp > cssUrls[mostRecent].timestamp) {
+              mostRecent = key
+          }
+      }
+  });
+  cssUrlInput[0].value = cssUrls[mostRecent].rawUrl
+}
 
-$('#css-url-save').click((ev) => {
-    prompt('Name this stylesheet:','Existing value')
-    testAndLoadCSS(cuEl.value)
+chrome.storage.sync.get(['cssUrls'], initInput);
+
+cssUrlInput.change(ev => {
+  cssUrlInput[0].value = cssUrlInput.val().trim()
+  // if (cssUrlInput[0].value.indexOf('https://') !== 0) {
+  //   alert('Invalid url. Must start with https://.')
+  //   cssUrlInput[0].value = ''
+  // }
+  // const rawUrl = getRawUrl(ev.target.value)
+  // if (rawUrl === '') {
+  //   chrome.tabs.executeScript(null, {code: "window.MCExt.removeCSS()"});
+  // } else {
+  //   chrome.tabs.executeScript(null, {code: "window.MCExt.loadCSS('" + rawUrl + "')"});
+  // }
+}).autocomplete(
+  {
+    // appendTo: '#selector-container',
+    minLength: 0,
+    select: (ev, ui) => {
+      console.log(ev, ui)
+    },
+    source: (req, resp) => {
+      chrome.storage.sync.get(['cssUrls'], result => {
+        let cssUrls = result['cssUrls']
+        if (typeof cssUrls === 'undefined') {
+          resp([
+            {label: 'No saved urls.', value: ''}
+          ])
+          return
+        }
+        const term = req.term.toLowerCase()
+        const options = []
+        Object.entries(cssUrls).forEach(([key, obj]) => {
+          if (obj.name.toLowerCase().indexOf(term) >= 0  || obj.rawUrl.toLowerCase().indexOf(term) >= 0) {
+            options.push({label: obj.name, value: obj.rawUrl})
+          }
+        })
+        options.sort((a, b) => {
+          return b.timestamp - a.timestamp
+        })
+        resp(options)
+      })
+    }
+  }
+)
+
+cssUrlSave.click((ev) => {
+  chrome.storage.sync.get(['cssUrls'], result => {
+    const cssUrl = cssUrlInput.val()
+    const cssUrls = result['cssUrls']
+    if (typeof cssUrls === 'undefined' || typeof cssUrls[cssUrl] === 'undefined') {
+      let name = '',
+        cssUrls = {}
+
+    } else {
+      name = cssUrls[cssUrl].name
+    }
+    name = prompt('Give your stylesheet a name:', name)
+    cssUrls[cssUrl] = {
+      name: name,
+      timestamp: new Date()/1000,
+      rawUrl: getRawUrl(cssUrlInput.val())
+    }
+    chrome.storage.sync.set({cssUrls: cssUrls})
+  });
 })
-
-$('#css-url').autocomplete(
-    {appendTo: '#selector-container',
-    source: [
-        "ActionScript",
-        "AppleScript",
-        "Asp",
-        "BASIC",
-        "C",
-        "C++",
-        "Clojure",
-        "COBOL",
-        "ColdFusion",
-        "Erlang",
-        "Fortran",
-        "Groovy",
-        "Haskell",
-        "Java",
-        "JavaScript",
-        "Lisp",
-        "Perl",
-        "PHP",
-        "Python",
-        "Ruby",
-        "Scala",
-        "Scheme"
-      ]}
-    )

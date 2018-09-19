@@ -11,15 +11,19 @@
     <!-- endbuild -->
   </head>
   <body>
-    <h5>Magento Cloud Popup FPO</h5>
+    <h5>Magento Cloud Popup</h5>
     Url for css injection:<br/>
-    <input type="text" placeholder="https://..." id="css-url" />
+    <div id="selector-container">
+    <input id="css-url" type="text" placeholder="https://..."/>
+    <button id="css-url-save" type="button" value="save">save</button>
+    </div>
     <!-- build:js scripts/popup-vendor.js -->
     <!-- bower:js -->
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js scripts/popup.js -->
-    <script src="scripts/jquery-3.3.1.js"></script>
+    <script src="scripts/jquery-3.3.1.min.js"></script>
+    <script src="scripts/jquery-ui-1.12.1.min.js"></script>,
     <script src="scripts/popup.js"></script>
     <!-- endbuild -->
   </body>

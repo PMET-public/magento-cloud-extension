@@ -11,7 +11,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "scripts/chromereload.js",
+      "scripts/hot-reload.js",
       "scripts/background.js"
     ]
   },
@@ -54,39 +54,14 @@
         "https://*.the1umastory.com/*"
       ],
       "js": [
-        "scripts/jquery-3.3.1.js",
+        "scripts/jquery-3.3.1.min.js",
+        "scripts/jquery-ui-1.12.1.min.js",
         "scripts/jquery.tablesorter.js",
         "scripts/contentscript.js"
       ],
-      "run_at": "document_end",
+      "run_at": "document_start",
+      // "run_at": "document_end",
       "all_frames": false
-    },
-    {
-      "matches": [
-        "https://*.magentosite.cloud/admin/*",
-        "https://*.the1umastory.com/admin/*"
-      ],
-      "js": [
-        "scripts/jquery-3.3.1.js",
-        "scripts/jquery.tablesorter.js",
-        "scripts/admin/index.js",
-        "scripts/contentscript.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": false
-    },
-    {
-      "matches": [
-        "https://*/sales/order/view/order_id/*"
-      ],
-      "js": [
-        "scripts/jquery-3.3.1.js",
-        "scripts/forrester-b2b-b2c.js"
-      ],
-      "css": [
-        "css/forrester-b2b-b2c.css"
-      ],
-      "run_at": "document_end"
     }
   ],
   "omnibox": {

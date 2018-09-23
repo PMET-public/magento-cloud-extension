@@ -13,6 +13,10 @@
 $padding: 0 20px 120px;
 $width: 500px;
 
+::-webkit-scrollbar { 
+  display: none; 
+}
+
 body {
   padding: $padding;
   width: $width;

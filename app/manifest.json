@@ -12,7 +12,8 @@
   "background": {
     "scripts": [
       "scripts/hot-reload.js",
-      "scripts/background.js"
+      "scripts/background.js",
+      "image-downloader/scripts/defaults.js"
     ]
   },
   "permissions": [

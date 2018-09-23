@@ -1,0 +1,3 @@
+[submodule "app/image-downloader"]
+	path = app/image-downloader
+	url = git@github.com:PMET-public/image-downloader.git

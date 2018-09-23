@@ -11,7 +11,7 @@
 
 
 $padding: 0 20px 120px;
-$width: 500px;
+$width: 600px;
 
 ::-webkit-scrollbar { 
   display: none; 
@@ -60,9 +60,12 @@ span.mdi-help-box {
   background-color: inherit;
 }
 
-#tabs > div {
+#tabs [role="tabpanel"] {
   border: #CCC 1px solid;
   border-radius: 3px;
+  width: 500px;
+}
+
 .ui-tabs-anchor:focus {
   outline: 0;
 }

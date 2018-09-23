@@ -1,9 +1,67 @@
-$padding: 20px;
+@import 'color';
+
+@import 'jquery-ui';
+@import 'jquery-ui.structure';
+@import 'jquery-ui.theme';
+
+
+
+$padding: 0 20px 120px;
 $width: 500px;
+
 body {
   padding: $padding;
   width: $width;
+  margin: 0;
 }
-@import 'jquery-ui.css'
-@import 'jquery-ui.structure.css'
-@import 'jquery-ui.theme.css'
+
+#top-nav {
+  float: right;
+  padding: 0 1em;
+}
+
+#slack-link {
+  position: relative;
+  top: 0.1em;
+}
+
+#slack-link-logo {
+  height: 1.5em;
+  width: 1.5em;
+}
+
+h3 {
+  line-height: 2em;
+  font-size: 1.5em;
+  margin: 0.5em;
+}
+
+span.mdi {
+  font-size: 1.5em;
+}
+
+span.mdi-help-box {
+  font-size: 1em;
+  position: relative;
+  top: -0.5em;
+  left: -0.2em;
+}
+
+#tab-list, #tabs {
+  border: none;
+  background-color: inherit;
+}
+
+#tabs > div {
+  border: #CCC 1px solid;
+  border-radius: 3px;
+}
+
+#css-url-input {
+  width: 20em;
+  padding: .4em 0;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin-right: 1em;
+}

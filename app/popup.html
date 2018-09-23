@@ -36,15 +36,15 @@
             <table id="filter_inputs_container" class="grid">
               <tr>
                 <td>
-                  Subfolder: 
+                  <label>Downloads subfolder:</label> 
                 </td>
                 <td>
-                  <input type="text" id="folder_name_textbox" placeholder="Save to subfolder" title="Set the name of the subfolder you want to download the images to" />
+                  <input type="text" id="folder_name_textbox" placeholder="Save to subfolder" title="Set the name of the subfolder you want to download the images to" readonly disabled />
                 </td>
               </tr>
               <tr id="image_url_filter">
                 <td>
-                  Filter:
+                  <label>Url filter:</label> 
                 </td>
                 <td>
                   <input type="text" id="filter_textbox" placeholder="Filter by url" title="Filter by parts of the URL" />
@@ -94,15 +94,18 @@
                   </label>
                 </td>
               </tr>
+              <tr>
+                <td colspan="6" style="text-align: center">
+                  <button id="download_button" class="ui-button ui-corner-all"></button>
+                </td>
+              </tr>
             </table>
       
             <label id="only_images_from_links_container" title="Only show images from direct links on the page; this can be useful on sites like Reddit">
               <input type="checkbox" id="only_images_from_links_checkbox" />Only images from links
             </label>
         </div>
-      
         <div id="images_cache"></div>
-        <input type="button" id="download_button" class="accent" value="Download" />
         <table id="images_table" class="grid"></table>
         <!-- image-downloader end -->
       </div>

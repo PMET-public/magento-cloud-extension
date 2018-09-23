@@ -12,12 +12,31 @@
     <!-- endbuild -->
   </head>
   <body>
-    <h5>Magento Cloud Popup</h5>
-    Url for css injection:<br/>
-    <div id="selector-container">
-    <input id="css-url-input" type="text" placeholder="https://..."/>
-    <button id="css-url-save" type="button" value="save">save</button>
+    <nav id="top-nav">
+      <a href="https://demo.magento.cloud/projects/" title="Magento Cloud Projects" target="_blank"><span class="mdi mdi-cloud-circle primary-color"></span></a>
+      <a id="slack-link" href="slack://channel?team=T025FJ55H&id=C0MQZ62DV" title="Slack Support Channel" target="_blank"><img id="slack-link-logo" src="images/slack-logo.png"></a>
+    </nav>
+    <h3 class="extension-title">Magento Cloud Extension 
+      <a href="https://github.com/PMET-public/magento-cloud-extension" title="Extension Home" target="_blank"><span class="mdi mdi-help-box primary-color"></span></a>
+    </h3>
+    <div id="tabs">
+      <ul id="tab-list">
+        <li><a href="#selector-container"><span class="mdi mdi-bullseye-arrow"></span> CSS Injector</a></li>
+        <li><a href="#store-scraper"><span class="mdi mdi-briefcase-download"></span> Store Scraper</a></li>
+        <li><a href="#commands"><span class="mdi mdi-console"></span> Commands</a></li>
+      </ul>
+      <div id="selector-container">
+          CSS Url:<br>
+          <input id="css-url-input" type="text" class="" placeholder="https://...">
+          <button id="css-url-save" type="button" class="ui-button ui-corner-all ui-widget" value="save">save</button>
+      </div>
+      <div id="store-scraper">
+      </div>
+      <div id="commands">
+        commands
+      </div>
     </div>
+
     <!-- build:js scripts/popup-vendor.js -->
     <!-- bower:js -->
     <!-- endbower -->

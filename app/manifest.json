@@ -27,9 +27,6 @@
     "cookies",
     "declarativeContent",
     "downloads",
-    "downloads.open",
-    "downloads.shelf",
-    "geolocation",
     "history",
     "https://*.magentosite.cloud/*",
     "https://github.com/*",
@@ -61,7 +58,6 @@
         "scripts/contentscript.js"
       ],
       "run_at": "document_start",
-      // "run_at": "document_end",
       "all_frames": false
     }
   ],

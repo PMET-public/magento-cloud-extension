@@ -63,6 +63,12 @@ span.mdi-help-box {
 #tabs > div {
   border: #CCC 1px solid;
   border-radius: 3px;
+.ui-tabs-anchor:focus {
+  outline: 0;
+}
+
+:focus {
+  outline-color: $secondary-color;
 }
 
 #css-url-input {

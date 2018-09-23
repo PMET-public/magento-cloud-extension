@@ -48,6 +48,10 @@ cssUrlInput.change(ev => {
     minLength: 0,
     select: (ev, ui) => {
       if (cssUrlInput.val() !== ui.item.value) {
+        const rawUrl = getRawUrl(ui.item.value)
+        chrome.tabs.executeScript(null, {code: "window.MCExt.removeCSS()"});
+        chrome.tabs.executeScript(null, {code: "window.MCExt.loadCSS('" + rawUrl + "')"})
+      }
     },
     source: (req, resp) => {
       chrome.storage.sync.get(['cssUrls'], result => {

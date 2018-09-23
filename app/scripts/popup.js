@@ -62,7 +62,8 @@ cssUrlInput.change(ev => {
         const options = []
         Object.entries(cssUrls).forEach(([key, obj]) => {
           if (obj.name.toLowerCase().indexOf(term) >= 0  || obj.rawUrl.toLowerCase().indexOf(term) >= 0) {
-            options.push({label: obj.name, value: obj.rawUrl})
+            const label = obj.name + ' (saved: ' + new Date(obj.timestamp * 1000).toLocaleDateString(navigator.language) + ') ' + key
+            options.push({label: label, value: obj.rawUrl})
           }
         })
         options.sort((a, b) => {

@@ -39,16 +39,15 @@ cssUrlInput.change(ev => {
   // }
   // const rawUrl = getRawUrl(ev.target.value)
   // if (rawUrl === '') {
-  //   chrome.tabs.executeScript(null, {code: "window.MCExt.removeCSS()"});
+  //   chrome.tabs.executeScript(null, {code: "window.MCExt.removeCSS()"})
   // } else {
-  //   chrome.tabs.executeScript(null, {code: "window.MCExt.loadCSS('" + rawUrl + "')"});
+  //   chrome.tabs.executeScript(null, {code: "window.MCExt.loadCSS('" + rawUrl + "')"})
   // }
 }).autocomplete(
   {
-    // appendTo: '#selector-container',
     minLength: 0,
     select: (ev, ui) => {
-      console.log(ev, ui)
+      if (cssUrlInput.val() !== ui.item.value) {
     },
     source: (req, resp) => {
       chrome.storage.sync.get(['cssUrls'], result => {

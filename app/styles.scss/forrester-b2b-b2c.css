@@ -1,0 +1,28 @@
+input#items-qty {
+  width: 2em;
+  text-align: center;
+}
+input#items-sku {
+  width: 20em;
+  text-align: left;
+}
+#del-item {
+  float:left;
+  margin-right:20px;
+}
+#del-item::before {
+  content: '\e604';
+  font-family: 'icons-blank-theme';
+  font-size: 18px;
+  line-height: 20px;
+  color: #757575;
+}
+#del-item:hover::before {
+  color: #000;
+  text-decoration: none !important;
+}
+#order-item-new-row > td.col.price > span, #order-item-new-row > td.col.subtotal > span {
+  font-weight: 700;
+  font-size: 1.8rem;
+  color: #666;
+}

@@ -7,18 +7,139 @@
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css styles/main.css -->
+    <link href="https://cdn.materialdesignicons.com/2.7.94/css/materialdesignicons.css" rel="stylesheet">
     <link href="styles/main.css" rel="stylesheet">
     <!-- endbuild -->
   </head>
   <body>
-    <h5>Magento Cloud Popup FPO</h5>
+    <nav id="top-nav">
+      <a href="https://demo.magento.cloud/projects/" title="Magento Cloud Projects" target="_blank"><span class="mdi mdi-cloud-circle primary-color"></span></a>
+      <a id="slack-link" href="slack://channel?team=T025FJ55H&id=C0MQZ62DV" title="Slack Support Channel" target="_blank"><img id="slack-link-logo" src="images/slack-logo.png"></a>
+    </nav>
+    <h3 class="extension-title">Magento Cloud Extension 
+      <a href="https://github.com/PMET-public/magento-cloud-extension" title="Extension Home" target="_blank"><span class="mdi mdi-help-box primary-color"></span></a>
+    </h3>
+    <div id="tabs">
+      <ul id="tab-list">
+        <li><a href="#selector-container"><span class="mdi mdi-bullseye-arrow"></span> CSS Injector</a></li>
+        <li><a href="#store-scraper"><span class="mdi mdi-briefcase-download"></span> Store Scraper</a></li>
+        <li><a href="#commands"><span class="mdi mdi-console"></span> Commands</a></li>
+      </ul>
+      <div id="selector-container">
+          CSS Url:<br>
+          <input id="css-url-input" type="text" class="" placeholder="https://...">
+          <button id="css-url-save" type="button" class="ui-button ui-corner-all ui-widget" value="save">save</button>
+      </div>
+      <div id="store-scraper">
+        <!-- image-downloader start -->
+        <div id="filters_container">
+            <table id="filter_inputs_container" class="grid">
+              <tr>
+                <td>
+                  <label>Downloads subfolder:</label> 
+                </td>
+                <td>
+                  <input type="text" id="folder_name_textbox" placeholder="Save to subfolder" title="Set the name of the subfolder you want to download the images to" readonly disabled />
+                </td>
+              </tr>
+              <tr id="image_url_filter">
+                <td>
+                  <label>Url filter:</label> 
+                </td>
+                <td>
+                  <input type="text" id="filter_textbox" placeholder="Filter by url" title="Filter by parts of the URL" />
+                  <input type="hidden" id="filter_url_mode_input" value="normal">
+                </td>
+              </tr>
+            </table>
+      
+            <table class="grid">
+              <colgroup>
+                <col style="width: 45px;">
+                <col style="width: 40px;">
+                <col style="width: 10px;">
+                <col>
+                <col style="width: 10px;">
+                <col style="width: 40px;">
+              </colgroup>
+              <tr id="image_width_filter">
+                <td>Width:</td>
+                <td style="text-align: right;">
+                  <label for="image_width_filter_min_checkbox">
+                    <small id="image_width_filter_min"></small>
+                  </label>
+                </td>
+                <td><input type="checkbox" id="image_width_filter_min_checkbox" checked /></td>
+                <td><div id="image_width_filter_slider"></div></td>
+                <td><input type="checkbox" id="image_width_filter_max_checkbox" /></td>
+                <td style="text-align: right;">
+                  <label for="image_width_filter_max_checkbox">
+                    <small id="image_width_filter_max"></small>
+                  </label>
+                </td>
+              </tr>
+              <tr id="image_height_filter">
+                <td>Height:</td>
+                <td style="text-align: right;">
+                  <label for="image_height_filter_min_checkbox">
+                    <small id="image_height_filter_min"></small>
+                  </label>
+                </td>
+                <td><input type="checkbox" id="image_height_filter_min_checkbox" /></td>
+                <td><div id="image_height_filter_slider"></div></td>
+                <td><input type="checkbox" id="image_height_filter_max_checkbox" /></td>
+                <td style="text-align: right;">
+                  <label for="image_height_filter_max_checkbox">
+                    <small id="image_height_filter_max"></small>
+                  </label>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="6" style="text-align: center">
+                  <button id="download_button" class="ui-button ui-corner-all"></button>
+                </td>
+              </tr>
+            </table>
+      
+            <label id="only_images_from_links_container" title="Only show images from direct links on the page; this can be useful on sites like Reddit">
+              <input type="checkbox" id="only_images_from_links_checkbox" />Only images from links
+            </label>
+        </div>
+        <div id="images_cache"></div>
+        <table id="images_table" class="grid"></table>
+        <!-- image-downloader end -->
+      </div>
+      <div id="commands">
+        <b>Reset admin password for current store</b><br>
+        <input type="text" value="~/.magento-cloud/bin/magento-cloud ssh -p uwm5hjzffpgnq -e master" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
+        <b>Rerun indexers for current store</b><br>
+        <input type="text" value="~/.magento-cloud/bin/magento-cloud ssh -p uwm5hjzffpgnq -e master" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
+        <b>Check load for current env</b><br>
+        <input type="text" value="~/.magento-cloud/bin/magento-cloud ssh -p uwm5hjzffpgnq -e master" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
+        <b>Check services (nginx, MySQL, Redis, Elasitic search) for current env</b><br>
+        <input type="text" value="~/.magento-cloud/bin/magento-cloud ssh -p uwm5hjzffpgnq -e master" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
+
+      </div>
+    </div>
 
     <!-- build:js scripts/popup-vendor.js -->
     <!-- bower:js -->
     <!-- endbower -->
     <!-- endbuild -->
-
     <!-- build:js scripts/popup.js -->
+    <script src="scripts/jquery-3.3.1.min.js"></script>
+    <script src="scripts/jquery-ui-1.12.1.min.js"></script>
+
+
+    <!-- image-downloader start -->
+    <script src="image-downloader/lib/zepto.js"></script>
+    <script src="image-downloader/lib/jquery.nouislider/jquery.nouislider.js"></script>
+    <script src="image-downloader/lib/jss.js"></script>
+
+    <script src="image-downloader/scripts/defaults.js"></script>
+    <script src="image-downloader/scripts/popup.js"></script>
+    <!-- image-downloader end -->
+
     <script src="scripts/popup.js"></script>
     <!-- endbuild -->
   </body>

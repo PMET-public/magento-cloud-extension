@@ -1,7 +1,7 @@
 {
   "name": "__MSG_appName__",
   "short_name": "__MSG_appName__",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -11,8 +11,9 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "scripts/chromereload.js",
-      "scripts/background.js"
+      "scripts/hot-reload.js",
+      "scripts/background.js",
+      "image-downloader/scripts/defaults.js"
     ]
   },
   "permissions": [
@@ -27,10 +28,9 @@
     "cookies",
     "declarativeContent",
     "downloads",
-    "downloads.open",
-    "downloads.shelf",
     "history",
     "https://*.magentosite.cloud/*",
+    "https://github.com/*",
     "notifications",
     "pageCapture",
     "proxy",
@@ -42,20 +42,19 @@
     "webRequest",
     "webRequestBlocking"
   ],
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
-  },
   "content_scripts": [
     {
       "matches": [
-        "https://*.magentosite.cloud/*"
+        "https://*.magentosite.cloud/*",
+        "https://*.the1umastory.com/*"
       ],
       "js": [
-        "scripts/jquery-3.3.1.js",
+        "scripts/jquery-3.3.1.min.js",
+        "scripts/jquery-ui-1.12.1.min.js",
+        "scripts/jquery.tablesorter.js",
         "scripts/contentscript.js"
       ],
-      "run_at": "document_end",
+      "run_at": "document_start",
       "all_frames": false
     }
   ],

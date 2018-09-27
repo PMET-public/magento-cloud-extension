@@ -1,4 +1,84 @@
-$padding: 20px;
+@import 'color';
+
+@import 'jquery-ui';
+@import 'jquery-ui.structure';
+@import 'jquery-ui.theme';
+
+@import '../image-downloader/stylesheets/main';
+@import '../image-downloader/lib/jquery.nouislider/jquery.nouislider';
+@import '../image-downloader/stylesheets/from-popup-html';
+@import '../image-downloader/stylesheets/customize';
+
+
+$padding: 0 20px 120px;
+$width: 600px;
+
+::-webkit-scrollbar { 
+  display: none; 
+}
+
 body {
   padding: $padding;
+  width: $width;
+  margin: 0;
+}
+
+#top-nav {
+  float: right;
+  padding: 0 1em;
+}
+
+#slack-link {
+  position: relative;
+  top: 0.1em;
+}
+
+#slack-link-logo {
+  height: 1.5em;
+  width: 1.5em;
+}
+
+h3 {
+  line-height: 2em;
+  font-size: 1.5em;
+  margin: 0.5em;
+}
+
+span.mdi {
+  font-size: 1.5em;
+}
+
+span.mdi-help-box {
+  font-size: 1em;
+  position: relative;
+  top: -0.5em;
+  left: -0.2em;
+}
+
+#tab-list, #tabs {
+  border: none;
+  background-color: inherit;
+}
+
+#tabs [role="tabpanel"] {
+  border: #CCC 1px solid;
+  border-radius: 3px;
+  width: 500px;
+}
+
+.ui-tabs-anchor:focus {
+  outline: 0;
+}
+
+:focus {
+  outline-color: $secondary-color;
+}
+
+#css-url-input {
+  width: 20em;
+  padding: .4em 0;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+  margin-right: 1em;
 }

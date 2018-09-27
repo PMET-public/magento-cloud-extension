@@ -111,14 +111,13 @@
       </div>
       <div id="commands">
         <b>Reset admin password for current store</b><br>
-        <input type="text" value="~/.magento-cloud/bin/magento-cloud ssh -p uwm5hjzffpgnq -e master" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env url={{url}} bash" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
         <b>Rerun indexers for current store</b><br>
-        <input type="text" value="~/.magento-cloud/bin/magento-cloud ssh -p uwm5hjzffpgnq -e master" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/rerun-indexers.sh | env url={{url}} bash" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
         <b>Check load for current env</b><br>
-        <input type="text" value="~/.magento-cloud/bin/magento-cloud ssh -p uwm5hjzffpgnq -e master" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-load.sh | env url={{url}} bash" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
         <b>Check services (nginx, MySQL, Redis, Elasitic search) for current env</b><br>
-        <input type="text" value="~/.magento-cloud/bin/magento-cloud ssh -p uwm5hjzffpgnq -e master" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
-
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-services.sh | env url={{url}} bash" size="60" readonly> <span class="mdi mdi-content-copy"></span><br><br>
       </div>
     </div>
 

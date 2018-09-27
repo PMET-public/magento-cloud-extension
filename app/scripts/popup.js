@@ -82,7 +82,7 @@ cssUrlInput.change(ev => {
 cssUrlSave.click((ev) => {
   chrome.storage.sync.get(['cssUrls'], result => {
     const cssUrl = cssUrlInput.val()
-    const cssUrls = result['cssUrls']
+    const cssUrls = result['cssUrls'] || {}
     if (typeof cssUrls === 'undefined' || typeof cssUrls[cssUrl] === 'undefined') {
       let name = '',
         cssUrls = {}

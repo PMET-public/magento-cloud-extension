@@ -33,16 +33,16 @@ chrome.storage.sync.get(['cssUrls'], initInput);
 
 cssUrlInput.change(ev => {
   cssUrlInput[0].value = cssUrlInput.val().trim()
-  // if (cssUrlInput[0].value.indexOf('https://') !== 0) {
-  //   alert('Invalid url. Must start with https://.')
-  //   cssUrlInput[0].value = ''
-  // }
-  // const rawUrl = getRawUrl(ev.target.value)
-  // if (rawUrl === '') {
-  //   chrome.tabs.executeScript(null, {code: "window.MCExt.removeCSS()"})
-  // } else {
-  //   chrome.tabs.executeScript(null, {code: "window.MCExt.loadCSS('" + rawUrl + "')"})
-  // }
+  if (cssUrlInput[0].value.indexOf('https://') !== 0) {
+    alert('Invalid url. Must start with https://.')
+    cssUrlInput[0].value = ''
+  }
+  const rawUrl = getRawUrl(ev.target.value)
+  if (rawUrl === '') {
+    chrome.tabs.executeScript(null, {code: "window.MCExt.removeCSS()"})
+  } else {
+    chrome.tabs.executeScript(null, {code: "window.MCExt.loadCSS('" + rawUrl + "')"})
+  }
 }).autocomplete(
   {
     minLength: 0,

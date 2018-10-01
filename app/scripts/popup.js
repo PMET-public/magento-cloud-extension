@@ -45,9 +45,9 @@ cssUrlInput.change(ev => {
   }
   const rawUrl = getRawUrl(ev.target.value)
   if (rawUrl === '') {
-    chrome.tabs.executeScript(null, {code: "window.MCExt.removeCSS()"})
+    chrome.tabs.executeScript(null, {code: 'window.MCExt.removeCSS()'})
   } else {
-    chrome.tabs.executeScript(null, {code: "window.MCExt.loadCSS('" + rawUrl + "')"})
+    chrome.tabs.executeScript(null, {code: 'window.MCExt.loadCSS(\'' + rawUrl + '\')'})
   }
 }).autocomplete(
   {
@@ -55,8 +55,8 @@ cssUrlInput.change(ev => {
     select: (ev, ui) => {
       if (cssUrlInput.val() !== ui.item.value) {
         const rawUrl = getRawUrl(ui.item.value)
-        chrome.tabs.executeScript(null, {code: "window.MCExt.removeCSS()"});
-        chrome.tabs.executeScript(null, {code: "window.MCExt.loadCSS('" + rawUrl + "')"})
+        chrome.tabs.executeScript(null, {code: 'window.MCExt.removeCSS()'});
+        chrome.tabs.executeScript(null, {code: 'window.MCExt.loadCSS(\'' + rawUrl + '\')'})
       }
     },
     source: (req, resp) => {

@@ -107,15 +107,27 @@ cssUrlSave.click((ev) => {
 })
 
 $( function() {
-  var tabs = $( "#tabs" ).tabs();
+  $('#accordion').accordion({
+    active: 1
+  })
+  $('#password-dialog').dialog({
+    autoOpen: false,
+    modal: true,
+    draggable: false,
+    resizable: false
+  })
+  var tabs = $('#tabs').tabs()
   $('.cli-cmd').each(function () {
-    const cmdInput = this;
+    const cmdInput = this
     $(this).val($(this).val().replace('{{url}}', tabDomain))
-      .next('.mdi-content-copy')
+      .next('.simple-copy')
       .click(function () {
         cmdInput.focus()
         cmdInput.select()
         document.execCommand('copy')
       })
+  })
+  $('#password-prompt').click(function () {
+    $('#password-dialog').dialog('open')
   })
 } );

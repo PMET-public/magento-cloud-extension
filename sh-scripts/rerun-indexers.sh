@@ -13,3 +13,5 @@ environment=$($CLI_PATH environments -p $project --pipe | \
   grep $url | \
   awk '{print $1}')
 #echo $environment
+
+$CLI_PATH ssh -p $project -e $environment 'php bin/magento indexer:reset; php bin/magento indexer:reindex'

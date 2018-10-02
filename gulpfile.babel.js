@@ -13,7 +13,8 @@ gulp.task('extras', () => {
     'app/_locales/**',
     '!app/*.json',
     '!app/*.html',
-    '!app/styles.scss'
+    '!app/styles.scss',
+    'app/image-downloader/**/*'
   ], {
     base: 'app',
     dot: true

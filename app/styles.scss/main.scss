@@ -94,3 +94,8 @@ span.mdi-help-box {
 .no-close .ui-dialog-titlebar-close {
   display: none;
 }
+
+#password-dialog input {
+   margin: 1em auto;
+   display: block;
+}

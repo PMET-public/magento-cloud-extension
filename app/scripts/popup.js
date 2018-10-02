@@ -98,12 +98,12 @@ $( function() {
     modal: true,
     draggable: false,
     resizable: false,
-    dialogClass: "no-close",
+    dialogClass: 'no-close',
     buttons: [
       {
-        text: "Ok",
+        text: 'Ok',
         click: function() {
-          $( this ).dialog( "close" )
+          $( this ).dialog('close')
           chrome.storage.sync.get(['cssUrls'], result => {
             const cssUrl = cssUrlInput.val()
             const cssUrls = result['cssUrls'] || {}
@@ -133,12 +133,12 @@ $( function() {
     modal: true,
     draggable: false,
     resizable: false,
-    dialogClass: "no-close",
+    dialogClass: 'no-close',
     buttons: [
       {
-        text: "Ok",
+        text: 'Ok',
         click: function() {
-          $( this ).dialog( "close" )
+          $( this ).dialog('close')
           const jInput = $('#password-cli-cmd')
           jInput.val(jInput.val().replace('password=[^ ]+', 'password=' + $('#password-dialog-input').val().trim()))
           input = jInput[0]

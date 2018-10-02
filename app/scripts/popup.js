@@ -85,30 +85,48 @@ cssUrlInput.change(ev => {
   }
 )
 
-cssUrlSave.click((ev) => {
-  chrome.storage.sync.get(['cssUrls'], result => {
-    const cssUrl = cssUrlInput.val()
-    const cssUrls = result['cssUrls'] || {}
-    if (typeof cssUrls === 'undefined' || typeof cssUrls[cssUrl] === 'undefined') {
-      let name = '',
-        cssUrls = {}
-
-    } else {
-      name = cssUrls[cssUrl].name
-    }
-    name = prompt('Give your stylesheet a name:', name)
-    cssUrls[cssUrl] = {
-      name: name,
-      timestamp: new Date()/1000,
-      rawUrl: getRawUrl(cssUrlInput.val())
-    }
-    chrome.storage.sync.set({cssUrls: cssUrls})
-  });
+cssUrlSave.click(function () {
+  $('#css-dialog').dialog('open')
 })
 
 $( function() {
   $('#accordion').accordion({
     active: 1
+  })
+  $('#css-dialog').dialog({
+    autoOpen: false,
+    modal: true,
+    draggable: false,
+    resizable: false,
+    dialogClass: "no-close",
+    buttons: [
+      {
+        text: "Ok",
+        click: function() {
+          $( this ).dialog( "close" )
+          chrome.storage.sync.get(['cssUrls'], result => {
+            const cssUrl = cssUrlInput.val()
+            const cssUrls = result['cssUrls'] || {}
+            if (typeof cssUrls === 'undefined' || typeof cssUrls[cssUrl] === 'undefined') {
+              let name = '',
+                cssUrls = {}
+            } else {
+              name = cssUrls[cssUrl].name
+            }
+            const jInput = $('#css-dialog-input')
+            name = jInput.val().trim()
+            jInput.val(name)
+            cssUrls[cssUrl] = {
+              name: name,
+              timestamp: new Date()/1000,
+              rawUrl: getRawUrl(cssUrlInput.val())
+            }
+            chrome.storage.sync.set({cssUrls: cssUrls})
+          });
+
+        }
+      }
+    ]
   })
   $('#password-dialog').dialog({
     autoOpen: false,

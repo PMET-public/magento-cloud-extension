@@ -90,3 +90,7 @@ span.mdi-help-box {
     left: -0.5em;
   }
 }
+
+.no-close .ui-dialog-titlebar-close {
+  display: none;
+}

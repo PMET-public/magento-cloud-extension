@@ -81,6 +81,7 @@ gulp.task('chromeManifest', () => {
       background: {
         target: 'scripts/background.js',
         exclude: [
+          'scripts/background.js',
           'crx-hotreload/hot-reload.js'
         ]
       }

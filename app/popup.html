@@ -129,12 +129,12 @@
           <div>
             <div class="cli-cmd-container">
               <b>Reset admin password for current store</b><br>
-              <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env url={{url}} bash" size="45" readonly> <span id="password-prompt" class="mdi mdi-content-copy"></span>
-              <div id="password-dialog" title="Enter a new password">
-                * Must have at least 7 characters<br>
-                * Must include at least 1 alpha character<br>
-                * Must include at least 1 numeric character<br>
-                <input type="password" placeholder="New password?" size="20">
+              <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env url={{url}} password={{password}} bash" size="45" readonly> <span id="password-prompt" class="mdi mdi-content-copy"></span>
+              <div id="password-dialog" title="Set the password for this environment">
+                * Must be at least 7 alphanumeric characters<br>
+                * Include at least 1 of each (alphabetic & numeric)<br>
+                * Special characters are not allowed<br>
+                <input id="password-dialog-input" type="text" class="has-error" placeholder="Enter password ..." size="20">
               </div>
             </div>
             <div class="cli-cmd-container">

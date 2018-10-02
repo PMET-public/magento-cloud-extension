@@ -11,7 +11,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "scripts/hot-reload.js",
+      "crx-hotreload/hot-reload.js",
       "scripts/background.js",
       "image-downloader/scripts/defaults.js"
     ]

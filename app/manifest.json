@@ -1,9 +1,9 @@
 {
-  "name": "__MSG_appName__",
-  "short_name": "__MSG_appName__",
+  "name": "Magento Cloud Extension",
+  "short_name": "mce",
   "version": "0.0.7",
   "manifest_version": 2,
-  "description": "__MSG_appDescription__",
+  "description": "Collection of tools to help Magento Solution Consultants",
   "icons": {
     "16": "images/icon-16.png",
     "128": "images/icon-128.png"
@@ -18,9 +18,7 @@
   },
   "permissions": [
     "activeTab",
-    "alarms",
     "background",
-    "bookmarks",
     "browsingData",
     "clipboardRead",
     "clipboardWrite",
@@ -28,17 +26,10 @@
     "cookies",
     "declarativeContent",
     "downloads",
-    "history",
     "https://*.magentosite.cloud/*",
     "https://github.com/*",
-    "notifications",
-    "pageCapture",
-    "proxy",
-    "sessions",
     "storage",
-    "tabCapture",
     "tabs",
-    "webNavigation",
     "webRequest",
     "webRequestBlocking"
   ],
@@ -58,9 +49,6 @@
       "all_frames": false
     }
   ],
-  "omnibox": {
-    "keyword": "OMNIBOX-KEYWORD"
-  },
   "browser_action": {
     "default_icon": {
       "19": "images/icon-19.png",
@@ -72,5 +60,4 @@
   "web_accessible_resources": [
     "images/icon-48.png"
   ]
-
 }

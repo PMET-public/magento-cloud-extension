@@ -94,7 +94,6 @@ gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 gulp.task('watch', ['lint', 'styles'], () => {
   gulp.watch('app/scripts/**/*.js', ['lint']);
   gulp.watch('app/styles.scss/**/*.scss', ['styles']);
-  gulp.watch('bower.json', ['wiredep']);
 });
 
 gulp.task('size', () => {

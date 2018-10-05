@@ -41,9 +41,8 @@
       ],
       "js": [
         "scripts/jquery-3.3.1.min.js",
-        "scripts/jquery-ui-1.12.1.min.js",
         "scripts/jquery.tablesorter.js",
-        "scripts/contentscript.js"
+        "scripts/content-script.js"
       ],
       "run_at": "document_start",
       "all_frames": false

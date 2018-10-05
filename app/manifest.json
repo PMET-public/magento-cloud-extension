@@ -42,7 +42,7 @@
       "js": [
         "scripts/jquery-3.3.1.min.js",
         "scripts/jquery.tablesorter.js",
-        "scripts/content-script.js"
+        "scripts/document-start.js"
       ],
       "run_at": "document_start",
       "all_frames": false

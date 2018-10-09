@@ -1,9 +1,6 @@
 [submodule "app/image-downloader"]
 	path = app/image-downloader
 	url = git@github.com:PMET-public/image-downloader.git
-[submodule "app/magento-sc-custom-demo-css"]
-	path = app/magento-sc-custom-demo-css
-	url = git@github.com:PMET-public/magento-sc-custom-demo-css.git
 [submodule "app/crx-hotreload"]
 	path = app/crx-hotreload
 	url = git@github.com:PMET-public/crx-hotreload.git

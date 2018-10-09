@@ -5,8 +5,8 @@
   "manifest_version": 2,
   "description": "Collection of tools to help Magento Solution Consultants",
   "icons": {
-    "16": "images/icon-16.png",
-    "128": "images/icon-128.png"
+    "16": "images/cloud-16.png",
+    "48": "images/cloud-48.png"
   },
   "default_locale": "en",
   "background": {
@@ -50,13 +50,15 @@
   ],
   "browser_action": {
     "default_icon": {
-      "19": "images/icon-19.png",
-      "38": "images/icon-38.png"
+      "16": "images/cloud-disabled-16.png",
+      "24": "images/cloud-disabled-24.png",
+      "32": "images/cloud-disabled-32.png",
+      "48": "images/cloud-disabled-48.png"
     },
-    "default_title": "mc chrome ext",
+    "default_title": "Magento Cloud",
     "default_popup": "popup.html"
   },
   "web_accessible_resources": [
-    "images/icon-48.png"
+    "images/cloud-48.png"
   ]
 }

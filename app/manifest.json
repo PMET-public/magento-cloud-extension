@@ -39,8 +39,7 @@
         "<all_urls>"
       ],
       "js": [
-        "scripts/jquery-3.3.1.min.js",
-        "scripts/jquery.tablesorter.js",
+        "scripts/lib.js",
         "scripts/document-start.js"
       ],
       "run_at": "document_start",

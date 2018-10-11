@@ -51,7 +51,7 @@ gulp.task('images', () => {
     .pipe(gulp.dest('dist/images'));
 });
 gulp.task('styles', () => {
-  return gulp.src('app/styles.scss/*.scss')
+  return gulp.src('app/styles.scss/main.scss')
     .pipe($.plumber())
     .pipe($.sass.sync({
       outputStyle: 'expanded',

@@ -79,16 +79,4 @@ span.mdi-help-box {
 :focus {
   outline-color: $secondary-color;
 }
-
-
-.cli-cmd-container {
-  margin-bottom: 2em;
-  b {
-    position: relative;
-    left: -0.5em;
-  }
-}
-
-.no-close .ui-dialog-titlebar-close {
-  display: none;
 }

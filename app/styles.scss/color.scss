@@ -1,8 +1,9 @@
-$primary-color: #ff6d00;
-$secondary-color: #ff9e40;
-.primary-color {
-  color: $primary-color;
-}
-.secondary-color {
-  color: $secondary-color;
-}
+$color-primary: #ff6d00;
+$color-secondary: rgba(#f9f0ca, 0.95);
+
+$color-normal-text: #333;
+$color-disabled-text: #454545;
+$color-hover-text: #2b2b2b;
+
+$color-error-text: #5f3f3f;
+$color-highlight-text: #777620;

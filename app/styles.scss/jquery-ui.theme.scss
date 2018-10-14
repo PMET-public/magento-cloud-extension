@@ -69,7 +69,7 @@
 	font-size: 1em;
 }
 .ui-widget.ui-widget-content {
-	border: 1px solid #c5c5c5;
+	border: 1px solid $color-border;
 }
 .ui-widget-content {
 	border: 1px solid #dddddd;
@@ -100,7 +100,7 @@
 works properly when clicked or hovered */
 html .ui-button.ui-state-disabled:hover,
 html .ui-button.ui-state-disabled:active {
-	border: 1px solid #c5c5c5;
+	border: 1px solid $color-border;
 	background: #f6f6f6;
 	font-weight: normal;
 	color: $color-disabled-text;

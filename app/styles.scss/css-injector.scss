@@ -1,0 +1,102 @@
+$input-width: 205px;
+#css-url-input {
+  width: $input-width;
+  padding: 5px;
+  display: inline-block;
+  position: relative;
+  top: 2px;
+}
+
+#css-url-applied-domain {
+  font-weight: bold;
+  font-size: 1em;
+  text-decoration: underline;
+  margin-bottom: 13px;
+  display: inline-block;
+}
+
+#css-url-error-msg {
+  font-weight: bold;
+  color: $color-error-text;
+  display: none;
+  position: absolute;
+  top: 6px;
+  left: 60px;
+}
+
+#css-injector-toggler {
+  margin: 0 auto 20px 50%;
+  left: -25%;
+  position: relative;
+  text-align: center;
+  .mdi-power {
+    font-size: 6em;
+    color: #ccc;
+    font-weight: bold;
+    padding: 35px 6px 30px 8px;
+    border-radius: 50px;
+    display: inline-block;
+    box-sizing:border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #fff;
+    &:hover {
+      color: #454545;
+      cursor: pointer;
+      background-color: $color-secondary;
+      border: 1px solid $color-primary;
+    }
+    &.on {
+      color: $color-primary;
+    }
+  }
+}
+
+#css-dev-mode, #css-dev-mode-help {
+  float: right;
+  left: 12px;
+  margin-top: 5px;
+}
+
+#css-url-input-row {
+  position: relative;
+  .mdi-close-circle-outline, .mdi-arrow-down-drop-circle-outline {
+    position: absolute;
+    background-color: rgba($color: #fff, $alpha: 0.8);
+    z-index: 1;
+    left: $input-width - 25px;
+    top: 5px;
+    color: #aaa;
+    cursor: pointer;
+    padding: 1px;
+  }
+  .mdi-close-circle-outline {
+    display: none;
+  }
+  button {
+    position: relative;
+    top: 1px;
+    left: 5px;
+  }
+}
+
+.ui-menu-placeholder-item {
+  color: #999;
+  background-color: #eee;
+  border: 1px dotted #999;
+  div:hover {
+    color: inherit;
+    background-color: inherit;
+    border: 1px dotted #999;
+  }
+}
+
+.ui-menu-item a {
+  float: right;
+  color: $color-primary;
+}
+
+.ui-autocomplete {
+  max-height: 150px;
+  overflow: scroll;
+}

@@ -1,0 +1,26 @@
+.cli-cmd-container {
+  margin-bottom: 2em;
+  b {
+    position: relative;
+    left: -0.5em;
+  }
+}
+
+#password-dialog input {
+  margin: 1em auto;
+  display: block;
+}
+
+.cli-cmd {
+  width: 250px;
+  padding: 5px;
+  ~ .mdi {
+    position: relative;
+    top: 2px;
+    left: 1px;
+    &:hover {
+      color: $color-primary;
+      cursor: pointer;
+    }
+  }
+}

@@ -1,5 +1,8 @@
 @import 'https://cdn.materialdesignicons.com/2.7.94/css/materialdesignicons.css';
+
 @import 'color';
+@import 'checkbox';
+@import 'tooltip';
 
 @import 'jquery-ui';
 @import 'jquery-ui.structure';
@@ -10,6 +13,8 @@
 @import '../image-downloader/stylesheets/from-popup-html';
 @import '../image-downloader/stylesheets/customize';
 
+@import 'css-injector';
+@import 'commands';
 
 $padding: 0 20px 120px;
 $width: 600px;
@@ -75,14 +80,6 @@ span.mdi-help-box {
   outline-color: $secondary-color;
 }
 
-#css-url-input {
-  width: 20em;
-  padding: .4em 0;
-  display: inline-block;
-  position: relative;
-  top: 2px;
-  margin-right: 1em;
-}
 
 .cli-cmd-container {
   margin-bottom: 2em;
@@ -94,9 +91,4 @@ span.mdi-help-box {
 
 .no-close .ui-dialog-titlebar-close {
   display: none;
-}
-
-#password-dialog input {
-  margin: 1em auto;
-  display: block;
 }

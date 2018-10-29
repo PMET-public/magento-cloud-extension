@@ -14,4 +14,4 @@ environment=$($CLI_PATH environments -p $project --pipe | \
   awk '{print $1}')
 #echo $environment
 
-$CLI_PATH ssh -p $project -e $environment "uptime"
+$CLI_PATH ssh -p $project -e $environment ''

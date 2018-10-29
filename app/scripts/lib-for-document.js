@@ -1,5 +1,3 @@
-console.log('MCE: lib.js running')
-
 var MCExt = {
   loadCSS: function (url, cacheBustingEnabled = false) {
     if (cacheBustingEnabled) {

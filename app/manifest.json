@@ -12,6 +12,7 @@
   "background": {
     "scripts": [
       "crx-hotreload/hot-reload.js",
+      "scripts/lib-for-extension.js",
       "scripts/background.js",
       "image-downloader/scripts/defaults.js"
     ]
@@ -39,7 +40,7 @@
         "<all_urls>"
       ],
       "js": [
-        "scripts/lib.js",
+        "scripts/lib-for-document.js",
         "scripts/document-start.js"
       ],
       "run_at": "document_start",

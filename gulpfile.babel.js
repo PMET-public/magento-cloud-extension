@@ -50,14 +50,17 @@ gulp.task('images', () => {
     })))
     .pipe(gulp.dest('dist/images'));
 });
+
 gulp.task('styles', () => {
   return gulp.src('app/styles.scss/main.scss')
     .pipe($.plumber())
+    .pipe($.sourcemaps.init())
     .pipe($.sass.sync({
       outputStyle: 'expanded',
       precision: 10,
       includePaths: ['.']
     }).on('error', $.sass.logError))
+    .pipe($.sourcemaps.write())
     .pipe(gulp.dest('app/styles'));
 });
 

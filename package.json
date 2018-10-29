@@ -12,6 +12,7 @@
     "gulp-cache": "^1.0.2",
     "gulp-chrome-manifest": "0.0.13",
     "gulp-clean-css": "^3.10.0",
+    "gulp-concat": "^2.6.1",
     "gulp-eslint": "^5.0.0",
     "gulp-htmlmin": "^5.0.1",
     "gulp-if": "^2.0.0",

@@ -1,19 +1,85 @@
-const cssUrlInput = $('#css-url-input'),
-  cssUrlSave = $('#css-url-save')
+const jCssUrlInput = $('#css-url-input'),
+  jCssUrlSave = $('#css-url-save'),
+  jCssUrlDelete = $('#css-url-delete'),
+  jCssPowerButton = $('#css-injector-toggler .mdi-power'),
+  jCssDropDownButton = $('.mdi-arrow-down-drop-circle-outline'),
+  jCssClearInputButton = $('.mdi-close-circle-outline'),
+  jCssNameDialog = $('#css-name-dialog'),
+  jCssNameDialogInput = $('#css-name-dialog-input')
 
-function getRawUrl(url) {
-  const rawUrl = url.replace(/(https:\/\/github.com.*\/)blob\//,'$1raw\/');
-  return rawUrl
-  // $.ajax({
-  //   url: url,
-  //   type: 'GET',
-  //   success: data => {
-  //     data
-  //   }
-  // })
+function handleCssInput(ev, ui) {
+  jCssUrlInput.val(jCssUrlInput.val().trim())
+  if (ev) {
+    if (ev.type === 'change') {
+      if (jCssUrlInput.val().indexOf('https://') !== 0) {
+        jCssUrlInput.val('')
+        $('#css-url-error-msg').show().fadeOut(2000)
+      } else {
+        $('#css-url-error-msg').hide()
+        chrome.storage.local.set({curCssUrl: jCssUrlInput.val()})
+      }
+    } else if (ev.type === 'advautocompletechange') {
+      //curCssUrl = ui.item.value.replace(/.*?(https:\/\/)/, '$1')
+      chrome.storage.local.set({curCssUrl: ui.item.value})
+      jCssUrlInput.val(ui.item.label).prop('disabled', true)
+    }
+  }
+
+  // show diff input buttons based on input val
+  if (jCssUrlInput.val()) {
+    jCssDropDownButton.hide()
+    jCssClearInputButton.show()
+  } else {
+    jCssDropDownButton.show()
+    jCssClearInputButton.hide()
+  }
+
+  // always remove but possibly load changed css
+  chrome.storage.local.get(['isCssInjectorOn', 'curCssUrl'], function (result) {
+    chrome.tabs.executeScript({file: 'scripts/lib-for-document.js'}, function () {
+      chrome.tabs.executeScript({code: 'MCExt.removeCSS()'})
+      if (result['isCssInjectorOn']) {
+        if (result['curCssUrl']) {
+          chrome.tabs.executeScript({code: 'MCExt.loadCSS(\'' + result['curCssUrl'] + '\')'})
+        }
+      }
+    })
+  })
 }
 
-function initInput(result) {
+
+
+jCssUrlSave.click(function () {
+  jCssNameDialog.dialog('open')
+})
+
+jCssDropDownButton.click(function (ev) {
+  jCssUrlInput.focus()
+})
+
+jCssPowerButton.click(function (ev) {
+  const isOn = $(this).toggleClass('on').is('.on')
+  chrome.storage.local.set({isCssInjectorOn: isOn ? true : false})
+  handleExtensionIcon()
+  handleCssInput()
+})
+
+jCssClearInputButton.click(function (ev) {
+  jCssUrlInput.val('').prop('disabled', false).focus()
+  handleCssInput()
+})
+
+// get list of css files in repo via API
+// note: anonymous API limited to 60 requests / hr / IP (should be sufficient)
+fetch('https://api.github.com/repos/PMET-public/magento-sc-custom-demo-css/contents/')
+  .then(response => response.json())
+  .then(files => files.filter(file => /\.css$/i.test(file.name)))
+  .then(repoCssFiles => {
+    chrome.storage.local.set({'repoCssFiles': repoCssFiles})
+  })
+
+// user saved urls
+chrome.storage.local.get(['cssUrls'], function (result) {
   const cssUrls = result['cssUrls']
   if (typeof cssUrls === 'undefined') return
   let mostRecent = null
@@ -26,95 +92,20 @@ function initInput(result) {
           }
       }
   });
-  cssUrlInput[0].value = cssUrls[mostRecent].rawUrl
-}
+  jCssUrlInput[0].value = cssUrls[mostRecent].rawUrl
+});
 
-chrome.storage.sync.get(['cssUrls'], initInput);
-
-cssUrlInput.change(ev => {
-  cssUrlInput[0].value = cssUrlInput.val().trim()
-  if (cssUrlInput[0].value.indexOf('https://') !== 0) {
-    alert('Invalid url. Must start with https://.')
-    cssUrlInput[0].value = ''
-  }
-  const rawUrl = getRawUrl(ev.target.value)
-  if (rawUrl === '') {
-    chrome.tabs.executeScript(null, {code: 'window.MCExt.removeCSS()'})
-  } else {
-    chrome.tabs.executeScript(null, {code: 'window.MCExt.loadCSS(\'' + rawUrl + '\')'})
-  }
-}).autocomplete(
-  {
-    minLength: 0,
-    select: (ev, ui) => {
-      if (cssUrlInput.val() !== ui.item.value) {
-        const rawUrl = getRawUrl(ui.item.value)
-        chrome.tabs.executeScript(null, {code: 'window.MCExt.removeCSS()'});
-        chrome.tabs.executeScript(null, {code: 'window.MCExt.loadCSS(\'' + rawUrl + '\')'})
-      }
-    },
-    source: (req, resp) => {
-      chrome.storage.sync.get(['cssUrls'], result => {
-        let cssUrls = result['cssUrls']
-        if (typeof cssUrls === 'undefined') {
-          resp([
-            {label: 'No saved urls.', value: ''}
-          ])
-          return
-        }
-        const term = req.term.toLowerCase()
-        const options = []
-        Object.entries(cssUrls).forEach(([key, obj]) => {
-          if (obj.name.toLowerCase().indexOf(term) >= 0  || obj.rawUrl.toLowerCase().indexOf(term) >= 0) {
-            const label = obj.name + ' (saved: ' + new Date(obj.timestamp * 1000).toLocaleDateString(navigator.language) + ') ' + key
-            options.push({label: label, value: obj.rawUrl})
-          }
-        })
-        options.sort((a, b) => {
-          return b.timestamp - a.timestamp
-        })
-        resp(options)
-      })
+// initialize view
+$(function () {
+  chrome.storage.local.get(['isCssInjectorOn'], function (result) {
+    if (result['isCssInjectorOn']) {
+      jCssPowerButton.addClass('on')
+    } else {
+      jCssPowerButton.removeClass('on')
     }
-  }
-)
+  })
+  const appliedDomain = tabDomain.replace(/.*\/\//,'')
+  $('#css-url-applied-domain').text(appliedDomain)
 
-cssUrlSave.click(function () {
-  $('#css-dialog').dialog('open')
+
 })
-
-$($('#css-dialog').dialog({
-  autoOpen: false,
-  modal: true,
-  draggable: false,
-  resizable: false,
-  dialogClass: 'no-close',
-  buttons: [
-    {
-      text: 'Ok',
-      click: function() {
-        $( this ).dialog('close')
-        chrome.storage.sync.get(['cssUrls'], result => {
-          const cssUrl = cssUrlInput.val()
-          const cssUrls = result['cssUrls'] || {}
-          if (typeof cssUrls === 'undefined' || typeof cssUrls[cssUrl] === 'undefined') {
-            let name = '',
-              cssUrls = {}
-          } else {
-            name = cssUrls[cssUrl].name
-          }
-          const jInput = $('#css-dialog-input')
-          name = jInput.val().trim()
-          jInput.val(name)
-          cssUrls[cssUrl] = {
-            name: name,
-            timestamp: new Date()/1000,
-            rawUrl: getRawUrl(cssUrlInput.val())
-          }
-          chrome.storage.sync.set({cssUrls: cssUrls})
-        });
-
-      }
-    }
-  ]
-}))

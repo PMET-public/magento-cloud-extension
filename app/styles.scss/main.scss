@@ -16,7 +16,7 @@
 @import 'css-injector';
 @import 'commands';
 
-$padding: 0 20px 120px;
+$padding: 0 20px 150px;
 $width: 600px;
 
 ::-webkit-scrollbar { 
@@ -24,6 +24,7 @@ $width: 600px;
 }
 
 body {
+  font: 13px/1.5em 'Lucida Grande', Arial, sans-serif;
   padding: $padding;
   width: $width;
   margin: 0;
@@ -32,6 +33,9 @@ body {
 #top-nav {
   float: right;
   padding: 0 1em;
+  a {
+    color: $color-primary;
+  }
 }
 
 #slack-link {
@@ -50,15 +54,33 @@ h3 {
   margin: 0.5em;
 }
 
-span.mdi {
-  font-size: 1.5em;
+.mdi {
+  font-size: 20px;
+  height: 24px;
+  width: 24px;
+  padding: 0 2px;
+  border-radius: 4px;
+  text-align: center;
+  line-height: 24px;
+  &:hover {
+    color: #fff;
+    background-color: $color-primary;
+  }
+}
+.not-interactive.mdi {
+  background-color: inherit;
+  &:hover {
+    background-color: inherit;
+    color: inherit;
+  }
 }
 
-span.mdi-help-box {
-  font-size: 1em;
+.mdi-help, h3 .mdi-open-in-new {
+  font-size: 16px;
   position: relative;
-  top: -0.5em;
-  left: -0.2em;
+  top: -10px;
+  left: -6px;
+  color: $color-primary;
 }
 
 #tab-list, #tabs {
@@ -77,6 +99,14 @@ span.mdi-help-box {
 }
 
 :focus {
-  outline-color: $secondary-color;
+  outline: $color-primary auto 5px;
 }
+
+input {
+  padding: 5px;
+  border: 1px solid $color-border;
+  &:disabled {
+    background-color: $color-disabled;
+    border-color: $color-disabled;
+  }
 }

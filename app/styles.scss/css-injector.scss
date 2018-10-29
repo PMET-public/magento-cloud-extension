@@ -30,10 +30,12 @@ $input-width: 205px;
   position: relative;
   text-align: center;
   .mdi-power {
-    font-size: 6em;
+    font-size: 80px;
+    height: 80px;
+    width: 80px;
     color: #ccc;
     font-weight: bold;
-    padding: 35px 6px 30px 8px;
+    padding: 29px 6px 30px 0px;
     border-radius: 50px;
     display: inline-block;
     box-sizing:border-box;
@@ -62,13 +64,14 @@ $input-width: 205px;
   position: relative;
   .mdi-close-circle-outline, .mdi-arrow-down-drop-circle-outline {
     position: absolute;
-    background-color: rgba($color: #fff, $alpha: 0.8);
+    background-color: #fff;
     z-index: 1;
-    left: $input-width - 25px;
-    top: 5px;
+    height: 20px;
+    width: 20px;
+    left: $input-width - 13px;
+    top: 3px;
     color: #aaa;
     cursor: pointer;
-    padding: 1px;
   }
   .mdi-close-circle-outline {
     display: none;
@@ -80,20 +83,28 @@ $input-width: 205px;
   }
 }
 
-.ui-menu-placeholder-item {
-  color: #999;
-  background-color: #eee;
-  border: 1px dotted #999;
-  div:hover {
-    color: inherit;
-    background-color: inherit;
-    border: 1px dotted #999;
+.ui-menu-item {
+  text-indent: 10px;
+  a {
+    float: right;
+    color: $color-primary;
+  }
+  .ui-state-active {
+    color: #fff;
   }
 }
 
-.ui-menu-item a {
-  float: right;
-  color: $color-primary;
+.ui-menu .ui-menu-placeholder-item {
+  color: #999;
+  background-color: $color-disabled;
+  border: 1px dotted #999;
+  text-indent: 0px;
+  cursor: default;
+  .ui-state-active {
+    color: inherit;
+    background-color: inherit;
+    border: inherit;
+  }
 }
 
 .ui-autocomplete {

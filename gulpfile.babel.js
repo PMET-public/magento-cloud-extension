@@ -7,6 +7,32 @@ import {stream as wiredep} from 'wiredep';
 
 const $ = gulpLoadPlugins();
 
+const jqueryDeps = [
+  'app/vendor/jquery-3.3.1.min.js',
+  'app/vendor/jquery-ui-1.12.1.min.js'
+  
+]
+
+const imageDownloader = [
+  'app/image-downloader/lib/zepto.js',
+  'app/image-downloader/lib/jquery.nouislider/jquery.nouislider.js',
+  'app/image-downloader/lib/jss.js',
+  'app/image-downloader/scripts/defaults.js',
+  'app/image-downloader/scripts/popup.js'
+]
+
+const mcmExt = [
+  'app/scripts/custom-autocomplete.js',
+  'app/scripts/lib-for-extension.js',
+  'app/scripts/css-injector/1.js',
+  'app/scripts/css-injector/delete-button.js',
+  'app/scripts/css-injector/input-field.js',
+  'app/scripts/css-injector/name-dialog.js',
+  'app/scripts/css-injector/css-injector.js',
+  'app/scripts/commands.js',
+  'app/scripts/popup.js'
+]
+
 gulp.task('extras', () => {
   return gulp.src([
     'app/*.*',
@@ -29,11 +55,30 @@ function lint(files, options) {
   };
 }
 
-gulp.task('lint', lint('app/scripts/**/*.js', {
-  env: {
-    es6: true
-  }
+function concatWithSourceMap(srcs, outputFile) {
+  return gulp.src(srcs)
+    .pipe($.sourcemaps.init())
+    .pipe($.concat(outputFile))
+    .pipe(gulp.dest("app/combined"))
+    .pipe($.sourcemaps.write())
+    .pipe(gulp.dest("app/combined"));
+}
+
+gulp.task('lint', lint(mcmExt, {
+  env: {es6: true}
 }));
+
+gulp.task('js-jquery-deps', () => {
+  return concatWithSourceMap(jqueryDeps, '1-js-jquery-deps.js')
+})
+
+gulp.task('js-image-downloader', () => {
+  return concatWithSourceMap(imageDownloader, '2-js-image-downloader.js')
+})
+
+gulp.task('js-mcm-ext', () => {
+  return concatWithSourceMap(mcmExt, '3-js-mcm-ext.js')
+})
 
 gulp.task('images', () => {
   return gulp.src('app/images/**/*')
@@ -84,7 +129,6 @@ gulp.task('chromeManifest', () => {
       background: {
         target: 'scripts/background.js',
         exclude: [
-          'scripts/background.js',
           'crx-hotreload/hot-reload.js'
         ]
       }
@@ -95,9 +139,10 @@ gulp.task('chromeManifest', () => {
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'styles'], () => {
+gulp.task('watch', ['lint', 'styles', 'js-jquery-deps', 'js-image-downloader', 'js-mcm-ext'], () => {
   gulp.watch('app/scripts/**/*.js', ['lint']);
   gulp.watch('app/styles.scss/**/*.scss', ['styles']);
+  gulp.watch(mcmExt, ['js-mcm-ext']);
 });
 
 gulp.task('size', () => {
@@ -115,15 +160,12 @@ gulp.task('wiredep', () => {
 gulp.task('package', function () {
   var manifest = require('./dist/manifest.json');
   return gulp.src('dist/**')
-      .pipe($.zip('mcm chrome ext-' + manifest.version + '.zip'))
+      .pipe($.zip('mcm-chrome-ext-' + manifest.version + '.zip'))
       .pipe(gulp.dest('package'));
 });
 
-gulp.task('build', (cb) => {
-  runSequence(
-    'lint', 'chromeManifest',
-    ['html', 'images', 'extras'],
-    cb);
+gulp.task('build', cb => {
+  runSequence(['lint', 'chromeManifest', 'html', 'images', 'extras'], cb);
 });
 
 gulp.task('default', ['clean'], cb => {

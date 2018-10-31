@@ -13,7 +13,7 @@
     "scripts": [
       "crx-hotreload/hot-reload.js",
       "scripts/lib-for-extension.js",
-      "scripts/background.js",
+      "scripts/my-background.js",
       "image-downloader/scripts/defaults.js"
     ]
   },

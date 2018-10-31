@@ -1,6 +1,10 @@
 #!/bin/bash
 
 CLI_PATH=~/.magento-cloud/bin/magento-cloud
+SSH_CMD="${CLI_PATH} ssh"
+if [ -f ${HOME}/.ssh/id_rsa.magento ]; then
+  SSH_CMD="${SSH_CMD} -i ${HOME}/.ssh/id_rsa.magento"
+fi
 
 # url is passed via `env url=https://....`
 #echo $url
@@ -14,4 +18,4 @@ environment=$($CLI_PATH environments -p $project --pipe | \
   awk '{print $1}')
 #echo $environment
 
-$CLI_PATH ssh -p $project -e $environment ''
+$SSH_CMD -p $project -e $environment ''

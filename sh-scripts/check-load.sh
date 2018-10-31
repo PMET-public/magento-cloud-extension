@@ -1,6 +1,10 @@
 #!/bin/bash
 
 CLI_PATH=~/.magento-cloud/bin/magento-cloud
+SSH_CMD="${CLI_PATH} ssh"
+if [ -f ${HOME}/.ssh/id_rsa.magento ]; then
+  SSH_CMD="${SSH_CMD} -i ${HOME}/.ssh/id_rsa.magento"
+fi
 
 # url is passed via `env url=https://....`
 #echo $url
@@ -19,7 +23,7 @@ green='\033[0;32m'
 yellow='\033[1;33m'
 no_color='\033[0m'
 
-read -r nproc loadavg1 loadavg5 < <($CLI_PATH ssh -p $project -e $environment 'echo $(nproc) $(awk "{print \$1, \$2}" /proc/loadavg)' 2> /dev/null) 
+read -r nproc loadavg1 loadavg5 < <($SSH_CMD -p $project -e $environment 'echo $(nproc) $(awk "{print \$1, \$2}" /proc/loadavg)' 2> /dev/null) 
 
 load1=$(awk "BEGIN {printf \"%.f\", $loadavg1 * 100 / $nproc}")
 load5=$(awk "BEGIN {printf \"%.f\", $loadavg5 * 100 / $nproc}")

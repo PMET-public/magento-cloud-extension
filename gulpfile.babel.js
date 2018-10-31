@@ -9,8 +9,8 @@ const $ = gulpLoadPlugins();
 
 const jqueryDeps = [
   'app/vendor/jquery-3.3.1.min.js',
-  'app/vendor/jquery-ui-1.12.1.min.js'
-  
+  'app/vendor/jquery-ui-1.12.1.min.js',
+  'app/vendor/jquery.tablesorter.js'
 ]
 
 const imageDownloader = [
@@ -24,11 +24,7 @@ const imageDownloader = [
 const mcmExt = [
   'app/scripts/custom-autocomplete.js',
   'app/scripts/lib-for-extension.js',
-  'app/scripts/css-injector/1.js',
-  'app/scripts/css-injector/delete-button.js',
-  'app/scripts/css-injector/input-field.js',
-  'app/scripts/css-injector/name-dialog.js',
-  'app/scripts/css-injector/css-injector.js',
+  'app/scripts/css-injector/*.js',
   'app/scripts/commands.js',
   'app/scripts/popup.js'
 ]

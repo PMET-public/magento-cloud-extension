@@ -1,6 +1,7 @@
 const jCssUrlInput = $('#css-url-input'),
   jCssUrlSave = $('#css-url-save'),
   jCssUrlDelete = $('#css-url-delete'),
+  jCssUrlAppliedDomain = $('#css-url-applied-domain'),
   jCssPowerButton = $('#css-injector-toggler .mdi-power'),
   jCssDropDownButton = $('.mdi-arrow-down-drop-circle-outline'),
   jCssClearInputButton = $('.mdi-close-circle-outline'),
@@ -46,3 +47,16 @@ function handleCssInput(ev, ui) {
     })
   })
 }
+// initialize view
+$(function () {
+  chrome.storage.local.get(['isCssInjectorOn'], function (result) {
+    if (result['isCssInjectorOn']) {
+      jCssPowerButton.addClass('on')
+    } else {
+      jCssPowerButton.removeClass('on')
+    }
+  })
+  
+  .text(appliedDomain)
+
+})

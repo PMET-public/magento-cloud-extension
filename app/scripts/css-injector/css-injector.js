@@ -1,7 +1,3 @@
-jCssUrlSave.click(function () {
-  jCssNameDialog.dialog('open')
-})
-
 jCssDropDownButton.click(function (ev) {
   jCssUrlInput.focus()
 })
@@ -43,17 +39,3 @@ chrome.storage.local.get(['cssUrls'], function (result) {
   });
   jCssUrlInput[0].value = cssUrls[mostRecent].rawUrl
 });
-
-// initialize view
-$(function () {
-  chrome.storage.local.get(['isCssInjectorOn'], function (result) {
-    if (result['isCssInjectorOn']) {
-      jCssPowerButton.addClass('on')
-    } else {
-      jCssPowerButton.removeClass('on')
-    }
-  })
-  
-  $('#css-url-applied-domain').text(appliedDomain)
-
-})

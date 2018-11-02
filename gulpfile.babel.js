@@ -142,10 +142,6 @@ gulp.task('watch', ['lint', 'styles', 'js-jquery-deps', 'js-image-downloader', '
   gulp.watch(mcmExt, ['js-mcm-ext']);
 });
 
-gulp.task('size', () => {
-  return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
-});
-
 gulp.task('wiredep', () => {
   gulp.src('app/*.html')
     .pipe(wiredep({

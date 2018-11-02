@@ -1,16 +1,15 @@
 // generated on 2018-05-08 using generator-chrome-extension 0.7.1
-import gulp from 'gulp';
-import gulpLoadPlugins from 'gulp-load-plugins';
-import del from 'del';
-import runSequence from 'run-sequence';
-import {stream as wiredep} from 'wiredep';
 
+const gulp = require('gulp');
+const gulpLoadPlugins = require('gulp-load-plugins');
 const $ = gulpLoadPlugins();
+const del = require('del')
+const runSequence = require('run-sequence')
+const wiredep = require('wiredep').stream
 
 const jqueryDeps = [
-  'app/vendor/jquery-3.3.1.min.js',
-  'app/vendor/jquery-ui-1.12.1.min.js',
-  'app/vendor/jquery.tablesorter.js'
+  'app/bower_components/jquery/dist/jquery.js',
+  'app/bower_components/jquery-ui/jquery-ui.js'
 ]
 
 const imageDownloader = [
@@ -30,6 +29,8 @@ const mcmExt = [
 ]
 
 const contentScripts = [
+  // 'app/bower_components/tablesorter/dist/js/jquery.tablesorter.combined.js',
+  // app/scripts/content/index.js',
   'app/scripts/content/lib-for-document.js',
   'app/scripts/content/document-start.js'
 ]
@@ -42,6 +43,15 @@ const distBackgroundScripts = [
 
 const devBackgroundScripts = ['app/crx-hotreload/hot-reload.js', ...distBackgroundScripts]
 
+const devOpts = {
+  sourcemaps: 1,
+  minify: 0
+}
+
+const distOpts = {
+
+}
+
 function lint(files, options) {
   return () => {
     return gulp.src(files)
@@ -50,8 +60,9 @@ function lint(files, options) {
   };
 }
 
-function processJS(srcs, opts) {
+function processJS(opts) {
   const defaultOpts = {
+    srcs: '**/*.js',
     sourcemaps: 1, 
     concat: 1, 
     minify: 0, 
@@ -60,7 +71,7 @@ function processJS(srcs, opts) {
     file: 'out.js'
   }
   const combinedOpts = Object.assign(defaultOpts, opts)
-  return gulp.src(srcs)
+  return gulp.src(combinedOpts.srcs)
     .pipe($.if(combinedOpts.sourcemaps, $.sourcemaps.init()))
     .pipe($.if(combinedOpts.concat, $.concat(combinedOpts.file)))
     .pipe($.if(combinedOpts.minify, $.minify({noSource: true, ext: {min: '.js'}})))
@@ -86,17 +97,19 @@ gulp.task('lint', lint(mcmExt, {
 }));
 
 gulp.task('dev-js', () => {
-  processJS(devBackgroundScripts, {
+  processJS({
+    srcs: devBackgroundScripts,
     file: 'background/main.processed.js',
-    sourcemaps: 1,
-    minify: 0
+    ...devOpts
   })
-  processJS(contentScripts, {
+  processJS({
+    srcs: contentScripts,
     file: 'content/main.processed.js',
     sourcemaps: 1,
     minify: 0
   })
-  processJS([...jqueryDeps, ...imageDownloader, ...mcmExt], {
+  processJS({
+    srcs: [...jqueryDeps, ...imageDownloader, ...mcmExt],
     file: 'popup/main.processed.js',
     sourcemaps: 1,
     minify: 0
@@ -104,17 +117,20 @@ gulp.task('dev-js', () => {
 })
 
 gulp.task('dist-js', () => {
-  processJS(distBackgroundScripts, {
+  processJS({
+    srcs: distBackgroundScripts,
     file: 'background/main.processed.js',
     sourcemaps: 0,
     minify: 1
   })
-  processJS(contentScripts, {
+  processJS({
+    srcs: contentScripts,
     file: 'content/main.processed.js',
     sourcemaps: 0,
     minify: 1
   })
-  processJS([...jqueryDeps, ...imageDownloader, ...mcmExt], {
+  processJS({
+    srcs: [...jqueryDeps, ...imageDownloader, ...mcmExt],
     file: 'popup/main.processed.js',
     sourcemaps: 0,
     minify: 1

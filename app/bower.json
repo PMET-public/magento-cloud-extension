@@ -13,5 +13,10 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "dependencies": {
+    "jquery": "~3.3.1",
+    "jquery-ui": "~1.12.1",
+    "tablesorter": "jquery.tablesorter#~2.31.0"
+  }
 }

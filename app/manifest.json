@@ -11,10 +11,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "crx-hotreload/hot-reload.js",
-      "scripts/lib-for-extension.js",
-      "scripts/my-background.js",
-      "image-downloader/scripts/defaults.js"
+      "scripts/background/main.processed.js"
     ]
   },
   "permissions": [
@@ -40,8 +37,7 @@
         "<all_urls>"
       ],
       "js": [
-        "scripts/lib-for-document.js",
-        "scripts/document-start.js"
+        "scripts/content/main.processed.js"
       ],
       "run_at": "document_start",
       "all_frames": false

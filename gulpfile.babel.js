@@ -105,10 +105,11 @@ gulp.task('styles', () => {
     .pipe(gulp.dest('app/styles'));
 });
 
-gulp.task('html', ['styles'], () => {
-  return gulp.src('app/*.html')
+gulp.task('html', () => {
+  return gulp.src('app/html/popup.html')
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
     .pipe($.if('*.css', $.cleanCss({compatibility: '*'})))
+    .pipe($.if('*.html', $.fileInclude()))
     .pipe($.if('*.html', $.htmlmin({
       collapseWhitespace: true,
       minifyCSS: true,

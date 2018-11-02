@@ -1,0 +1,60 @@
+<div id="filters_container">
+  <button id="download_button" class="ui-button ui-corner-all"></button>
+  <table id="filter_inputs_container" class="grid">
+    <tr>
+      <td>
+        <label><span class="mdi mdi-folder-download not-interactive"></span></label>
+      </td>
+      <td>
+        <input type="text" id="folder_name_textbox" placeholder="Save to subfolder" title="Set the name of the subfolder you want to download the images to" readonly disabled />
+      </td>
+    </tr>
+    <tr id="image_url_filter">
+      <td>
+        <label><span class="mdi mdi-filter not-interactive"></span></label> 
+      </td>
+      <td>
+        <input type="text" id="filter_textbox" placeholder="Filter by url" title="Filter by parts of the URL" />
+        <input type="hidden" id="filter_url_mode_input" value="normal">
+      </td>
+    </tr>
+  </table>
+  <table class="grid">
+    <tr id="image_width_filter">
+      <td>Width:</td>
+      <td style="text-align: right;">
+        <label for="image_width_filter_min_checkbox">
+          <small id="image_width_filter_min"></small>
+        </label>
+      </td>
+      <td><input type="checkbox" id="image_width_filter_min_checkbox" checked /></td>
+      <td><div id="image_width_filter_slider"></div></td>
+      <td><input type="checkbox" id="image_width_filter_max_checkbox" /></td>
+      <td style="text-align: right;">
+        <label for="image_width_filter_max_checkbox">
+          <small id="image_width_filter_max"></small>
+        </label>
+      </td>
+    </tr>
+    <tr id="image_height_filter">
+      <td>Height:</td>
+      <td style="text-align: right;">
+        <label for="image_height_filter_min_checkbox">
+          <small id="image_height_filter_min"></small>
+        </label>
+      </td>
+      <td><input type="checkbox" id="image_height_filter_min_checkbox" /></td>
+      <td><div id="image_height_filter_slider"></div></td>
+      <td><input type="checkbox" id="image_height_filter_max_checkbox" /></td>
+      <td style="text-align: right;">
+        <label for="image_height_filter_max_checkbox">
+          <small id="image_height_filter_max"></small>
+        </label>
+      </td>
+  </table>
+  <label id="only_images_from_links_container" title="Only show images from direct links on the page; this can be useful on sites like Reddit">
+    <input type="checkbox" id="only_images_from_links_checkbox" />Only images from links
+  </label>
+</div>
+<div id="images_cache"></div>
+<table id="images_table" class="grid"></table>

@@ -55,7 +55,7 @@
       "48": "images/cloud-disabled-48.png"
     },
     "default_title": "Magento Cloud",
-    "default_popup": "popup.html"
+    "default_popup": "html/popup.html"
   },
   "web_accessible_resources": [
     "images/cloud-48.png"

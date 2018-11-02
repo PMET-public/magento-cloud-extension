@@ -1,0 +1,36 @@
+<h3>Prerequisites</h3>
+<div>
+  <div class="cli-cmd-container">
+    <b>Install the Magento Cloud CLI</b><br>
+    <input class="cli-cmd" type="text" value="curl -sS https://accounts.magento.cloud/cli/installer | php" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
+  </div>
+  <div class="cli-cmd-container">
+    <b>Setup local ssh keys</b><br>
+    <input class="cli-cmd" type="text" value="test -f ~/.ssh/id_rsa.magento ||  ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa.magento; ~/.magento-cloud/bin/magento-cloud ssh-key:add ~/.ssh/id_rsa.magento --yes" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
+  </div>
+</div>
+<h3>Useful Commands</h3>
+<div>
+  <div class="cli-cmd-container">
+    <b>Reset admin password for current store</b><br>
+    <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env url={{url}} password={{password}} bash" readonly> <span id="password-prompt" class="mdi mdi-pencil-lock"></span>
+    <div id="password-dialog" title="Set the password for this environment">
+      * Must be at least 7 alphanumeric characters<br>
+      * Include at least 1 of each (alphabetic & numeric)<br>
+      * Special characters are not allowed<br>
+      <input id="password-dialog-input" type="text" class="has-error" placeholder="Enter password ..." size="20">
+    </div>
+  </div>
+  <div class="cli-cmd-container">
+    <b>Rerun indexers for current store</b><br>
+    <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/rerun-indexers.sh | env url={{url}} bash" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
+  </div>
+  <div class="cli-cmd-container">
+    <b>Check load for current env</b><br>
+    <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-load.sh | env url={{url}} bash" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
+  </div>
+  <div class="cli-cmd-container">
+    <b>Check services (nginx, MySQL, Redis, Elasitic search) for current env</b><br>
+    <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-services.sh | env url={{url}} bash" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
+  </div>
+</div>

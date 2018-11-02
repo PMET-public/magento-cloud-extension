@@ -1,0 +1,44 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link href="styles/main.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav id="top-nav">
+      <a href="https://demo.magento.cloud/projects/" title="Magento Cloud Projects" target="_blank"><span class="mdi mdi-cloud-circle"></span></a>
+      <a id="slack-link" href="slack://channel?team=T025FJ55H&id=C0MQZ62DV" title="Slack Support Channel" target="_blank"><img id="slack-link-logo" src="images/slack-logo.png"></a>
+    </nav>
+    <h3 class="extension-title">Magento Cloud Extension
+      <a href="https://github.com/PMET-public/magento-cloud-extension" title="Extension Home" target="_blank"><span class="mdi mdi-open-in-new"></span></a>
+    </h3>
+    <div id="tabs">
+      <ul id="tab-list">
+        <li><a href="#css-injector-container"><span class="mdi mdi-bullseye-arrow not-interactive"></span> CSS Injector</a></li>
+        <li><a href="#store-scraper"><span class="mdi mdi-briefcase-download not-interactive"></span> Store Scraper</a></li>
+        <li><a href="#commands"><span class="mdi mdi-console not-interactive"></span> Commands</a></li>
+      </ul>
+      <div id="css-injector-container">
+        @@include('css-injector.html')
+      </div>
+      <div id="store-scraper">
+        @@include('image-downloader.html')
+      </div>
+      <div id="commands">
+        <div id="commands-accordion">
+          @@include('commands.html')
+        </div>
+      </div>
+    </div>
+
+    <!-- build:js scripts/popup-vendor.js -->
+    <!-- bower:js -->
+    <!-- endbower -->
+    <!-- endbuild -->
+    <!-- build:js scripts/popup.js -->
+    <script src="combined/1-js-jquery-deps.js"></script>
+    <script src="combined/2-js-image-downloader.js"></script>
+    <script src="combined/3-js-mcm-ext.js"></script>
+    <!-- endbuild -->
+  </body>
+</html>

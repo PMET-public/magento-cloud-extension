@@ -1,0 +1,24 @@
+<div id="css-injector-toggler">
+  <span class="mdi mdi-power"></span><br>
+  Turn CSS Injector On/Off
+  <span data-descr="Check every page of every site you visit for CSS to inject. Recommended during demos and demo preparation." class="mdi mdi-help"></span>
+</div>
+Enter your own CSS URL or select an option for<br>
+<span id="css-url-applied-domain"></span>:<br>
+<div id="css-url-input-row">
+  <span id="css-dev-mode-help" data-descr="Look for recent CSS changes on every page load. Check this while creating your own stylesheets but NOT during demos." class="mdi mdi-help"></span>
+  <label id="css-dev-mode" class="custom-checkbox"> 
+      CSS Dev Mode
+      <input type="checkbox">
+      <span class="checkmark"></span>
+  </label>
+  <span class="mdi mdi-close-circle-outline"></span>
+  <span class="mdi mdi-arrow-down-drop-circle-outline"></span>
+  <span id="css-url-error-msg">Must start with https://</span>
+  <input id="css-url-input" type="text" class="" placeholder=" https://...">
+  <button id="css-url-save" type="button" class="ui-button ui-corner-all ui-widget" value="save">save</button>
+  <button id="css-url-delete" type="button" class="ui-button ui-corner-all ui-widget" value="delete">delete</button>
+</div>
+<div id="css-name-dialog" title="Name your stylesheet">
+    <input id="css-name-dialog-input" type="text" class="has-error" placeholder="Stylesheet name ..." size="20">
+</div>

@@ -1,0 +1,17 @@
+{
+  "name": "mcm-chrome-ext",
+  "description": "Collection of tools to help Magento Solution Consultants",
+  "main": "",
+  "authors": [
+    "kbentrup@adobe.com"
+  ],
+  "homepage": "https://github.com/PMET-public/magento-cloud-extension",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

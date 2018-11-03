@@ -49,7 +49,8 @@ const devOpts = {
 }
 
 const distOpts = {
-
+  sourcemaps: 0,
+  minify: 1
 }
 
 function lint(files, options) {
@@ -96,44 +97,24 @@ gulp.task('lint', lint(mcmExt, {
   env: {es6: true}
 }));
 
-gulp.task('dev-js', () => {
-  processJS({
-    srcs: devBackgroundScripts,
-    file: 'background/main.processed.js',
-    ...devOpts
-  })
-  processJS({
-    srcs: contentScripts,
-    file: 'content/main.processed.js',
-    sourcemaps: 1,
-    minify: 0
-  })
-  processJS({
-    srcs: [...jqueryDeps, ...imageDownloader, ...mcmExt],
-    file: 'popup/main.processed.js',
-    sourcemaps: 1,
-    minify: 0
-  })
-})
 
-gulp.task('dist-js', () => {
-  processJS({
-    srcs: distBackgroundScripts,
-    file: 'background/main.processed.js',
-    sourcemaps: 0,
-    minify: 1
-  })
-  processJS({
-    srcs: contentScripts,
-    file: 'content/main.processed.js',
-    sourcemaps: 0,
-    minify: 1
-  })
-  processJS({
-    srcs: [...jqueryDeps, ...imageDownloader, ...mcmExt],
-    file: 'popup/main.processed.js',
-    sourcemaps: 0,
-    minify: 1
+Object.entries({'dev-js': devOpts, 'dist-js': distOpts}).forEach(([taskName, confObj]) => {
+  gulp.task(taskName, () => {
+    processJS({
+      srcs: taskName === 'dev-js' ? devBackgroundScripts : distBackgroundScripts,
+      file: 'background/main.processed.js',
+      ...confObj
+    })
+    processJS({
+      srcs: contentScripts,
+      file: 'content/main.processed.js',
+      ...confObj
+    })
+    processJS({
+      srcs: [...jqueryDeps, ...imageDownloader, ...mcmExt],
+      file: 'popup/main.processed.js',
+      ...confObj
+    })
   })
 })
 

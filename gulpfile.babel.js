@@ -84,7 +84,8 @@ function processJS(opts) {
 gulp.task('copy-remaining-to-dist', () =>
   gulp.src([
     'app/manifest.json',
-    'app/_locales/**'
+    'app/_locales/**',
+    'app/image-downloader/**'
   ], {
     base: 'app',
     dot: true

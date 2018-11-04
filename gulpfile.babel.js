@@ -4,8 +4,8 @@ const gulp = require('gulp')
 const gulpLoadPlugins = require('gulp-load-plugins')
 const $ = gulpLoadPlugins()
 const del = require('del')
-const runSequence = require('run-sequence')
 const wiredep = require('wiredep').stream
+const runSequence = require('run-sequence')
 
 const jqueryDeps = [
   'app/bower_components/jquery/dist/jquery.js',
@@ -54,11 +54,10 @@ const distOpts = {
 }
 
 function lint(files, options) {
-  return () => {
+  return () =>
     gulp.src(files)
       .pipe($.eslint(options))
       .pipe($.eslint.format())
-  }
 }
 
 function processJS(opts) {
@@ -82,71 +81,73 @@ function processJS(opts) {
     .pipe(gulp.dest(combinedOpts.dest))
 }
 
-gulp.task('copy-remaining-to-dist', () => {
+gulp.task('copy-remaining-to-dist', () =>
   gulp.src([
     'app/manifest.json',
-    'app/_locales/**',
-    'app/image-downloader/**/*'
+    'app/_locales/**'
   ], {
     base: 'app',
     dot: true
   }).pipe(gulp.dest('dist'))
-})
+)
 
 gulp.task('lint', lint(mcmExt, {
   env: {es6: true}
 }))
 
-
-Object.entries({'dev-js': devOpts, 'dist-js': distOpts}).forEach(([taskName, confObj]) => {
-  gulp.task(taskName, () => {
+for (let mode of ['dev', 'dist']) {
+  gulp.task(mode + '-js', () => {
     processJS({
-      srcs: taskName === 'dev-js' ? devBackgroundScripts : distBackgroundScripts,
+      srcs: mode === 'dev' ? devBackgroundScripts : distBackgroundScripts,
       file: 'background/main.processed.js',
-      ...confObj
+      ...(mode === 'dev' ? devOpts : distOpts)
     })
     processJS({
       srcs: contentScripts,
       file: 'content/main.processed.js',
-      ...confObj
+      ...(mode === 'dev' ? devOpts : distOpts)
     })
     processJS({
       srcs: [...jqueryDeps, ...imageDownloader, ...mcmExt],
       file: 'popup/main.processed.js',
-      ...confObj
+      ...(mode === 'dev' ? devOpts : distOpts)
     })
   })
-})
+
+  gulp.task(mode + '-styles', () =>
+    gulp.src('app/styles.scss/main.scss')
+      .pipe($.plumber())
+      .pipe($.if(mode === 'dev', $.sourcemaps.init()))
+      .pipe($.sass.sync({
+        outputStyle: 'expanded',
+        precision: 10,
+        includePaths: ['.']
+      }).on('error', $.sass.logError))
+      .pipe($.if(mode === 'dev', $.sourcemaps.write()))
+      .pipe(gulp.dest('dist/styles'))
+  )
+
+  gulp.task(mode + '-build', ['clean'], (cb) => {
+      runSequence('copy-remaining-to-dist', 'lint', mode + '-js', mode + '-styles', 'html', 'images', cb)
+    })
+}
 
 gulp.task('images', () => {
-  gulp.src('app/images/**/*')
-    .pipe($.if($.if.isFile, $.cache($.imagemin({
+  return gulp.src('app/images/**/*')
+    .pipe($.if($.if.isFile, $.imagemin({
       progressive: true,
       interlaced: true,
       // don't remove IDs from SVGs, they are often used as hooks for embedding and styling
       svgoPlugins: [{cleanupIDs: false}]
-    }))
+    })
     .on('error', function (err) {
       console.log(err)
       this.end()
     })))
     .pipe(gulp.dest('dist/images'))
-})
+  })
 
-gulp.task('styles', () => {
-  gulp.src('app/styles.scss/main.scss')
-    .pipe($.plumber())
-    .pipe($.sourcemaps.init())
-    .pipe($.sass.sync({
-      outputStyle: 'expanded',
-      precision: 10,
-      includePaths: ['.']
-    }).on('error', $.sass.logError))
-    .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('dist/styles'))
-})
-
-gulp.task('html', () => {
+gulp.task('html', () =>
   gulp.src('app/html/popup.html')
     .pipe($.fileInclude())
     .pipe($.htmlmin({
@@ -156,29 +157,25 @@ gulp.task('html', () => {
       removeComments: true
     }))
     .pipe(gulp.dest('dist/html/'))
-})
+)
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']))
 
-gulp.task('watch', ['lint', 'styles', 'dev-js'], () => {
+gulp.task('watch', ['lint', 'dev-styles', 'dev-js'], () => {
   gulp.watch('app/scripts/**/*.js', ['lint', 'dev-js'])
-  gulp.watch('app/styles.scss/**/*.scss', ['styles'])
+  gulp.watch('app/styles.scss/**/*.scss', ['dev-styles'])
 })
 
-gulp.task('wiredep', () => {
+gulp.task('wiredep', () =>
   gulp.src('app/*.html')
     .pipe(wiredep({
       ignorePath: /^(\.\.\/)*\.\./
     }))
     .pipe(gulp.dest('app'))
-})
+)
 
-gulp.task('build', cb => {
-  runSequence(['lint', 'dev-js', 'styles', 'html', 'images'], 'copy-remaining-to-dist', cb)
-})
-
-gulp.task('package', function () {
-  var manifest = require('./dist/manifest.json')
+gulp.task('package', ['dist-build'], () => {
+  const manifest = require('./dist/manifest.json')
   gulp.src([
       'dist/**'
     ])
@@ -186,6 +183,4 @@ gulp.task('package', function () {
     .pipe(gulp.dest('package'))
 })
 
-gulp.task('default', cb => {
-  runSequence('clean', 'build', cb)
-})
+gulp.task('default', ['dev-build'])

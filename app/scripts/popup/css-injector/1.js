@@ -56,7 +56,5 @@ $(function () {
       jCssPowerButton.removeClass('on')
     }
   })
-  
-  .text(appliedDomain)
-
+  jCssUrlAppliedDomain.text(appliedDomain)
 })

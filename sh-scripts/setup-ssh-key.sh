@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if ! -f ~/.ssh/id_rsa.magento; then
+if [ ! -f ~/.ssh/id_rsa.magento ]; then
   ssh-keygen -t rsa -N '' -f ~/.ssh/id_rsa.magento;
 fi
   

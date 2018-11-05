@@ -12,13 +12,19 @@
 <h3>Useful Commands</h3>
 <div>
   <div class="cli-cmd-container">
-    <b>Reset admin password for current store</b><br>
-    <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env url={{url}} password={{password}} bash" readonly> <span id="password-prompt" class="mdi mdi-pencil-lock"></span>
-    <div id="password-dialog" title="Set the password for this environment">
+    <b>Create/reset admin credentials for current store</b><br>
+    <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env url={{url}} email={{email}} user={{user}} password={{password}} bash" readonly> <span id="password-prompt" class="mdi mdi-pencil-lock"></span>
+    <div id="password-dialog" title="Create/reset admin info for this store">
+      Admin email: <input id="email-dialog-input" type="text" class="has-error" placeholder="Enter email ..." size="20"><br>
+      Admin username: <input id="user-dialog-input" type="text" class="has-error" placeholder="Enter username ..." size="20"><br>
+      Admin password: <input id="password-dialog-input" type="text" class="has-error" placeholder="Enter password ..." size="20">
+      <p>
+      All 3 fields are required.<br>
+      Passwords:<br>
       * Must be at least 7 alphanumeric characters<br>
       * Include at least 1 of each (alphabetic & numeric)<br>
-      * Special characters are not allowed<br>
-      <input id="password-dialog-input" type="text" class="has-error" placeholder="Enter password ..." size="20">
+      * Special characters are <b>NOT</b> allowed<br>
+      </p>
     </div>
   </div>
   <div class="cli-cmd-container">

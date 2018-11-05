@@ -6,9 +6,16 @@
   }
 }
 
-#password-dialog input {
-  margin: 1em auto;
-  display: block;
+#password-dialog {
+  text-align: right;
+  input {
+    margin: 5px 30px 5px 5px;
+    width: 200px;
+  }
+  p {
+    text-align: left;
+    margin: 5px auto 5px 20px;
+  }
 }
 
 .cli-cmd {

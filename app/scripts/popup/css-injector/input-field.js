@@ -5,7 +5,7 @@ jCssUrlInput
     }
     jCssDropDownButton.hide()
   })
-  .change(handleCssInput)
+  .change(handleCssInjector)
   .advAutocomplete({
     minLength: 0,
     select: function (ev, ui) {
@@ -17,7 +17,7 @@ jCssUrlInput
       // appears to be a bug in jquery ui when invoking this._super for customized autocompletes
       setTimeout(() => jCssUrlInput.blur(), 20)
     },
-    change: handleCssInput,
+    change: handleCssInjector,
     source: function (req, resp) {
       chrome.storage.local.get(['cssUrls'], result => {
         const cssUrls = result['cssUrls'] || {}

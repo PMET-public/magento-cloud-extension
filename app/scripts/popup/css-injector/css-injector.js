@@ -6,12 +6,12 @@ jCssPowerButton.click(function (ev) {
   const isOn = $(this).toggleClass('on').is('.on')
   chrome.storage.local.set({isCssInjectorOn: isOn ? true : false})
   handleExtensionIcon()
-  handleCssInput()
+  handleCssInjector()
 })
 
 jCssClearInputButton.click(function (ev) {
   jCssUrlInput.val('').prop('disabled', false).focus()
-  handleCssInput()
+  handleCssInjector()
 })
 
 // get list of css files in repo via API

@@ -8,7 +8,7 @@ const jCssUrlInput = $('#css-url-input'),
   jCssNameDialog = $('#css-name-dialog'),
   jCssNameDialogInput = $('#css-name-dialog-input')
 
-function handleCssInput(ev, ui) {
+function handleCssInjector(ev, ui) {
   jCssUrlInput.val(jCssUrlInput.val().trim())
   if (ev) {
     if (ev.type === 'change') {
@@ -21,8 +21,10 @@ function handleCssInput(ev, ui) {
       }
     } else if (ev.type === 'advautocompletechange') {
       //curCssUrl = ui.item.value.replace(/.*?(https:\/\/)/, '$1')
-      chrome.storage.local.set({curCssUrl: ui.item.value})
-      jCssUrlInput.val(ui.item.label).prop('disabled', true)
+      if (typeof ui !== 'undefined' && typeof ui.item !== 'undefined') {
+        chrome.storage.local.set({curCssUrl: ui.item.value})
+        jCssUrlInput.val(ui.item.label).prop('disabled', true)
+      }
     }
   }
 
@@ -30,9 +32,12 @@ function handleCssInput(ev, ui) {
   if (jCssUrlInput.val()) {
     jCssDropDownButton.hide()
     jCssClearInputButton.show()
+    jCssUrlSave.prop('disabled', false)
   } else {
     jCssDropDownButton.show()
     jCssClearInputButton.hide()
+    chrome.storage.local.set({curCssUrl: null})
+    jCssUrlSave.prop('disabled', true)
   }
 
   // always remove but possibly load changed css
@@ -47,6 +52,7 @@ function handleCssInput(ev, ui) {
     })
   })
 }
+
 // initialize view
 $(function () {
   chrome.storage.local.get(['isCssInjectorOn'], function (result) {
@@ -57,4 +63,5 @@ $(function () {
     }
   })
   jCssUrlAppliedDomain.text(appliedDomain)
+  handleCssInjector()
 })

@@ -18,4 +18,5 @@ environment=$($CLI_PATH environments -p $project --pipe | \
   awk '{print $1}')
 #echo $environment
 
-$SSH_CMD -p $project -e $environment ''
+$SSH_CMD -p $project -e $environment 'php bin/magento admin:user:unlock admin;
+  php bin/magento admin:user:create --admin-user=admin --admin-password=${password} --admin-email=kbentrup@magento.com --admin-firstname=Admin --admin-lastname=Username'

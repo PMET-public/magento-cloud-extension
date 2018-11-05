@@ -7,7 +7,7 @@ if [ -f ${HOME}/.ssh/id_rsa.magento ]; then
 fi
 
 # url is passed via `env url=https://....`
-#echo $url
+echo "Attempting ssh login and cmd for: $url"
 
 project=$(echo "$url" | perl -pe "s/.*-//;s/\..*//;")
 #echo $project

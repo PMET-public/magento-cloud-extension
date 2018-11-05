@@ -162,9 +162,10 @@ gulp.task('html', () =>
 
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']))
 
-gulp.task('watch', ['lint', 'dev-styles', 'dev-js'], () => {
+gulp.task('watch', ['lint', 'dev-js', 'dev-styles', 'copy-remaining-to-dist'], () => {
   gulp.watch('app/scripts/**/*.js', ['lint', 'dev-js'])
   gulp.watch('app/styles.scss/**/*.scss', ['dev-styles'])
+  gulp.watch('app/image-downloader/**', ['copy-remaining-to-dist'])
 })
 
 gulp.task('wiredep', () =>

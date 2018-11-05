@@ -16,7 +16,7 @@ To install the Magento Cloud Extension:
 2. Chrome settings (⋮) → More Tools → Extensions
 3. Turn on "Developer Mode"
 4. Click "Load Unpacked" 
-5. Select unzipped folder
+5. Select unzipped folder from step #1.
 
 Incognito Access:
 

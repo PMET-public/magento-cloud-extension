@@ -13,7 +13,7 @@
 <div>
   <div class="cli-cmd-container">
     <b>Create/reset admin credentials for current store</b><br>
-    <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env url={{url}} email={{email}} user={{user}} password={{password}} bash" readonly> <span id="password-prompt" class="mdi mdi-pencil-lock"></span>
+    <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env url={{url}} email={{email}} user={{user}} password={{password}} bash" readonly> <span id="password-prompt" class="mdi mdi-pencil-lock"></span>
     <div id="password-dialog" title="Create/reset admin info for this store">
       Admin email: <input id="email-dialog-input" type="text" class="has-error" placeholder="Enter email ..." size="20"><br>
       Admin username: <input id="user-dialog-input" type="text" class="has-error" placeholder="Enter username ..." size="20"><br>
@@ -29,14 +29,14 @@
   </div>
   <div class="cli-cmd-container">
     <b>Rerun indexers for current store</b><br>
-    <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/rerun-indexers.sh | env url={{url}} bash" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
+    <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/rerun-indexers.sh | env url={{url}} bash" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
   </div>
   <div class="cli-cmd-container">
     <b>Check load for current env</b><br>
-    <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-load.sh | env url={{url}} bash" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
+    <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-load.sh | env url={{url}} bash" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
   </div>
   <div class="cli-cmd-container">
     <b>Check services (nginx, MySQL, Redis, Elasitic search) for current env</b><br>
-    <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-services.sh | env url={{url}} bash" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
+    <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-services.sh | env url={{url}} bash" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
   </div>
 </div>

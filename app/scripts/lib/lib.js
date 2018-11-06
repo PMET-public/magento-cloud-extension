@@ -13,11 +13,12 @@ function handleExtensionIcon() {
   })
 }
 
-var tabDomain = null,
+var tabUrl = null, 
+  tabDomain = null,
   appliedDomain = null
   
 chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
-  var tabUrl = tabs[0].url
+  tabUrl = tabs[0].url
   tabDomain = tabUrl.substring(0,tabUrl.indexOf('/', 8))
   appliedDomain = tabDomain.replace(/.*\/\//,'')
 });

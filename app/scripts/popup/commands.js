@@ -104,7 +104,9 @@ $(function () {
   
   $('.cli-cmd').each(function () {
     const jCmdInput = $(this)
-    jCmdInput.val(jCmdInput.val().replace('{{url}}', tabDomain))
+    // if url is part of magento.cloud, use full url else just domain
+    const url = /magento\.cloud/.test(tabDomain) ? tabUrl : tabDomain
+    jCmdInput.val(jCmdInput.val().replace('{{url}}', url))
       .next('.simple-copy')
       .click(function (ev) {
         copyToClipboard(jCmdInput)

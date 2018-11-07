@@ -10,7 +10,6 @@ if [[ -f "${HOME}/.ssh/id_rsa.magento" ]]; then
   SSH_CMD="${SSH_CMD} -i ${HOME}/.ssh/id_rsa.magento"
 fi
 
-
 if [[ "${url}" =~ .magento.cloud/projects/ ]]; then
   project=$(echo "${url}" | perl -pe "s!.*?projects/!!;s!/environments/.*!!;")
   environment=$(echo "${url}" | perl -pe "s!.*?environments/!!;s!/.*!!;")
@@ -27,7 +26,6 @@ green='\033[0;32m'
 yellow='\033[1;33m'
 no_color='\033[0m'
 
-
 if [[ -z "${project}" ]]; then
   printf "${red}Project not found in your projects or could not be determined from url.${no_color}\n"
 elif [[ -z "${environment}" ]]; then
@@ -35,4 +33,3 @@ elif [[ -z "${environment}" ]]; then
 else
   printf "\nRunning command for:\n${green}${url}${no_color}\n\n"
 fi
-

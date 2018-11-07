@@ -1,5 +1,9 @@
 #!/bin/bash
 
+if [[ ! -z "${debug}" ]]; then
+  set -x
+fi
+
 CLI_PATH=~/.magento-cloud/bin/magento-cloud
 SSH_CMD="${CLI_PATH} ssh"
 if [[ -f "${HOME}/.ssh/id_rsa.magento" ]]; then
@@ -23,4 +27,12 @@ green='\033[0;32m'
 yellow='\033[1;33m'
 no_color='\033[0m'
 
-printf "\nRunning command for:\n${green}${url}${no_color}\n\n"
+
+if [[ -z "${project}" ]]; then
+  printf "${red}Project not found in your projects or could not be determined from url.${no_color}\n"
+elif [[ -z "${environment}" ]]; then
+  printf "${red}Environment not found or could not be determined from url.${no_color}\n"
+else
+  printf "\nRunning command for:\n${green}${url}${no_color}\n\n"
+fi
+

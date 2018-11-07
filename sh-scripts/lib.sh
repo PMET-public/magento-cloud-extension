@@ -5,11 +5,8 @@ if [[ ! -z "${debug}" ]]; then
 fi
 
 CLI_PATH=~/.magento-cloud/bin/magento-cloud
-SSH_CMD="${CLI_PATH} ssh -n"
-if [[ -f "${HOME}/.ssh/id_rsa.magento" ]]; then
-  SSH_CMD="${SSH_CMD} -i ${HOME}/.ssh/id_rsa.magento"
-fi
 
+# determine relevant project and environment
 if [[ "${url}" =~ .magento.cloud/projects/ ]]; then
   project=$(echo "${url}" | perl -pe "s!.*?projects/!!;s!/environments/.*!!;")
   environment=$(echo "${url}" | perl -pe "s!.*?environments/!!;s!/.*!!;")
@@ -20,6 +17,13 @@ else
     grep "${url}" | \
     awk '{print $1}')
 fi
+
+# create ssh cmd
+SSH_CMD="ssh -n $(${CLI_PATH} ssh -p "${project}" -e "${environment}" --pipe)"
+if [[ -f "${HOME}/.ssh/id_rsa.magento" ]]; then
+  SSH_CMD="${SSH_CMD} -i ${HOME}/.ssh/id_rsa.magento"
+fi
+
 
 red='\033[0;31m'
 green='\033[0;32m'

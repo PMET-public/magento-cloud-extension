@@ -1,2 +1,2 @@
 
-$SSH_CMD -p $project -e $environment 'php bin/magento indexer:reset; php bin/magento indexer:reindex'
+$SSH_CMD 'php bin/magento indexer:reset; php bin/magento indexer:reindex'

@@ -1,5 +1,5 @@
 
-read -r nproc loadavg1 loadavg5 < <($SSH_CMD -n -p $project -e $environment 'echo $(nproc) $(awk "{print \$1, \$2}" /proc/loadavg)' 2> /dev/null)
+read -r nproc loadavg1 loadavg5 < <($SSH_CMD -p $project -e $environment 'echo $(nproc) $(awk "{print \$1, \$2}" /proc/loadavg)' 2> /dev/null)
 
 load1=$(awk "BEGIN {printf \"%.f\", $loadavg1 * 100 / $nproc}")
 load5=$(awk "BEGIN {printf \"%.f\", $loadavg5 * 100 / $nproc}")

@@ -5,7 +5,7 @@ if [[ ! -z "${debug}" ]]; then
 fi
 
 CLI_PATH=~/.magento-cloud/bin/magento-cloud
-SSH_CMD="${CLI_PATH} ssh"
+SSH_CMD="${CLI_PATH} ssh -n"
 if [[ -f "${HOME}/.ssh/id_rsa.magento" ]]; then
   SSH_CMD="${SSH_CMD} -i ${HOME}/.ssh/id_rsa.magento"
 fi

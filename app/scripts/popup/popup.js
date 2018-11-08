@@ -1,3 +1,4 @@
 $(function() {
-  var tabs = $('#tabs').tabs()
+  $('#tabs').tabs()
+  $('.applied-domain').text(appliedDomain)
 })

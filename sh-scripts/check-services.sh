@@ -1,2 +1,2 @@
 
-$SSH_CMD
+$ssh_cmd

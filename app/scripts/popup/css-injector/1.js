@@ -1,7 +1,6 @@
 const jCssUrlInput = $('#css-url-input'),
   jCssUrlSave = $('#css-url-save'),
   jCssUrlDelete = $('#css-url-delete'),
-  jCssUrlAppliedDomain = $('#css-url-applied-domain'),
   jCssPowerButton = $('#css-injector-toggler .mdi-power'),
   jCssDropDownButton = $('.mdi-arrow-down-drop-circle-outline'),
   jCssClearInputButton = $('.mdi-close-circle-outline'),
@@ -62,6 +61,5 @@ $(function () {
       jCssPowerButton.removeClass('on')
     }
   })
-  jCssUrlAppliedDomain.text(appliedDomain)
   handleCssInjector()
 })

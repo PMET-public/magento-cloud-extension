@@ -1,4 +1,6 @@
 .cli-cmd-container {
+  float: left;
+  width: 50%;
   margin-bottom: 2em;
   b {
     position: relative;
@@ -19,7 +21,7 @@
 }
 
 .cli-cmd {
-  width: 250px;
+  width: 50px;
   padding: 5px;
   ~ .mdi {
     position: relative;

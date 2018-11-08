@@ -4,36 +4,51 @@ if [[ ! -z "${debug}" ]]; then
   set -x
 fi
 
-CLI_PATH=~/.magento-cloud/bin/magento-cloud
-
-# determine relevant project and environment
-if [[ "${url}" =~ .magento.cloud/projects/ ]]; then
-  project=$(echo "${url}" | perl -pe "s!.*?projects/!!;s!/environments/.*!!;")
-  environment=$(echo "${url}" | perl -pe "s!.*?environments/!!;s!/.*!!;")
-else
-  project=$(echo "${url}" | perl -pe "s/.*-//;s/\..*//;")
-  environment=$("${CLI_PATH}" environments -p "${project}" --pipe | \
-    xargs -I + sh -c "printf '%s ' '+'; "${CLI_PATH}" url -p "${project}" -e + --pipe;" | \
-    grep "${url}" | \
-    awk '{print $1}')
-fi
-
-# create ssh cmd
-SSH_CMD="ssh -n $(${CLI_PATH} ssh -p "${project}" -e "${environment}" --pipe)"
-if [[ -f "${HOME}/.ssh/id_rsa.magento" ]]; then
-  SSH_CMD="${SSH_CMD} -i ${HOME}/.ssh/id_rsa.magento"
-fi
-
-
 red='\033[0;31m'
 green='\033[0;32m'
 yellow='\033[1;33m'
 no_color='\033[0m'
 
-if [[ -z "${project}" ]]; then
-  printf "${red}Project not found in your projects or could not be determined from url.${no_color}\n"
-elif [[ -z "${environment}" ]]; then
-  printf "${red}Environment not found or could not be determined from url.${no_color}\n"
+if [[ "${url}" =~ .magento(site)?.cloud ]]; then
+
+  home_dir="/app"
+  cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
+
+  # determine relevant project and environment
+  if [[ "${url}" =~ .magento.cloud/projects/.*/environments ]]; then
+    project=$(echo "${url}" | perl -pe "s!.*?projects/!!;s!/environments/.*!!;")
+    environment=$(echo "${url}" | perl -pe "s!.*?environments/!!;s!/.*!!;")
+  else
+    project=$(echo "${url}" | perl -pe "s/.*-//;s/\..*//;")
+    environment=$("${cli_path}" environments -p "${project}" --pipe | \
+      xargs -I + sh -c "printf '%s ' '+'; "${cli_path}" url -p "${project}" -e + --pipe;" | \
+      grep "${url}" | \
+      awk '{print $1}')
+  fi
+
+  if [[ -z "${project}" ]]; then
+    printf "${red}Project not found in your projects or could not be determined from url.${no_color}\n" && exit
+  elif [[ -z "${environment}" ]]; then
+    printf "${red}Environment not found or could not be determined from url.${no_color}\n" && exit
+  fi
+
+  # create ssh cmd
+  ssh_cmd="ssh -n $(${cli_path} ssh -p "${project}" -e "${environment}" --pipe)"
+  if [[ -f "${HOME}/.ssh/id_rsa.magento" ]]; then
+    ssh_cmd="${ssh_cmd} -i ${HOME}/.ssh/id_rsa.magento"
+  fi  
+
 else
-  printf "\nRunning command for:\n${green}${url}${no_color}\n\n"
+
+  # if not magento cloud, assume local vm
+  home_dir="/var/www/magento"
+  ssh_cmd="ssh -n vagrant@192.168.56.11 -i ~/Documents/demo-vm/keys/vm-private-key"
+  
+  # verify vm key exists
+  if [[ -f "${HOME}/.ssh/demo-vm-insecure-private-key" ]]; then
+    curl -o "${HOME}/.ssh/demo-vm-insecure-private-key" https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/demo-vm-insecure-private-key
+  fi
+
 fi
+
+printf "\nAttempting command for:\n${green}${url}${no_color}\n\n"

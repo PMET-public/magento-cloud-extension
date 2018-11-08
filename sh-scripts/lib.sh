@@ -44,7 +44,7 @@ else
   home_dir="/var/www/magento"
   ssh_cmd="ssh -n vagrant@192.168.56.11 -i ${HOME}/.ssh/demo-vm-insecure-private-key"
   
-  # verify vm key exists
+  # verify local vm key exists
   if [[ -f "${HOME}/.ssh/demo-vm-insecure-private-key" ]]; then
     curl -o "${HOME}/.ssh/demo-vm-insecure-private-key" https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/demo-vm-insecure-private-key
   fi

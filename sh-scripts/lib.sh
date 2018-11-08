@@ -42,7 +42,7 @@ else
 
   # if not magento cloud, assume local vm
   home_dir="/var/www/magento"
-  ssh_cmd="ssh -n vagrant@192.168.56.11 -i ~/Documents/demo-vm/keys/vm-private-key"
+  ssh_cmd="ssh -n vagrant@192.168.56.11 -i ${HOME}/.ssh/demo-vm-insecure-private-key"
   
   # verify vm key exists
   if [[ -f "${HOME}/.ssh/demo-vm-insecure-private-key" ]]; then

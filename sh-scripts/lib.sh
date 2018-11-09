@@ -42,11 +42,14 @@ else
 
   # if not magento cloud, assume local vm
   home_dir="/var/www/magento"
-  ssh_cmd="ssh -n vagrant@192.168.56.11 -i ${HOME}/.ssh/demo-vm-insecure-private-key"
+  domain=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!;s!https?://!!")
+  ssh_cmd="ssh -n vagrant@${domain} -i ${HOME}/.ssh/demo-vm-insecure-private-key"
+
   
   # verify local vm key exists
-  if [[ -f "${HOME}/.ssh/demo-vm-insecure-private-key" ]]; then
+  if [[ ! -f "${HOME}/.ssh/demo-vm-insecure-private-key" ]]; then
     curl -o "${HOME}/.ssh/demo-vm-insecure-private-key" https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/demo-vm-insecure-private-key
+    chmod 600 "${HOME}/.ssh/demo-vm-insecure-private-key"
   fi
 
 fi

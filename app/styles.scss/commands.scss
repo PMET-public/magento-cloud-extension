@@ -3,10 +3,13 @@
     margin: 5px auto;
     text-align: center;
   }
+  .ui-accordion .ui-accordion-content {
+    padding: 0;
+  }
 }
 
 .cli-cmd-container {
-  width: 50%;
+  width: 33%;
   display: inline-block;
   margin-bottom: 1em;
 }
@@ -46,11 +49,10 @@
   margin-left: 10px;
 }
 
-.cmds-cloud-and-vm {
-
+.cmds-prequisites, .cmds-cloud-and-vm, .cmds-vm-only {
+  padding: 10px;
 }
 
 .cmds-vm-only {
-  clear: both;
   background-color: #f0f0f0;
 }

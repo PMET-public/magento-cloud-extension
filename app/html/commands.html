@@ -3,15 +3,17 @@
 <div id="commands-accordion">  
   <h3>Cloud Prerequisites</h3>
   <div>
-    <p>You should only need to run these commands on your computer once.</p>
-    <div class="cli-cmd-container">
-      <b>Install the Magento Cloud CLI</b><br>
-      <input class="cli-cmd" type="text" value="curl -sS https://accounts.magento.cloud/cli/installer | php" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
-    </div>
-    <div class="cli-cmd-container">
-      <b>Setup local ssh keys</b><br>
-      <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/setup-ssh-key.sh | bash" readonly>
-      <span class="mdi mdi-content-copy simple-copy"></span>
+    <div class="cmds-prequisites">
+      <p>You should only need to run these commands on your computer once.</p>
+      <div class="cli-cmd-container">
+        <b>Install the Cloud CLI</b><br>
+        <input class="cli-cmd" type="text" value="curl -sS https://accounts.magento.cloud/cli/installer | php" readonly> <span class="mdi mdi-content-copy simple-copy"></span>
+      </div>
+      <div class="cli-cmd-container">
+        <b>Setup local ssh keys</b><br>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/setup-ssh-key.sh | bash" readonly>
+        <span class="mdi mdi-content-copy simple-copy"></span>
+      </div>
     </div>
   </div>
   <h3>Useful Commands</h3>
@@ -19,7 +21,7 @@
     <div class="cmds-cloud-and-vm">
       <h4>Cloud or VM cmds</h4>
       <div class="cli-cmd-container">
-        <b>Create/reset admin credentials</b><br>
+        <b>Create/reset admin users</b><br>
         <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env url={{url}} email={{email}} user={{user}} password={{password}} bash" readonly>
           <span id="password-prompt" class="mdi mdi-pencil-lock"></span>

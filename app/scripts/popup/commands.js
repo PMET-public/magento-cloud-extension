@@ -36,7 +36,8 @@ $(function () {
   
   $('#commands-accordion').accordion({
     active: 1,
-    collapsible: true
+    collapsible: true,
+    heightStyle: "content"
   })
   
   $('#password-dialog').dialog({

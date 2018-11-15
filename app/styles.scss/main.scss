@@ -16,7 +16,6 @@
 @import 'css-injector';
 @import 'commands';
 
-$padding: 0 20px 150px;
 $width: 600px;
 
 ::-webkit-scrollbar { 
@@ -25,7 +24,8 @@ $width: 600px;
 
 body {
   font: 13px/1.5em 'Lucida Grande', Arial, sans-serif;
-  padding: $padding;
+  padding: 0 20px;
+  min-height: 600px;
   width: $width;
   margin: 0;
 }
@@ -91,7 +91,6 @@ h3 {
 #tabs .ui-tabs-panel {
   border: #CCC 1px solid;
   border-radius: 3px;
-  width: 500px;
 }
 
 .ui-tabs-anchor:focus, .ui-accordion-header:focus {

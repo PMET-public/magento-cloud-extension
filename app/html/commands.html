@@ -82,13 +82,19 @@
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-load.sh | env url={{url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
+      <div class="cli-cmd-container">
+          <b>Check services</b><br>
+          <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
+            https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-services.sh | env url={{url}} bash" readonly>
+          <span class="mdi mdi-content-copy simple-copy"></span>
+      </div>
     </div>
     <div class="cmds-vm-only"><h4>VM specific cmds</h4>
       <div class="cli-cmd-container">
-        <b>Check services<br>(nginx, MySQL, Redis, ES)</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-services.sh | env url={{url}} bash" readonly>
-        <span class="mdi mdi-content-copy simple-copy"></span>
+          <b>Toggle dev/prod mode</b><br>
+          <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
+            https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/toggle-magento-mode.sh | env url={{url}} bash" readonly>
+          <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
     </div>
   </div>

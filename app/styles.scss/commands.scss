@@ -1,11 +1,16 @@
-.cli-cmd-container {
-  float: left;
-  width: 50%;
-  margin-bottom: 2em;
-  b {
-    position: relative;
-    left: -0.5em;
+#commands {
+  p, h4 {
+    margin: 5px auto;
   }
+  h4 {
+    text-align: center;
+  }
+}
+
+.cli-cmd-container {
+  width: 50%;
+  display: inline-block;
+  margin-bottom: 1em;
 }
 
 #password-dialog {
@@ -23,10 +28,12 @@
 .cli-cmd {
   width: 50px;
   padding: 5px;
+  left: 5px;
+  position: relative;
   ~ .mdi {
     position: relative;
     top: 2px;
-    left: 1px;
+    left: 5px;
     &:hover {
       background-color: $color-primary;
       color: #fff;
@@ -39,4 +46,13 @@
   color: red;
   font-weight: bold;
   margin-left: 10px;
+}
+
+.cmds-cloud-and-vm {
+
+}
+
+.cmds-vm-only {
+  clear: both;
+  background-color: #f0f0f0;
 }

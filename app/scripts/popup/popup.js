@@ -18,9 +18,3 @@ $(function() {
   })
   $('.applied-domain').text(appliedDomain)
 })
-
-$('.ui-tabs-tab, h3').on('click', (ev) => {
-  debugger
-  console.log('hi')
-  
-})

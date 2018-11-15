@@ -1,5 +1,3 @@
-#!/bin/bash
-
 if [[ ! -z "${debug}" ]]; then
   set -x
 fi

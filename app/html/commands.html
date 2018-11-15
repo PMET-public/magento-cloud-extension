@@ -1,7 +1,7 @@
 <p>Copy <span class="mdi mdi-content-copy"></span> & paste a command into your terminal to run it on:<br>
   <span class="applied-domain"></span></p>
 <div id="commands-accordion">  
-  <h3>Cloud Only Prerequisites</h3>
+  <h3>Cloud Prerequisites</h3>
   <div>
     <p>You should only need to run these commands on your computer once.</p>
     <div class="cli-cmd-container">
@@ -38,8 +38,9 @@
       </div>
       <div class="cli-cmd-container">
         <b>SSH into environment</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/ssh.sh | env url={{url}} bash" readonly>
+        <!-- this cmd needs to be structured differently b/c ssh will need to read from stdin so it can't be piped to bash -->
+        <input class="cli-cmd" type="text" value="sh -c '$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/ssh.sh | env url={{url}} bash)'" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">

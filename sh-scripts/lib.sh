@@ -9,7 +9,10 @@ green='\033[0;32m'
 yellow='\033[1;33m'
 no_color='\033[0m'
 
-if [[ "${url}" =~ .magento(site)?.cloud ]]; then
+simplified_url=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
+domain=$(echo "${simplified_url}" | perl -pe "s!https?://!!")
+
+if [[ "${simplified_url}" =~ .magento(site)?.cloud ]]; then
 
   home_dir="/app"
   cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
@@ -22,7 +25,7 @@ if [[ "${url}" =~ .magento(site)?.cloud ]]; then
     project=$(echo "${url}" | perl -pe "s/.*-//;s/\..*//;")
     environment=$("${cli_path}" environments -p "${project}" --pipe | \
       xargs -I + sh -c "printf '%s ' '+'; "${cli_path}" url -p "${project}" -e + --pipe;" | \
-      grep "${url}" | \
+      grep "${simplified_url}" | \
       awk '{print $1}')
   fi
 
@@ -42,9 +45,7 @@ else
 
   # if not magento cloud, assume local vm
   home_dir="/var/www/magento"
-  domain=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!;s!https?://!!")
   ssh_cmd="ssh -n vagrant@${domain} -i ${HOME}/.ssh/demo-vm-insecure-private-key"
-
   
   # verify local vm key exists
   if [[ ! -f "${HOME}/.ssh/demo-vm-insecure-private-key" ]]; then
@@ -53,5 +54,3 @@ else
   fi
 
 fi
-
-printf "\nAttempting command for:\n${green}${url}${no_color}\n\n"

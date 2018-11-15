@@ -1,4 +1,3 @@
-
 printf "\nChecking load on env ...\n"
 
 read -r nproc loadavg1 loadavg5 < <($ssh_cmd 'echo $(nproc) $(awk "{print \$1, \$2}" /proc/loadavg)' 2> /dev/null)

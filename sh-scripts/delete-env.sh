@@ -1,3 +1,3 @@
-printf "\nFlushing cache ...\n"
+printf "\nDeleting env ...\n"
 
-"${cli_path}" environment:delete --no-wait --yes -p "${project}" -e "${environment}"
+"${cli_path}" environment:delete --no-wait -p "${project}" -e "${environment}"

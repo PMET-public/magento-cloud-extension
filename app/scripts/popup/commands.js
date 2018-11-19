@@ -15,15 +15,23 @@ function isPasswordValid(passwordVal) {
 }
 
 function setFormButtonState() {
-  const passed = isEmailValid($('#email-dialog-input').val()) &&
+  const emailPassed = isEmailValid($('#email-dialog-input').val())
+  const passed = emailPassed &&
     isUserValid($('#user-dialog-input').val()) &&
     isPasswordValid($('#password-dialog-input').val())
   $('#password-dialog ~ .ui-dialog-buttonpane button').button(passed ? 'enable' : 'disable')
   // special case for "admin" user in cloud
-  if ($('#user-dialog-input').val() === 'admin' && 
-    $('#email-dialog-input').val() !== 'kbentrup@magento.com' &&
-    true) {
-      $('#password-dialog').prepend('Note: By default, the cloud environment was created with "admin" assigned to "kbentrup@magento.com".')
+  if (/magento(site)?\.cloud/.test(tabBaseUrl) && emailPassed && $('#user-dialog-input').val() === 'admin' && $('#email-dialog-input').val() !== 'kbentrup@magento.com') { 
+    if (!$('#admin-reset-note').length) {
+      $('#password-dialog').prepend(
+        '<p id="admin-reset-note">Note: By default, cloud environments were created with the "admin" account ' +
+        'assigned to "kbentrup@magento.com". If the default email has not been changed, this UI will let you ' +
+        '<b>CHANGE THE PASSWORD ONLY</b> for that username &amp; email ' + 
+        'pair. To change the email for "admin" you will have to log into the /admin site.</p>'
+      )
+    }
+  } else {
+    $('#admin-reset-note').remove();
   }
 }
 
@@ -115,8 +123,8 @@ $(function () {
   
   $('.cli-cmd').each(function () {
     const jCmdInput = $(this)
-    // if url is part of magento.cloud, use full url else just domain
-    const url = /magento\.cloud/.test(tabDomain) ? tabUrl : tabDomain
+    // if url is part of magento.cloud (not magentosite.cloud or VM), use full url else just base url
+    const url = /magento\.cloud/.test(tabBaseUrl) ? tabUrl : tabBaseUrl
     jCmdInput.val(jCmdInput.val().replace('{{url}}', url))
       .next('.simple-copy')
       .click(function (ev) {

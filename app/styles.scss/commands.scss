@@ -1,18 +1,17 @@
-#commands {
-  p, h4 {
-    margin: 5px auto;
+#commands p, #commands .ui-accordion-content h3 {
     text-align: center;
-  }
-  .ui-accordion .ui-accordion-content {
-    padding: 0;
-  }
+    margin: 5px auto;
+}
+
+#commands .ui-accordion-content {
+  padding: 0;
 }
 
 .cli-cmd-container {
   width: 25%;
   display: inline-block;
   font-size: 95%;
-  margin-bottom: 1em;
+  margin-bottom: 12px;
 }
 
 #password-dialog {
@@ -70,4 +69,8 @@
 .cmds-vm-only {
   background-color: $color-disabled;
   width: calc(50% - 5px);
+}
+
+#admin-reset-note {
+  color: $color-error-text;
 }

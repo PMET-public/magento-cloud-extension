@@ -3,6 +3,10 @@ function isEmailValid(emailVal) {
 }
 
 function isUserValid(userVal) {
+  if (userVal === 'admin') {
+    
+
+  }
   return userVal.length > 1
 }
 
@@ -15,6 +19,12 @@ function setFormButtonState() {
     isUserValid($('#user-dialog-input').val()) &&
     isPasswordValid($('#password-dialog-input').val())
   $('#password-dialog ~ .ui-dialog-buttonpane button').button(passed ? 'enable' : 'disable')
+  // special case for "admin" user in cloud
+  if ($('#user-dialog-input').val() === 'admin' && 
+    $('#email-dialog-input').val() !== 'kbentrup@magento.com' &&
+    true) {
+      $('#password-dialog').prepend('Note: By default, the cloud environment was created with "admin" assigned to "kbentrup@magento.com".')
+  }
 }
 
 function copyToClipboard(el) {

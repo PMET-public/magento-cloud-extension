@@ -71,7 +71,7 @@
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
-        <b>Reindex; Flush; then warm</b><br>
+        <b>Reindex; flush; then warm</b><br>
         <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reindex.sh 
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/cache-flush.sh 
@@ -88,6 +88,14 @@
           <b>Check services</b><br>
           <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
             https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-services.sh | env url={{url}} bash" readonly>
+          <span class="mdi mdi-content-copy simple-copy"></span>
+      </div>
+    </div>
+    <div class="cmds-cloud-only"><h4>Cloud specific cmds</h4>
+      <div class="cli-cmd-container">
+          <b>Delete env immediately</b><br>
+          <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
+            https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/mode-dev.sh | env url={{url}} bash" readonly>
           <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
     </div>

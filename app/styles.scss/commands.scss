@@ -9,8 +9,9 @@
 }
 
 .cli-cmd-container {
-  width: 33%;
+  width: 25%;
   display: inline-block;
+  font-size: 95%;
   margin-bottom: 1em;
 }
 
@@ -49,10 +50,24 @@
   margin-left: 10px;
 }
 
-.cmds-prequisites, .cmds-cloud-and-vm, .cmds-vm-only {
-  padding: 10px;
+.cmds-prequisites, .cmds-cloud-and-vm {
+  padding: 5px;
+}
+
+.cmds-cloud-only, .cmds-vm-only {
+  display: inline-block;
+  vertical-align: top;
+  padding-left: 5px;
+  .cli-cmd-container { 
+    width: 50%;
+  }
+}
+
+.cmds-cloud-only {
+  width: calc(50% - 5px);
 }
 
 .cmds-vm-only {
-  background-color: #f0f0f0;
+  background-color: $color-disabled;
+  width: calc(50% - 5px);
 }

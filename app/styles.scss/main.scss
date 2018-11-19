@@ -120,3 +120,19 @@ input {
   margin-bottom: 13px;
   display: inline-block;
 }
+
+.update-available {
+  color: red;
+  text-transform: uppercase;
+  opacity: 1;
+  animation: fade-in ease-in 2; 
+  animation-fill-mode: forwards;
+  animation-duration:3s;
+  animation-delay: 0s
+}
+
+@keyframes fade-in { 
+  0% { opacity: 1; } 
+  50% { opacity: 0; } 
+  100% { opacity: 1; } 
+}

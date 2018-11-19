@@ -17,4 +17,23 @@ $(function() {
     }
   })
   $('.applied-domain').text(appliedDomain)
+
+  // check current manifest vs remote manifest
+  fetch('https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/app/manifest.json')
+    .then(response => response.json())
+    .then(json => {
+      const remoteManifestParts = json.version.split('.')
+      const curManifestParts = chrome.runtime.getManifest().version.split('.')
+      remoteIsNewer = false
+      for (let i = 0; i < remoteManifestParts.length; i++) {
+        if (parseInt(remoteManifestParts[i], 10) > parseInt(curManifestParts[i], 10)) {
+          remoteIsNewer = true
+          break
+        }
+      }
+      if (remoteIsNewer) {
+        $('.extension-title').append('<a class="update-available" target="_blank" href="https://github.com/PMET-public/magento-cloud-extension/releases">update available!</a>')
+      }
+    })
+
 })

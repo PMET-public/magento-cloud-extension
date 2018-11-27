@@ -27,5 +27,6 @@ To install the Magento Cloud CLI & setup ssh keys:
 1. Clicks the "Commands" tab in the extension
 2. Click "Prerequisites"
 3. Copy and paste those commands in your terminal
+4. When asked, run the `magento-cloud login` in the terminal, too.
 
 Done

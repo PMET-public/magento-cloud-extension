@@ -53,12 +53,6 @@
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
-        <b>Restore env</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/restore-env.sh | env url={{url}} bash" readonly>
-        <span class="mdi mdi-content-copy simple-copy"></span>
-      </div>
-      <div class="cli-cmd-container">
         <b>Reindex</b><br>
         <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reindex.sh | env url={{url}} bash" readonly>
@@ -111,6 +105,12 @@
             https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/delete-env.sh | env url={{url}} bash" readonly>
           <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
+      <div class="cli-cmd-container">
+          <b>Create env from backup</b><br>
+          <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
+            https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/create-new-cloud-env-from-backup.sh | env url={{url}} bash" readonly>
+          <span class="mdi mdi-content-copy simple-copy"></span>
+        </div>
     </div>
     <div class="cmds-vm-only"><h3>VM specific cmds</h3>
       <div class="cli-cmd-container">

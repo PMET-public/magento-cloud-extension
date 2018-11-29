@@ -2,6 +2,10 @@ printf "\nBacking up env ...\n"
 
 tar_file=/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar
 tmp_git_dir="/tmp/delete-me-${environment}"
+additional_files=""
+if is_cloud; then
+  additional_files=".magento.app.yaml"
+fi
 
 $ssh_cmd "sql_file=\$(php ${home_dir}/bin/magento setup:backup --db | sed -n \"s/.*path: \/app\///p\")
 
@@ -32,15 +36,17 @@ order by updated_at asc)' 2> /dev/null | \
   tar -cf ${tar_file} --files-from -
 
 # add sql file and other files needed to recreate project/environment
-tar --ignore-failed-read -rf ${tar_file} \$sql_file .gitignore composer.json composer.lock .magento.app.yaml pub/media/gene-cms pub/media/wysiwyg pub/media/ThemeCustomizer
+tar --ignore-failed-read -rf ${tar_file} \$sql_file .gitignore composer.json composer.lock ${additional_files} pub/media/gene-cms pub/media/wysiwyg pub/media/ThemeCustomizer
 "
 
 mkdir -p "${backups_dir}"
 $scp_cmd:$tar_file "${backups_dir}"
 
-# still not done b/c need .magento/services.yml & .magento/routes.yml but they do not exist on the remote cloud filesystem
-# so grab them from the env's repo
-rm -rf "${tmp_git_dir}" # ensure tmp_git_dir doesn't exist from a previously aborted cmd 
-git clone --branch "${environment}" $(${cli_path} project:info -p "${project}" git) "${tmp_git_dir}"
-tar -C "${tmp_git_dir}" -rf "${backups_dir}/${tar_file#/tmp/}" .magento
-rm -rf "${tmp_git_dir}"
+if is_cloud; then
+  # still not done b/c need .magento/services.yml & .magento/routes.yml but they do not exist on the remote cloud filesystem
+  # so grab them from the env's repo
+  rm -rf "${tmp_git_dir}" # ensure tmp_git_dir doesn't exist from a previously aborted cmd 
+  git clone --branch "${environment}" $(${cli_path} project:info -p "${project}" git) "${tmp_git_dir}"
+  tar -C "${tmp_git_dir}" -rf "${backups_dir}/${tar_file#/tmp/}" .magento
+  rm -rf "${tmp_git_dir}"
+fi 

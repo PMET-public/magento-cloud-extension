@@ -1,9 +1,6 @@
 printf "\nCreating new cloud env from backup ...\n"
 
 # prompt user for tar file and project to create new env on
-menu_height=20
-menu_width=70
-num_visible_choices=10
 backtitle="Creating new cloud env from backup ..."
 
 tar_files=($(find "${backups_dir}" -name "*.tar" 2>/dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))

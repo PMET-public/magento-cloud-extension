@@ -15,6 +15,14 @@ domain=$(echo "${simplified_url}" | perl -pe "s!https?://!!")
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 backups_dir="${HOME}/Downloads/m2-backups"
 
+error(){
+  printf "\n${red}${@}${no_color}\n\n" && exit
+}
+
+warning(){
+  printf "\n${yellow}${@}${no_color}\n\n"
+}
+
 if [[ "${simplified_url}" =~ .magento(site)?.cloud ]]; then
 
   # determine relevant project and environment

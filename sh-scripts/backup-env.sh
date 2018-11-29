@@ -1,4 +1,4 @@
-printf "\nBacking up env. Depending on the size this may take a couple min ...\n"
+printf "\nBacking up env. Depending on the size, this may take a couple min ...\n"
 
 tar_file=/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar
 tmp_git_dir="/tmp/delete-me-${environment}"
@@ -36,7 +36,7 @@ order by updated_at asc)' 2> /dev/null | \
   tar -cf ${tar_file} --files-from -
 
 # add sql file and other files needed to recreate project/environment
-tar --ignore-failed-read -rf ${tar_file} \$sql_file .gitignore composer.json composer.lock ${additional_files} pub/media/gene-cms pub/media/wysiwyg pub/media/ThemeCustomizer
+tar --ignore-failed-read -rf ${tar_file} \$sql_file .gitignore composer.json composer.lock ${additional_files} pub/media/gene-cms pub/media/wysiwyg pub/media/ThemeCustomizer 2> /dev/null
 rm \$sql_file
 "
 

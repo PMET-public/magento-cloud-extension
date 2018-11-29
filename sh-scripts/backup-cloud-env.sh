@@ -1,13 +1,13 @@
 printf "\nBacking up env ...\n"
 
-tar_file=/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}-backup.tar
+tar_file=/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar
 tmp_git_dir="/tmp/delete-me-${environment}"
 
-$ssh_cmd "sqlfile=\$(php ${home_dir}/bin/magento setup:backup --db | sed -n \"s/.*path: //p\")
+$ssh_cmd "sql_file=\$(php ${home_dir}/bin/magento setup:backup --db | sed -n \"s/.*path: \/app\///p\")
 
 # replace specific host name with token placeholder
-perl -i -pe \"\\\$c+=s!${simplified_url}!{{REPLACEMENT_BASE_URL}}!g; 
-  END{print \\\"\n\\\$c host name replacements\n\\\"}\" \$sqlfile
+perl -i -pe \"\\\$c+=s!${simplified_url}!REPLACEMENT_BASE_URL!g; 
+  END{print \\\"\n\\\$c host name replacements\n\\\"}\" \$sql_file
 
 # find full paths of imported images and create tar file
 mysql main -sN -h database.internal -e '# all paths of products added after a certain date
@@ -32,7 +32,7 @@ order by updated_at asc)' 2> /dev/null | \
   tar -cf ${tar_file} --files-from -
 
 # add sql file and other files needed to recreate project/environment
-tar --ignore-failed-read -rf ${tar_file} \$sqlfile .gitignore composer.json composer.lock .magento.app.yaml pub/media/gene-cms pub/media/wysiwyg pub/media/ThemeCustomizer
+tar --ignore-failed-read -rf ${tar_file} \$sql_file .gitignore composer.json composer.lock .magento.app.yaml pub/media/gene-cms pub/media/wysiwyg pub/media/ThemeCustomizer
 "
 
 mkdir -p "${backups_dir}"

@@ -41,7 +41,7 @@ rm \$sql_file
 "
 
 mkdir -p "${backups_dir}"
-$scp_cmd:$tar_file "${backups_dir}"
+$scp_cmd ${user_and_host}:$tar_file "${backups_dir}"
 
 if is_cloud; then
   # clean up remote to prevent full disk errors

@@ -75,4 +75,4 @@ else
 fi
 
 ssh_cmd="ssh -n -i ${identity_file} ${user_and_host}"
-scp_cmd="scp -i ${identity_file} ${user_and_host}"
+scp_cmd="scp -i ${identity_file}"

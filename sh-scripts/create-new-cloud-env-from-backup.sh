@@ -6,7 +6,7 @@ menu_width=70
 num_visible_choices=10
 backtitle="Creating new cloud env from backup ..."
 
-tar_files=($(find "${backups_dir}" -name "*.tar" 2>/dev/null | perl -pe 's!.*/backups/!!' | cat -n))
+tar_files=($(find "${backups_dir}" -name "*.tar" 2>/dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))
 if [[ ${#tar_files[@]} -lt 1 ]]; then
   error No backups found in "${backups_dir}"
 fi

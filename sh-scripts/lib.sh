@@ -18,6 +18,9 @@ warning() {
   printf "\n${yellow}${@}${no_color}\n\n"
 }
 
+menu_height=20
+menu_width=70
+num_visible_choices=10
 simplified_url=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
 domain=$(echo "${simplified_url}" | perl -pe "s!https?://!!")
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"

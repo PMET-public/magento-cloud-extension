@@ -1,4 +1,4 @@
-printf "\nBacking up env ...\n"
+printf "\nBacking up env. Depending on the size this may take a couple min ...\n"
 
 tar_file=/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar
 tmp_git_dir="/tmp/delete-me-${environment}"
@@ -37,12 +37,15 @@ order by updated_at asc)' 2> /dev/null | \
 
 # add sql file and other files needed to recreate project/environment
 tar --ignore-failed-read -rf ${tar_file} \$sql_file .gitignore composer.json composer.lock ${additional_files} pub/media/gene-cms pub/media/wysiwyg pub/media/ThemeCustomizer
+rm \$sql_file
 "
 
 mkdir -p "${backups_dir}"
 $scp_cmd:$tar_file "${backups_dir}"
 
 if is_cloud; then
+  # clean up remote to prevent full disk errors
+  $ssh_cmd "rm ${tar_file}"
   # still not done b/c need .magento/services.yml & .magento/routes.yml but they do not exist on the remote cloud filesystem
   # so grab them from the env's repo
   rm -rf "${tmp_git_dir}" # ensure tmp_git_dir doesn't exist from a previously aborted cmd 

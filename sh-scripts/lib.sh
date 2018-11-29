@@ -10,20 +10,25 @@ green='\033[0;32m'
 yellow='\033[1;33m'
 no_color='\033[0m'
 
+error() {
+  printf "\n${red}${@}${no_color}\n\n" && exit
+}
+
+warning() {
+  printf "\n${yellow}${@}${no_color}\n\n"
+}
+
 simplified_url=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
 domain=$(echo "${simplified_url}" | perl -pe "s!https?://!!")
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 backups_dir="${HOME}/Downloads/m2-backups"
 
-error(){
-  printf "\n${red}${@}${no_color}\n\n" && exit
+is_cloud() {
+  [[ "${simplified_url}" =~ .magento(site)?.cloud ]]
+  return $?
 }
 
-warning(){
-  printf "\n${yellow}${@}${no_color}\n\n"
-}
-
-if [[ "${simplified_url}" =~ .magento(site)?.cloud ]]; then
+if is_cloud; then
 
   # determine relevant project and environment
   if [[ "${url}" =~ .magento.cloud/projects/.*/environments ]]; then

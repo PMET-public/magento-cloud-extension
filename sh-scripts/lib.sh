@@ -13,7 +13,7 @@ no_color='\033[0m'
 simplified_url=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
 domain=$(echo "${simplified_url}" | perl -pe "s!https?://!!")
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
-backups_dir="${HOME}/Downloads/backups"
+backups_dir="${HOME}/Downloads/m2-backups"
 
 if [[ "${simplified_url}" =~ .magento(site)?.cloud ]]; then
 

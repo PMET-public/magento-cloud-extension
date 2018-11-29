@@ -12,11 +12,10 @@ no_color='\033[0m'
 
 simplified_url=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
 domain=$(echo "${simplified_url}" | perl -pe "s!https?://!!")
+cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
+backups_dir="${HOME}/Downloads/backups"
 
 if [[ "${simplified_url}" =~ .magento(site)?.cloud ]]; then
-
-  home_dir="/app"
-  cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 
   # determine relevant project and environment
   if [[ "${url}" =~ .magento.cloud/projects/.*/environments ]]; then
@@ -30,28 +29,30 @@ if [[ "${simplified_url}" =~ .magento(site)?.cloud ]]; then
       awk '{print $1}')
   fi
 
+  user_and_host="$(${cli_path} ssh -p "${project}" -e "${environment}" --pipe)"
+  identity_file="${HOME}/.ssh/id_rsa.magento"
+  home_dir="/app"
+
   if [[ -z "${project}" ]]; then
     printf "${red}Project not found in your projects or could not be determined from url.${no_color}\n" && exit
   elif [[ -z "${environment}" ]]; then
     printf "${red}Environment not found or could not be determined from url.${no_color}\n" && exit
   fi
 
-  # create ssh cmd
-  ssh_cmd="ssh -n $(${cli_path} ssh -p "${project}" -e "${environment}" --pipe)"
-  if [[ -f "${HOME}/.ssh/id_rsa.magento" ]]; then
-    ssh_cmd="${ssh_cmd} -i ${HOME}/.ssh/id_rsa.magento"
-  fi  
-
 else
-
-  # if not magento cloud, assume local vm
-  home_dir="/var/www/magento"
-  ssh_cmd="ssh -n vagrant@${domain} -i ${HOME}/.ssh/demo-vm-insecure-private-key"
   
+  # if not magento cloud, assume local vm
+  user_and_host="vagrant@${domain}"
+  identity_file="${HOME}/.ssh/demo-vm-insecure-private-key"
+  home_dir="/var/www/magento"
+
   # verify local vm key exists
-  if [[ ! -f "${HOME}/.ssh/demo-vm-insecure-private-key" ]]; then
-    curl -o "${HOME}/.ssh/demo-vm-insecure-private-key" https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/demo-vm-insecure-private-key
-    chmod 600 "${HOME}/.ssh/demo-vm-insecure-private-key"
+  if [[ ! -f "${identity_file}" ]]; then
+    curl -o "${identity_file}" https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/demo-vm-insecure-private-key
+    chmod 600 "${identity_file}"
   fi
 
 fi
+
+ssh_cmd="ssh -n -i ${identity_file} ${user_and_host}"
+scp_cmd="scp -i ${identity_file} ${user_and_host}"

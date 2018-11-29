@@ -8,13 +8,13 @@ backtitle="Creating new cloud env from backup ..."
 
 tar_files=($(find "${backups_dir}" -name "*.tar" 2>/dev/null | perl -pe 's!.*/backups/!!' | cat -n))
 if [[ ${#tar_files[@]} -lt 1 ]]; then
-  printf "\n${red}No backups found in "${backups_dir}".${no_color}\n\n" && exit
+  error No backups found in "${backups_dir}"
 fi
 
 # must use "declare -a" b/c some array items are quoted strings with spaces
 declare -a "projects=($(${cli_path} projects --format=tsv | perl -pe 's/https:.*//' | sed '1d'))"
 if [[ ${#projects[@]} -lt 1 ]]; then
-  printf "\n${red}No projects found. Is your Magento Cloud CLI installed and logged in?${no_color}\n\n" && exit
+  error No projects found. Is your Magento Cloud CLI installed and logged in?
 fi
 
 selections=$(dialog --clear \

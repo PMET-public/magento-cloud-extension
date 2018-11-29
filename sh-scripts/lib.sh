@@ -37,15 +37,19 @@ if [[ "${simplified_url}" =~ .magento(site)?.cloud ]]; then
       awk '{print $1}')
   fi
 
-  user_and_host="$(${cli_path} ssh -p "${project}" -e "${environment}" --pipe)"
+  if [[ -z "${project}" ]]; then
+    error Project not found in your projects or could not be determined from url.
+  elif [[ -z "${environment}" ]]; then
+    error Environment not found or could not be determined from url.
+  fi
+
+  # prevent exit on inactive env but warn
+  user_and_host="$(${cli_path} ssh -p "${project}" -e "${environment}" --pipe 2> /dev/null || :)"
+  if [[ -z "${user_and_host}" ]]; then
+    warning SSH URL could not be determined. Environment inactive?
+  fi
   identity_file="${HOME}/.ssh/id_rsa.magento"
   home_dir="/app"
-
-  if [[ -z "${project}" ]]; then
-    printf "${red}Project not found in your projects or could not be determined from url.${no_color}\n" && exit
-  elif [[ -z "${environment}" ]]; then
-    printf "${red}Environment not found or could not be determined from url.${no_color}\n" && exit
-  fi
 
 else
   

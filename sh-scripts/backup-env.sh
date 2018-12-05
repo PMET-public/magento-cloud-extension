@@ -1,4 +1,4 @@
-printf "\nBacking up env. Depending on the size, this may take a couple min ...\n"
+msg Backing up env. Depending on the size, this may take a couple min ...
 
 tar_file=/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar
 tmp_git_dir="/tmp/delete-me-${environment}"

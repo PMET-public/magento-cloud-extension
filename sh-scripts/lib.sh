@@ -18,6 +18,10 @@ warning() {
   printf "\n${yellow}${@}${no_color}\n\n"
 }
 
+msg() {
+  printf "\n${green}${@}${no_color}\n\n"
+}
+
 menu_height=20
 menu_width=70
 num_visible_choices=10

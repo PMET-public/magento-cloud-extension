@@ -1,4 +1,4 @@
-printf "\nWarming cache ...\n"
+msg Warming cache ...
 
 wget_url=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
 wget_domain=$(echo "${wget_url}" | perl -pe "s!https?://!!")

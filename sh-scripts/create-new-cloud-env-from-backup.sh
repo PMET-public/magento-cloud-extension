@@ -1,4 +1,4 @@
-printf "\nCreating new cloud env from backup ...\n"
+msg Creating new cloud env from backup ...
 
 # prompt user for tar file and project to create new env on
 backtitle="Creating new cloud env from backup ..."

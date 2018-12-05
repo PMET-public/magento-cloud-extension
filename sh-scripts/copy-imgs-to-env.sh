@@ -1,4 +1,4 @@
-printf "\nCopy imgs to an env ...\n"
+msg Copy imgs to an env ...
 
 # prompt user for tar file and project to create new env on
 backtitle="Copy images to an env ..."

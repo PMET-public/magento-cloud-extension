@@ -1,7 +1,7 @@
 msg Backing up env. Depending on the size, this may take a couple min ...
 
 tar_file=/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar
-tmp_git_dir="/tmp/delete-me-${environment}"
+tmp_git_dir="/tmp/delete-me-${project}-${environment}"
 additional_files=""
 if is_cloud; then
   additional_files=".magento.app.yaml"

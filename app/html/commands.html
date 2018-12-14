@@ -118,13 +118,24 @@
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
+        <b data-descr="Immediately restore database and media to previous state using local backup.">
+          Restore env from backup
+          <span class="mdi mdi-help"></span>
+        </b>
+        <br>
+      </div>
+      <div class="cli-cmd-container">
         <b>Create env from backup</b><br>
         <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/create-new-cloud-env-from-backup.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
-        <b>Force rebuild env</b><br>
+        <b data-descr="Some operations (e.g. enabling email) require the env to be rebuilt. Please backup first.">
+          Force rebuild env
+          <span  class="mdi mdi-help"></span>
+        </b>
+        <br>
         <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/rebuild-cloud-env.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>

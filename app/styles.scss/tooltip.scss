@@ -1,9 +1,9 @@
-span[data-descr] {
+[data-descr] {
   position: relative;
   color: $color-primary;
 }
 
-span[data-descr]:hover::after {
+[data-descr]:hover::after {
   content: attr(data-descr);
   position: absolute;
   left: -250px;
@@ -16,5 +16,33 @@ span[data-descr]:hover::after {
   padding: 10px;
   color: $color-normal-text;
   font-size: 12px;
+  line-height: 16px;
   z-index: 2;
+}
+
+$cmd-tip-width: 200px;
+
+.cli-cmd-container {
+  .mdi-help {
+    position: relative;
+    font-size: 12px;
+    padding: 0;
+    overflow: visible;
+    height: 0;
+    width: 0;
+    top: -10px;
+    left: -10px;
+    &::before {
+      line-height: 10px;
+    }
+  }
+  [data-descr] {
+    color: $color-normal-text;
+  }
+  [data-descr]:hover::after {
+    top: -60px;
+    padding: 5px;
+    min-width: $cmd-tip-width;
+    left: -$cmd-tip-width*.75;
+  }
 }

@@ -1,3 +1,3 @@
 printf "\nRunning cron jobs ...\n"
 
-$ssh_cmd "php ${home_dir}/bin/magento cron:run; php ${home_dir}/bin/magento cron:run"
+$ssh_cmd "php ${app_dir}/bin/magento cron:run; php ${app_dir}/bin/magento cron:run"

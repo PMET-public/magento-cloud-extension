@@ -17,4 +17,4 @@ selection=$(dialog --clear \
 clear
 img_dir="${img_dirs[$(( (${selection} - 1) * 2 + 1))]}"
 
-$scp_cmd -r "${HOME}/Downloads/${img_dir}/" ${user_and_host}:${home_dir}/pub/media/import/products
+$scp_cmd -r "${HOME}/Downloads/${img_dir}/" $(get_ssh_url):${app_dir}/pub/media/import/products

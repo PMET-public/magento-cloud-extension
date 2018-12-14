@@ -61,14 +61,14 @@ if is_cloud; then
     warning SSH URL could not be determined. Environment inactive?
   fi
   identity_file="${HOME}/.ssh/id_rsa.magento"
-  home_dir="/app"
+  app_dir="/app"
 
 else
   
   # if not magento cloud, assume local vm
   user_and_host="vagrant@${domain}"
   identity_file="${HOME}/.ssh/demo-vm-insecure-private-key"
-  home_dir="/var/www/magento"
+  app_dir="/var/www/magento"
 
   # verify local vm key exists
   if [[ ! -f "${identity_file}" ]]; then

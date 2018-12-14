@@ -1,3 +1,3 @@
 msg Flushing cache ...
 
-$ssh_cmd "php ${home_dir}/bin/magento cache:flush; rm -rf ${home_dir}/var/cache/* ${home_dir}/var/page_cache/*"
+$ssh_cmd "php ${app_dir}/bin/magento cache:flush; rm -rf ${app_dir}/var/cache/* ${app_dir}/var/page_cache/*"

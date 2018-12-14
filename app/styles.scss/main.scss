@@ -16,7 +16,7 @@
 @import 'css-injector';
 @import 'commands';
 
-$width: 700px;
+$body-width: 700px;
 
 ::-webkit-scrollbar { 
   display: none; 
@@ -26,7 +26,7 @@ body {
   font: 13px/1.5em 'Lucida Grande', Arial, sans-serif;
   padding: 0 10px;
   min-height: 600px;
-  width: $width;
+  width: $body-width;
   margin: 0;
 }
 

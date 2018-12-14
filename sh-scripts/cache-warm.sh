@@ -1,6 +1,6 @@
 msg Warming cache ...
 
-wget_url=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
+wget_url=$(echo "${tab_url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
 wget_domain=$(echo "${wget_url}" | perl -pe "s!https?://!!")
 
 tmp_file=/tmp/$(date '+delete-me-%Y-%m-%d-%H-%M-%S')]

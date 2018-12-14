@@ -25,24 +25,28 @@ msg() {
 menu_height=20
 menu_width=70
 num_visible_choices=10
-simplified_url=$(echo "${url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
-domain=$(echo "${simplified_url}" | perl -pe "s!https?://!!")
+# tab_url_simplified has no trailing "/" but by Magento convention base_url does
+tab_url_simplified=$(echo "${tab_url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
+base_url=""
+domain=$(echo "${tab_url_simplified}" | perl -pe "s!https?://!!")
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 backups_dir="${HOME}/Downloads/m2-backups"
+sql_file=/tmp/db.sql
 
 is_cloud() {
-  [[ "${simplified_url}" =~ .magento(site)?.cloud ]]
+  [[ "${tab_url_simplified}" =~ .magento(site)?.cloud ]]
   return $?
 }
 
 if is_cloud; then
 
   # determine relevant project and environment
-  if [[ "${url}" =~ .magento.cloud/projects/.*/environments ]]; then
-    project=$(echo "${url}" | perl -pe "s!.*?projects/!!;s!/environments/.*!!;")
-    environment=$(echo "${url}" | perl -pe "s!.*?environments/!!;s!/.*!!;")
+  if [[ "${tab_url}" =~ .magento.cloud/projects/.*/environments ]]; then
+    project=$(echo "${tab_url}" | perl -pe "s!.*?projects/!!;s!/environments/.*!!;")
+    environment=$(echo "${tab_url}" | perl -pe "s!.*?environments/!!;s!/.*!!;")
+    base_url=$(get_cloud_base_url "${project}" "${environment}")
   else
-    project=$(echo "${url}" | perl -pe "s/.*-//;s/\..*//;")
+    base_url="${tab_url_simplified}/"
     environment=$("${cli_path}" environments -p "${project}" --pipe | \
       xargs -I + sh -c "printf '%s ' '+'; "${cli_path}" url -p "${project}" -e + --pipe;" | \
       grep "${simplified_url}" | \

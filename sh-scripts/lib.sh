@@ -75,8 +75,7 @@ if is_cloud; then
   fi
 
   # prevent exit on inactive env but warn
-  user_and_host="$(${cli_path} ssh -p "${project}" -e "${environment}" --pipe 2> /dev/null || :)"
-  if [[ -z "${user_and_host}" ]]; then
+  if [[ -z $(get_ssh_url) ]]; then
     warning SSH URL could not be determined. Environment inactive?
   fi
   identity_file="${HOME}/.ssh/id_rsa.magento"
@@ -85,7 +84,6 @@ if is_cloud; then
 else
   
   # if not magento cloud, assume local vm
-  user_and_host="vagrant@${domain}"
   identity_file="${HOME}/.ssh/demo-vm-insecure-private-key"
   app_dir="/var/www/magento"
 
@@ -97,5 +95,5 @@ else
 
 fi
 
-ssh_cmd="ssh -n -i ${identity_file} ${user_and_host}"
+ssh_cmd="$(get_ssh_cmd)"
 scp_cmd="scp -i ${identity_file}"

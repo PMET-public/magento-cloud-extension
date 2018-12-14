@@ -48,6 +48,15 @@ body {
   width: 1.5em;
 }
 
+#manifest-version {
+  font-size: 10px;
+  color: darken($color-disabled, 50%);
+  left: -100px;
+  top: 10px;
+  position: relative;
+  font-style: italic;
+}
+
 h3 {
   line-height: 2em;
   font-size: 1.5em;

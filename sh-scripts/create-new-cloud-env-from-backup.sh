@@ -56,13 +56,4 @@ git commit -m "Creating from backup: ${tar_file}"
 git push --set-upstream cloud "${environment}"
 "${cli_path}" environment:activate -p "${project}" -e "${environment}"
 
-# send media and sql back file
-cat "${backups_dir}/${tar_file}" | ssh -i "${HOME}/.ssh/id_rsa.magento" $("${cli_path}" ssh -p "${project}" -e "${environment}" --pipe) "tar -xf - -C /app pub/media var/backups"
-
-# get sql_file name
-sql_file=$(tar -tf tar -tf "${backups_dir}/${tar_file}" | grep "var/backups/.*.sql" | sed "s/.*\///")
-
-# replace hostname and rollback db
-new_base_url=$(curl -sI localhost | sed -n 's/Location: //;s/\.cloud\/.*/.cloud/p')
-perl -i -pe "s!REPLACEMENT_BASE_URL!${new_base_url}!g"
-php bin/magento setup:rollback -n -d "${sql_file}"
+restore_from_tar "${tar_file}" "${project}" "${environment}"

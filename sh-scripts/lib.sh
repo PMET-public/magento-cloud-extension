@@ -38,6 +38,73 @@ is_cloud() {
   return $?
 }
 
+set_db_vars() {
+  if is_cloud; then
+    additional_files=".magento.app.yaml"
+    tar_file="/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar"
+    db_host=database.internal
+    db_port=3306
+    db_user=user
+    db_name=main
+    db_pass=""
+  else
+    additional_files=""
+    tar_file="/tmp/$(date "+%Y-%m-%d-%H-%M")-${domain}.tar"
+    db_host=127.0.0.1
+    db_port=3306
+    db_user=user
+    db_name=main
+    db_pass=""
+  fi
+}
+
+get_cloud_base_url() {
+  echo "$(${cli_path} url -p "${1}" -e "${2}" --pipe | grep https -m 1 | perl -pe 's/\s+//')"
+}
+
+get_cloud_ssh_url() {
+  echo "$(${cli_path} ssh -p "${1}" -e "${2}" --pipe 2> /dev/null || :)"
+}
+
+get_ssh_url() {
+  # if parameters are passed, used those
+  # otherwise determine from env vars
+  if [[ $# -eq 2 ]]; then 
+    get_cloud_ssh_url $*
+  elif is_cloud; then  
+    get_cloud_ssh_url $project $environment
+  else
+    echo "vagrant@${domain}"
+  fi
+}
+
+get_ssh_cmd() {
+  echo "ssh -n -i ${identity_file} $(get_ssh_url $*)"
+}
+
+get_interactive_ssh_cmd() {
+  echo "ssh -i ${identity_file} $(get_ssh_url $*)"
+}
+
+restore_from_tar() {
+  local tar_file=$1
+  local project=$2
+  local environment=$3
+  # send media and sql back file
+  cat "${backups_dir}/${tar_file}" | $(get_interactive_ssh_cmd $project $environment) "tar -xf - -C / app/pub/media tmp"
+
+  # get sql_file name
+  sql_file=$(tar -tf "${backups_dir}/${tar_file}" | grep "var/backups/.*.sql" | sed "s/.*\///")
+
+  # replace hostname and rollback db
+  $(get_ssh_cmd $project $environment) "
+    new_base_url=\$(curl -sI localhost | sed -n \"s/location: //i;s/\.cloud\/.*/.cloud/p\")
+    gunzip ${sql_file}.gz
+    perl -i -pe \"s!REPLACEMENT_BASE_URL!\${new_base_url}!g\" ${sql_file}
+
+  "
+}
+
 if is_cloud; then
 
   # determine relevant project and environment

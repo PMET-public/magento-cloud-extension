@@ -47,10 +47,25 @@ if is_cloud; then
     base_url=$(get_cloud_base_url "${project}" "${environment}")
   else
     base_url="${tab_url_simplified}/"
-    environment=$("${cli_path}" environments -p "${project}" --pipe | \
-      xargs -I + sh -c "printf '%s ' '+'; "${cli_path}" url -p "${project}" -e + --pipe;" | \
-      grep "${simplified_url}" | \
-      awk '{print $1}')
+    project=$(echo "${tab_url}" | perl -pe "s/.*-//;s/\..*//;")
+    environments=$("${cli_path}" environments -I -p "${project}" --pipe)
+    environment=""
+    modified_env_pattern=$(echo "${tab_url_simplified}" | perl -pe 's!https://(.*?)-[^-]+-[^-]+$!\1!')
+    for e in ${environments}; do
+      if [[ "${e}" = "${modified_env_pattern}" ]]; then
+        environment="${e}"
+        break
+      fi
+    done
+    # if we didn't find an env match based on just the url, do a more thorough but time consuming search via the cli
+    if [[ -z "${environment}" ]]; then
+      for e in ${environments}; do
+        if [[ $(get_cloud_base_url "${project}" "${e}") = "${tab_url_simplified}/" ]]; then
+          environment="${e}"
+          break
+        fi
+      done
+    fi
   fi
 
   if [[ -z "${project}" ]]; then

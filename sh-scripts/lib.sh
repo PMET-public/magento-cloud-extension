@@ -11,7 +11,7 @@ yellow='\033[1;33m'
 no_color='\033[0m'
 
 error() {
-  printf "\n${red}${@}${no_color}\n\n" && exit
+  printf "\n${red}${@}${no_color}\n\n" && exit 1
 }
 
 warning() {

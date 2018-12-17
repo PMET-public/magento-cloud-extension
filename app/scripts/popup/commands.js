@@ -121,11 +121,12 @@ $(function () {
     setFormButtonState()
   })
   
+  const curManifestVersion = chrome.runtime.getManifest().version
   $('.cli-cmd').each(function () {
     const jCmdInput = $(this)
     // if url is part of magento.cloud (not magentosite.cloud or VM), use full url else just base url
     const url = /magento\.cloud/.test(tabBaseUrl) ? tabUrl : tabBaseUrl
-    jCmdInput.val(jCmdInput.val().replace('{{tab_url}}', url))
+    jCmdInput.val(jCmdInput.val().replace(/{{tab_url}}/g, url).replace(/{{version}}/g, curManifestVersion))
       .next('.simple-copy')
       .click(function (ev) {
         copyToClipboard(jCmdInput)

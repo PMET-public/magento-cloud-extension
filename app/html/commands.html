@@ -7,12 +7,12 @@
       <p>You should only need to run these commands on your computer once.</p>
       <div class="cli-cmd-container">
         <b>1) Install the Cloud CLI</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/install-cli-and-login.sh | bash" readonly> 
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/install-cli-and-login.sh | bash" readonly> 
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>2) Setup local ssh keys</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/setup-ssh-key.sh | bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/setup-ssh-key.sh | bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
     </div>
@@ -23,8 +23,8 @@
       <h3>Cloud or VM cmds</h3>
       <div class="cli-cmd-container">
         <b>Create/reset admin users</b><br>
-        <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reset-admin.sh | env tab_url={{tab_url}} email={{email}} user={{user}} password={{password}} bash" readonly>
+        <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/reset-admin.sh | env tab_url={{tab_url}} email={{email}} user={{user}} password={{password}} bash" readonly>
           <span id="password-prompt" class="mdi mdi-pencil-lock"></span>
         <div id="password-dialog" title="Create/reset admin info for this store">
           Admin email: <input id="email-dialog-input" type="text" class="has-error" placeholder="Enter email ..." size="20"><br>
@@ -42,79 +42,79 @@
       <div class="cli-cmd-container">
         <b>SSH into env</b><br>
         <!-- this cmd needs to be structured differently b/c ssh will need to read from stdin so it can't be piped to bash -->
-        <input class="cli-cmd" type="text" value="sh -c '$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/ssh.sh | env tab_url={{tab_url}} bash)'" readonly>
+        <input class="cli-cmd" type="text" value="sh -c '$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/ssh.sh | env tab_url={{tab_url}} bash)'" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Backup env</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/backup-env.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/backup-env.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Reindex</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reindex.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/reindex.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Cron every min (up to 60m)</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/run-cron.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/run-cron.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Warm cache</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/cache-warm.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/cache-warm.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Flush; then warm cache</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/cache-flush.sh 
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/cache-warm.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/cache-flush.sh 
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/cache-warm.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Reindex; flush; warm</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reindex.sh 
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/cache-flush.sh 
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/cache-warm.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/reindex.sh 
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/cache-flush.sh 
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/cache-warm.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Check current load</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-load.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/check-load.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Check services</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/check-services.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/check-services.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Send imgs to env</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/copy-imgs-to-env.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/copy-imgs-to-env.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Watch logs</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/watch-logs.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/watch-logs.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
     </div>
     <div class="cmds-cloud-only"><h3>Cloud specific cmds</h3>
       <div class="cli-cmd-container">
         <b>Delete env immediately</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/delete-env.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/delete-env.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
@@ -123,17 +123,17 @@
           <span class="mdi mdi-help"></span>
         </b>
         <br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/create-new-cloud-env-from-backup.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/reindex.sh 
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/cache-flush.sh 
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/cache-warm.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/create-new-cloud-env-from-backup.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/reindex.sh 
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/cache-flush.sh 
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/cache-warm.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Create env from backup</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/create-new-cloud-env-from-backup.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/create-new-cloud-env-from-backup.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
@@ -142,22 +142,22 @@
           <span  class="mdi mdi-help"></span>
         </b>
         <br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/rebuild-cloud-env.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/rebuild-cloud-env.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
     </div>
     <div class="cmds-vm-only"><h3>VM specific cmds</h3>
       <div class="cli-cmd-container">
         <b>Switch to dev mode</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/mode-dev.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/mode-dev.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
         <b>Switch to prod mode</b><br>
-        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/mode-prod.sh | env tab_url={{tab_url}} bash" readonly>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/mode-prod.sh | env tab_url={{tab_url}} bash" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
     </div>

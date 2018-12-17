@@ -91,6 +91,9 @@ get_interactive_ssh_cmd() {
   echo "ssh -i ${identity_file} $(get_ssh_url $*)"
 }
 
+ssh_cmd="$(get_ssh_cmd)"
+scp_cmd="scp -i ${identity_file}"
+
 choose_backup() {
   tar_file_pattern="${1}"
   local_tar_files=($(find "${backups_dir}" -name "*${tar_file_pattern}*.tar" 2>/dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))
@@ -120,12 +123,19 @@ reset_env() {
   "
 }
 
+transfer_local_tar_to_remote() {
+  local local_tar_file="${1}"
+  local project="${2}"
+  local environment="${3}"
+  $("${scp_cmd}" "${backups_dir}/${local_tar_file}" $(get_ssh_url "${project}" "${environment}"):/tmp)
+}
+
 restore_files_from_tar() {
   local local_tar_file="${1}"
   local project="${2}"
   local environment="${3}"
   local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
-  cat "${backups_dir}/${local_tar_file}" | ${ssh_cmd} "tar -xf - -C / ${app_dir#'/'}/pub/media tmp"
+  ${ssh_cmd} "tar -xf /tmp/${local_tar_file} -C / ${app_dir#'/'}"
 }
 
 restore_db_from_tar() {
@@ -134,7 +144,8 @@ restore_db_from_tar() {
   local environment="${3}"
   local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
   ${ssh_cmd} "
-    rm ${sql_file} 2> /dev/null # if an old file exists from a previous
+    rm ${sql_file} 2> /dev/null # if an old file exists from previous attempt
+    tar -xf /tmp/${local_tar_file} -C / tmp
     gunzip ${sql_file}.gz
     perl -i -pe \"\\\$c+=s!REPLACEMENT_BASE_URL!$(get_cloud_base_url ${project} ${environment})!g;
       END{ if (\\\$c == 0) {exit 1;} print \\\"\n\\\$c base url replacements\n\\\"}\" ${sql_file}
@@ -205,6 +216,3 @@ else
   fi
 
 fi
-
-ssh_cmd="$(get_ssh_cmd)"
-scp_cmd="scp -i ${identity_file}"

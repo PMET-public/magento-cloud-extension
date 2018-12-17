@@ -30,6 +30,7 @@ fi
 # clone new environment from master (~5-10 min)
 "${cli_path}" environment:branch -p "${project}" "${environment}"  master --force
 
+transfer_local_tar_to_remote "${local_tar_file}" "${project}" "${environment}"
 restore_db_from_tar "${local_tar_file}" "${project}" "${environment}"
 restore_files_from_tar "${local_tar_file}" "${project}" "${environment}"
 
@@ -45,6 +46,3 @@ git add .
 git add -f auth.json
 git commit -m "Creating from backup: ${local_tar_file}"
 git push -f -u cloud "${environment}"
-#"${cli_path}" environment:activate -p "${project}" -e "${environment}"
-
-

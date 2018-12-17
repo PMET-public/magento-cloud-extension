@@ -9,7 +9,9 @@ cli_required_version="1.23.0"
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("${cli_path}" --version | perl -pe 's/.*?([\d\.]+)/\1/')
 if [[ "${cli_actual_version}" != "${cli_required_version}" ]]; then
+  cli_path="${cli_path}-${cli_required_version}"
   curl -o "${cli_path}" "https://accounts.magento.cloud/sites/default/files/magento-cloud-v${cli_required_version}.phar" || (echo Could not retrieve required cli version && exit 1)
+  chmod +x "${cli_path}"
 fi
 
 red='\033[0;31m'

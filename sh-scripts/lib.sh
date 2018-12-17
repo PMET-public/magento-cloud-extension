@@ -48,22 +48,19 @@ is_cloud() {
 
 set_db_vars() {
   if is_cloud; then
-    additional_files=".magento.app.yaml"
-    tar_file="/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar"
     db_host=database.internal
     db_port=3306
     db_user=user
     db_name=main
     db_pass=""
   else
-    additional_files=""
-    tar_file="/tmp/$(date "+%Y-%m-%d-%H-%M")-${domain}.tar"
     db_host=127.0.0.1
     db_port=3306
     db_user=user
     db_name=main
     db_pass=""
   fi
+  db_opts="-h \"${db_host}\" -P \"${db_port}\" -u \"${db_user}\" --password=\"${db_pass}\" \"${db_name}\""
 }
 
 get_cloud_base_url() {
@@ -77,7 +74,7 @@ get_cloud_ssh_url() {
 get_ssh_url() {
   # if parameters are passed, used those
   # otherwise determine from env vars
-  if [[ $# -eq 2 ]]; then 
+  if [[ $# -eq 2 ]]; then
     get_cloud_ssh_url $*
   elif is_cloud; then  
     get_cloud_ssh_url $project $environment
@@ -94,22 +91,61 @@ get_interactive_ssh_cmd() {
   echo "ssh -i ${identity_file} $(get_ssh_url $*)"
 }
 
-restore_from_tar() {
-  local tar_file=$1
-  local project=$2
-  local environment=$3
-  # send media and sql back file
-  cat "${backups_dir}/${tar_file}" | $(get_interactive_ssh_cmd $project $environment) "tar -xf - -C / app/pub/media tmp"
+choose_backup() {
+  tar_file_pattern="${1}"
+  local_tar_files=($(find "${backups_dir}" -name "*${tar_file_pattern}*.tar" 2>/dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))
+  if [[ ${#local_tar_files[@]} -lt 1 ]]; then
+    error No files matching "*-${tar_file_pattern}" found in "${backups_dir}"
+  fi
 
-  # get sql_file name
-  sql_file=$(tar -tf "${backups_dir}/${tar_file}" | grep "var/backups/.*.sql" | sed "s/.*\///")
+  selection=$(dialog --clear \
+    --backtitle "Restoring env from backup ..." \
+    --title "Your Backup(s)" \
+    --menu "Choose a backup file to deploy to ${pattern}:" \
+    $menu_height $menu_width $num_visible_choices "${local_tar_files[@]}" \
+    2>&1 >/dev/tty)
+  clear > /dev/null
+  echo "${local_tar_files[$(( (${selection} - 1) * 2 + 1))]}" # account for menu numbering vs array with labels numbering
+}
 
-  # replace hostname and rollback db
-  $(get_ssh_cmd $project $environment) "
-    new_base_url=\$(curl -sI localhost | sed -n \"s/location: //i;s/\.cloud\/.*/.cloud/p\")
+reset_env() {
+  local project="${1}"
+  local environment="${2}"
+  local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
+  ${ssh_cmd} "
+    mysql -h ${db_host} -e 'drop database if exists ${db_name}; 
+    create database if not exists ${db_name} default character set utf8;'; 
+    # can not remove var/export so or noop cmd (|| :) in case it exists
+    rm -rf ~/var/* ~/pub/media/* ~/app/etc/env.php ~/app/etc/config.php || :
+  "
+}
+
+restore_files_from_tar() {
+  local local_tar_file="${1}"
+  local project="${2}"
+  local environment="${3}"
+  local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
+  cat "${backups_dir}/${local_tar_file}" | ${ssh_cmd} "tar -xf - -C / ${app_dir#'/'}/pub/media tmp"
+}
+
+restore_db_from_tar() {
+  local local_tar_file="${1}"
+  local project="${2}"
+  local environment="${3}"
+  local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
+  ${ssh_cmd} "
+    rm ${sql_file} 2> /dev/null # if an old file exists from a previous
     gunzip ${sql_file}.gz
-    perl -i -pe \"s!REPLACEMENT_BASE_URL!\${new_base_url}!g\" ${sql_file}
-
+    perl -i -pe \"\\\$c+=s!REPLACEMENT_BASE_URL!$(get_cloud_base_url ${project} ${environment})!g;
+      END{ if (\\\$c == 0) {exit 1;} print \\\"\n\\\$c base url replacements\n\\\"}\" ${sql_file}
+    if [[ $? -ne 0 ]]; then
+      echo No replacements made in sql. Not restoring. && exit 1
+    fi
+    php bin/magento maintenance:enable
+    mysql ${db_opts} -e 'drop database if exists ${db_name}; 
+    create database if not exists ${db_name} default character set utf8;'
+    mysql ${db_opts} < ${sql_file}
+    php bin/magento maintenance:disable
   "
 }
 

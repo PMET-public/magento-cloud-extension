@@ -116,7 +116,10 @@ for (let mode of ['dev', 'dist']) {
   })
 
   gulp.task(mode + '-styles', () =>
-    gulp.src('app/styles.scss/main.scss')
+    gulp.src([
+        'app/styles.scss/main.scss',
+        'app/styles.scss/content.scss',
+      ])
       .pipe($.plumber())
       .pipe($.if(mode === 'dev', $.sourcemaps.init()))
       .pipe($.sass.sync({

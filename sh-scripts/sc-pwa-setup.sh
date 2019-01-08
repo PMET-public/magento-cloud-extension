@@ -1,13 +1,16 @@
 #!/bin/bash
-LOCAL=$(git rev-parse @)
-REMOTE=$(git rev-parse @{u})
-BASE=$(git merge-base @ @{u})
+
+# 1st install & run
+# possibly update & run
 
 if which node > /dev/null; then
   echo "[*] node is installed, continuing..."
   if [ -d "$HOME/pwa-studio/node_modules" ]; then
     echo "[*] pwa-studio previously setup, continuing..."
     cd $HOME/pwa-studio/
+    LOCAL=$(git rev-parse @)
+    REMOTE=$(git rev-parse @{u})
+    BASE=$(git merge-base @ @{u})
     if [ $LOCAL = $REMOTE ]; then
       echo "[*] pwa-studio up-to-date, starting..."
       npm run watch:venia
@@ -22,7 +25,7 @@ if which node > /dev/null; then
       echo "[*] starting..."
       npm run watch:venia
     else
-      echo "[*] Diverged"
+      echo "[*] Diverged, ¯\_(ツ)_/¯"
       exit 1
     fi
   else

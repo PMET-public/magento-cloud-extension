@@ -91,9 +91,6 @@ get_interactive_ssh_cmd() {
   echo "ssh -i ${identity_file} $(get_ssh_url $*)"
 }
 
-ssh_cmd="$(get_ssh_cmd)"
-scp_cmd="scp -i ${identity_file}"
-
 choose_backup() {
   tar_file_pattern="${1}"
   local_tar_files=($(find "${backups_dir}" -name "*${tar_file_pattern}*.tar" 2>/dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))
@@ -216,3 +213,6 @@ else
   fi
 
 fi
+
+ssh_cmd="$(get_ssh_cmd)"
+scp_cmd="scp -i ${identity_file}"

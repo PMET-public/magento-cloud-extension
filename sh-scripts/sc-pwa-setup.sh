@@ -1,4 +1,8 @@
 #!/bin/bash
+
+# 1st install & run
+# possibly update & run
+
 LOCAL=$(git rev-parse @)
 REMOTE=$(git rev-parse @{u})
 BASE=$(git merge-base @ @{u})

@@ -8,8 +8,8 @@ if ! which node > /dev/null; then
   curl -o "/tmp/${NODE_VERSION}.tar.gz" "https://nodejs.org/dist/${NODE_VERSION}/node-${NODE_VERSION}-darwin-x64.tar.gz"
   mkdir -p "${HOME}/${NODE_VERSION}"
   tar -zxf "/tmp/${NODE_VERSION}.tar.gz" -C "${HOME}/${NODE_VERSION}" --strip 1
-  ln -sf "${HOME}/${NODE_VERSION}/bin/node" /usr/local/bin/node
-  ln -sf "${HOME}/${NODE_VERSION}/bin/npm" /usr/local/bin/npm
+  sudo ln -sf "${HOME}/${NODE_VERSION}/bin/node" /usr/local/bin/node
+  sudo ln -sf "${HOME}/${NODE_VERSION}/bin/npm" /usr/local/bin/npm
   rm "/tmp/${NODE_VERSION}.tar.gz"
 fi
 
@@ -24,7 +24,7 @@ fi
 
 cd "${HOME}/pwa-studio/"
 
-if [ "$(git rev-parse @)" -ne $(git rev-parse @{u}) ]; then
+if [ "$(git rev-parse @)" != $(git rev-parse @{u}) ]; then
   read -p "There is an update to PWA. It may contain breaking changes. Upgrade? (y/n)" -n 1 -r
   echo # new line
   if [[ "${REPLY}" =~ ^[Yy]$ ]]

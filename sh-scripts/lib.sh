@@ -157,6 +157,14 @@ restore_db_from_tar() {
   "
 }
 
+install_local_dev_tools_if_needed() {
+  if ! which git; then
+    warning Local developer tools are not installed. You will need to accept the agreement from Apple. Initiating ...
+    sudo xcode-select --install
+  fi
+}
+install_local_dev_tools_if_needed
+
 if is_cloud; then
 
   # determine relevant project and environment

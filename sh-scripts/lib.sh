@@ -161,6 +161,13 @@ install_local_dev_tools_if_needed() {
   if ! git --version; then
     warning Local developer tools are not installed. You will need to accept the agreement from Apple. Initiating ...
     sudo xcode-select --install
+    read -p "Continue when the installer has finished. Continue? (y/n)" -n 1 -r
+    echo # new line
+    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
+      install_local_dev_tools_if_needed # check again
+    else
+      exit
+    fi
   fi
 }
 install_local_dev_tools_if_needed

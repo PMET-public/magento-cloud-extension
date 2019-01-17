@@ -158,7 +158,7 @@ restore_db_from_tar() {
 }
 
 install_local_dev_tools_if_needed() {
-  if ! git --version; then
+  if ! git --version > /dev/null 2>&1; then
     warning Local developer tools are not installed. You will need to accept the agreement from Apple. Initiating install ...
     sudo xcode-select --install || :
     read -p "Continue when the installer has finished. Continue? (y/n): " -n 1 -r < /dev/tty

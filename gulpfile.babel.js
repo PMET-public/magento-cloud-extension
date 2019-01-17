@@ -25,7 +25,7 @@ const mcmExt = [
   'app/scripts/lib/lib.js',
   'app/scripts/popup/css-injector/*.js',
   'app/scripts/popup/commands.js',
-  'app/scripts/popup/popup.js'
+  'app/scripts/popup/mce-popup.js'
 ]
 
 const contentScripts = [

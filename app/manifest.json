@@ -11,7 +11,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
-      "scripts/background/main.processed.js"
+      "scripts/background.processed.js"
     ]
   },
   "permissions": [
@@ -37,7 +37,7 @@
         "<all_urls>"
       ],
       "js": [
-        "scripts/content/main.processed.js"
+        "scripts/content.processed.js"
       ],
       "css": [
         "styles/content.css"

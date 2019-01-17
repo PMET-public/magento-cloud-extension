@@ -100,17 +100,17 @@ for (let mode of ['dev', 'dist']) {
   gulp.task(mode + '-js', () => {
     processJS({
       srcs: mode === 'dev' ? devBackgroundScripts : distBackgroundScripts,
-      file: 'background/main.processed.js',
+      file: 'background.processed.js',
       ...(mode === 'dev' ? devOpts : distOpts)
     })
     processJS({
       srcs: contentScripts,
-      file: 'content/main.processed.js',
+      file: 'content.processed.js',
       ...(mode === 'dev' ? devOpts : distOpts)
     })
     processJS({
       srcs: [...jqueryDeps, ...imageDownloader, ...mcmExt],
-      file: 'popup/main.processed.js',
+      file: 'popup.processed.js',
       ...(mode === 'dev' ? devOpts : distOpts)
     })
   })

@@ -48,5 +48,32 @@ var MCExt = {
   },
   getOrigin: function (url) {
     return url.substring(0,url.indexOf('/', 8))
+  },
+  isCurrentTabCloudProjects: function () {
+    return /\.magento\.cloud$/.test(MCExt.getOrigin(location.href))
+  },
+  isCurrentTabCloudEnv: function () {
+    return /\.magentosite\.cloud$/.test(MCExt.getOrigin(location.href))
   }
+  // ,
+  // async parseCloudEnvVersions () {
+  //   const cloudEnvVersionsUrl = 'https://gist.githubusercontent.com/keithbentrup/521a61053281ceb65b38d7feae9ee82a/raw/a1c1fd598a8aa3cd6b3f3743bef49730ba6b8acb/env-versions'
+  //   const projects = {}
+  //   await fetch(cloudEnvVersionsUrl).then(r => {
+  //     r.text().then(t => {
+  //       t.split('\n').forEach(line => {
+  //         if (line) {
+  //           let [pid, env, eeVer, composerLockChecksum, appYamlChecksum] = line.split('|')
+  //           projects[pid] = {
+  //             env: env,
+  //             eeVer: eeVer,
+  //             composerLockChecksum: composerLockChecksum,
+  //             appYamlChecksum: appYamlChecksum
+  //           }
+  //         }
+  //       })
+  //     })
+  //   })
+  //   return projects
+  // }
 }

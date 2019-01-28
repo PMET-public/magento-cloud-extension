@@ -3,7 +3,7 @@ printf "\nSetting up PWA Studio ...\n"
 NODE_VERSION="v10.15.0"
 
 declare -a "pwa_backend_urls=(
-  '1. Cloud Backend ' 'https://pwa-n3sumvi-xy4itwbmg2khk.demo.magentosite.cloud/'
+  '1. Cloud Backend ' 'https://pwa-sc-s6uhy2i-u3uh6xofiwzu2.demo.magentosite.cloud/'
   '2. VM Backend ' 'http://luma.com/'
 )"
 

@@ -214,6 +214,9 @@ if is_cloud; then
   identity_file="${HOME}/.ssh/id_rsa.magento"
   app_dir="/app"
 
+  # export to env for child git processes only
+  export GIT_SSH_COMMAND="ssh -i ${HOME}/.ssh/id_rsa.magento"
+
 else
   
   # if not magento cloud, assume local vm

@@ -225,7 +225,7 @@ else
 
   # verify local vm key exists
   if [[ ! -f "${identity_file}" ]]; then
-    curl -o "${identity_file}" https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/demo-vm-insecure-private-key
+    curl -o "${identity_file}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
     chmod 600 "${identity_file}"
   fi
 

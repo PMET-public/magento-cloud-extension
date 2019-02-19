@@ -42,8 +42,8 @@
       <div class="cli-cmd-container">
         <b>SSH into env</b><br>
         <!-- this cmd needs to be structured differently b/c ssh will need to read from stdin so it can't be piped to bash -->
-        <input class="cli-cmd" type="text" value="bash -c '$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/ssh.sh | env ext_ver={{version}} tab_url={{tab_url}} bash)'" readonly>
+        <input class="cli-cmd" type="text" value="bash -c &quot;$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/ssh.sh | env ext_ver={{version}} tab_url={{tab_url}} bash)&quot;" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
       <div class="cli-cmd-container">
@@ -117,8 +117,8 @@
       </div>
       <div class="cli-cmd-container">
         <b>Access private repos</b><br>
-        <input class="cli-cmd" type="text" value="bash -c '$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/configure-proxies.sh | env ext_ver={{version}} tab_url={{tab_url}} bash)'" readonly>
+        <input class="cli-cmd" type="text" value="bash -c &quot;$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/configure-proxies.sh | env ext_ver={{version}} tab_url={{tab_url}} bash)&quot;" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
     </div>

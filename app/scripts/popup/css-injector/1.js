@@ -41,7 +41,7 @@ function handleCssInjector(ev, ui) {
 
   // always remove but possibly load changed css
   chrome.storage.local.get(['isCssInjectorOn', 'curCssUrl'], function (result) {
-    chrome.tabs.executeScript({file: 'scripts/content/main.processed.js'}, function () {
+    chrome.tabs.executeScript({file: 'scripts/content.processed.js'}, function () {
       chrome.tabs.executeScript({code: 'MCExt.removeCSS()'})
       if (result['isCssInjectorOn']) {
         if (result['curCssUrl']) {

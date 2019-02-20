@@ -2,7 +2,7 @@ Open the Network preferences pane from your system preferences
 
 ![Network1](network1.png)
 
-Highlight the top `Connected` service on the left. Then click "Advanced" in the bottom right.
+Highlight the top `Connected` service on the left. Then click `Advanced...` in the bottom right.
 
 Next click `Proxies` in the menu bar.
 

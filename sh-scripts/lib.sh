@@ -10,8 +10,10 @@ cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("${cli_path}" --version | perl -pe 's/.*?([\d\.]+)/\1/')
 if [[ "${cli_actual_version}" != "${cli_required_version}" ]]; then
   cli_path="${cli_path}-${cli_required_version}"
-  curl -o "${cli_path}" "https://accounts.magento.cloud/sites/default/files/magento-cloud-v${cli_required_version}.phar" || (echo Could not retrieve required cli version && exit 1)
-  chmod +x "${cli_path}"
+  if [[ ! -f "${cli_path}" ]]; then
+    curl -s -o "${cli_path}" "https://accounts.magento.cloud/sites/default/files/magento-cloud-v${cli_required_version}.phar" || (echo Could not retrieve required cli version && exit 1)
+    chmod +x "${cli_path}"
+  fi
 fi
 
 red='\033[0;31m'
@@ -214,6 +216,9 @@ if is_cloud; then
   identity_file="${HOME}/.ssh/id_rsa.magento"
   app_dir="/app"
 
+  # export to env for child git processes only
+  export GIT_SSH_COMMAND="ssh -i ${HOME}/.ssh/id_rsa.magento"
+
 else
   
   # if not magento cloud, assume local vm
@@ -222,7 +227,7 @@ else
 
   # verify local vm key exists
   if [[ ! -f "${identity_file}" ]]; then
-    curl -o "${identity_file}" https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/demo-vm-insecure-private-key
+    curl -o "${identity_file}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
     chmod 600 "${identity_file}"
   fi
 

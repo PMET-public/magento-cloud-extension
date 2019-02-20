@@ -5,7 +5,7 @@ curl -s -o - "https://raw.githubusercontent.com/PMET-public/magento-cloud-extens
 
 # start SOCKS proxy for git access over ssh via netcat (nc) var below
 # also start HTTP proxy (tinyproxy) with auto kill
-$ssh_cmd -f -D 8889 -L 8888:localhost:8888 "nohup sh -c 'sleep 7200; pkill tinyproxy' > /dev/null 2>&1 &; /tmp/tinyproxy/tinyproxy -c /tmp/tinyproxy/tinyproxy.conf"
+$ssh_cmd -f -D 8889 -L 8888:localhost:8888 "nohup sh -c '/tmp/tinyproxy/tinyproxy -c /tmp/tinyproxy/tinyproxy.conf; sleep 7200; pkill tinyproxy' > /dev/null 2>&1" &
 
 echo "printf '${red}\nNotes:\n\n1. Proxy will be open for 2 hrs.\n'"
 echo "printf '2. Composer and ssh only configured for this terminal.\n'"

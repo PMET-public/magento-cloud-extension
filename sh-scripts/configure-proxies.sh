@@ -13,5 +13,6 @@ printf "${red}\nNotes:\n\n1. Access granted for 4 hrs or until local/remote proc
 printf "2. Composer and git cmds are only configured for this terminal.\n" >&2
 printf "3. For gitlab web access (only if you need it), instructions to configure your browser can be found here:\n" >&2
 printf "\thttps://github.com/PMET-public/magento-cloud-extension/tree/${ext_ver}/tinyproxy\n\n${no_color}" >&2
-echo GIT_SSH_COMMAND='ssh -o ProxyCommand="nc -x 127.0.0.1:8889 %h %p"'
-echo HTTP_PROXY=http://127.0.0.1:8888
+
+echo export GIT_SSH_COMMAND=\'ssh -o ProxyCommand=\"nc -x 127.0.0.1:8889 %h %p\"\' HTTP_PROXY=http://127.0.0.1:8888
+echo exec bash

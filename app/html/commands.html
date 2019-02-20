@@ -117,7 +117,7 @@
       </div>
       <div class="cli-cmd-container">
         <b>Access private repos</b><br>
-        <input class="cli-cmd" type="text" value="export &quot;$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+        <input class="cli-cmd" type="text" value="bash -c &quot;$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/configure-proxies.sh | env ext_ver={{version}} tab_url={{tab_url}} bash)&quot;" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>

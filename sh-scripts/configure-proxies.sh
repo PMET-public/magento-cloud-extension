@@ -2,7 +2,7 @@
 # since this feature only applies to setting up connections via cloud
 # directly set applicable variables
 
-project=$(${cli_path} projects --pipe | head -1)
+project=$(${cli_path} projects --pipe --my | head -1)
 environment=master
 identity_file="${HOME}/.ssh/id_rsa.magento"
 

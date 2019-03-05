@@ -126,22 +126,22 @@ transfer_local_tar_to_remote() {
   local local_tar_file="${1}"
   local project="${2}"
   local environment="${3}"
-  $("${scp_cmd}" "${backups_dir}/${local_tar_file}" $(get_ssh_url "${project}" "${environment}"):/tmp)
+  $(${scp_cmd} "${backups_dir}/${local_tar_file}" $(get_ssh_url "${project}" "${environment}"):/tmp)
 }
 
 restore_files_from_tar() {
   local local_tar_file="${1}"
   local project="${2}"
   local environment="${3}"
-  local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
-  ${ssh_cmd} "tar -xf /tmp/${local_tar_file} -C / ${app_dir#'/'}"
+  local ssh_cmd=$(get_ssh_cmd ${project} ${environment})
+  ${ssh_cmd} "tar -xf /tmp/${local_tar_file} -C / --skip-old-files --exclude=.magento --anchored ${app_dir#'/'}"
 }
 
 restore_db_from_tar() {
   local local_tar_file="${1}"
   local project="${2}"
   local environment="${3}"
-  local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
+  local ssh_cmd=$(get_ssh_cmd ${project} ${environment})
   ${ssh_cmd} "
     rm ${sql_file} 2> /dev/null # if an old file exists from previous attempt
     tar -xf /tmp/${local_tar_file} -C / tmp

@@ -8,6 +8,7 @@ if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
 
   # in v1.23, --delete-branch appears to be incompatible with the --no-wait flag, so it must be run twice
   "${cli_path}" environment:delete -p "${project}" -e "${environment}" --delete-branch --no-wait --yes
+  sleep 30
   "${cli_path}" environment:delete -p "${project}" -e "${environment}" --delete-branch --no-wait --yes
 else
   exit

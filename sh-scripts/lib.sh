@@ -111,9 +111,9 @@ choose_backup() {
 }
 
 reset_env() {
-  local project="${1}"
-  local environment="${2}"
-  local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
+  local project="${1:-$project}"
+  local environment="${2:-$environment}"
+  local ssh_cmd=$(get_ssh_cmd ${project} ${environment})
   ${ssh_cmd} "
     mysql -h ${db_host} -e 'drop database if exists ${db_name}; 
     create database if not exists ${db_name} default character set utf8;'; 
@@ -122,25 +122,55 @@ reset_env() {
   "
 }
 
+reindex_env() {
+  local project="${1:-$project}"
+  local environment="${2:-$environment}"
+  local ssh_cmd=$(get_ssh_cmd ${project} ${environment})
+  ${ssh_cmd} "
+    php ${app_dir}/bin/magento indexer:reset; php ${app_dir}/bin/magento indexer:reindex
+  "
+}
+
+enable_cron() {
+  local project="${1:-$project}"
+  local environment="${2:-$environment}"
+  local ssh_cmd=$(get_ssh_cmd ${project} ${environment})
+  ${ssh_cmd} "
+    sed -i.bak '/cron.*enabled/d' /app/app/etc/env.php
+  "
+}
+
+disable_cron() {
+  local project="${1:-$project}"
+  local environment="${2:-$environment}"
+  local ssh_cmd=$(get_ssh_cmd ${project} ${environment})
+  ${ssh_cmd} "
+    # prevent duplicate lines
+    sed -i.bak '/cron.*enabled/d' /app/app/etc/env.php
+    # insert disable line
+    sed -i.bak '\$i\\\x27cron\x27 => array ( \x27enabled\x27 => 0, ),' /app/app/etc/env.php
+  "
+}
+
 transfer_local_tar_to_remote() {
   local local_tar_file="${1}"
-  local project="${2}"
-  local environment="${3}"
+  local project="${2:-$project}"
+  local environment="${3:-$environment}"
   $(${scp_cmd} "${backups_dir}/${local_tar_file}" $(get_ssh_url "${project}" "${environment}"):/tmp)
 }
 
 restore_files_from_tar() {
   local local_tar_file="${1}"
-  local project="${2}"
-  local environment="${3}"
+  local project="${2:-$project}"
+  local environment="${3:-$environment}"
   local ssh_cmd=$(get_ssh_cmd ${project} ${environment})
-  ${ssh_cmd} "tar -xf /tmp/${local_tar_file} -C / --skip-old-files --exclude=.magento --anchored ${app_dir#'/'}"
+  ${ssh_cmd} "tar -xf /tmp/${local_tar_file} -C / --anchored ${app_dir#'/'} || :"
 }
 
 restore_db_from_tar() {
   local local_tar_file="${1}"
-  local project="${2}"
-  local environment="${3}"
+  local project="${2:-$project}"
+  local environment="${3:-$environment}"
   local ssh_cmd=$(get_ssh_cmd ${project} ${environment})
   ${ssh_cmd} "
     rm ${sql_file} 2> /dev/null # if an old file exists from previous attempt

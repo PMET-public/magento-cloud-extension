@@ -8,7 +8,7 @@ identity_file="${HOME}/.ssh/id_rsa.magento"
 
 # transfer tinyproxy to the env
 ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
-curl -s -o - "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/tinyproxy/tinyproxy.tar.gz" | $ssh_cmd "tar -C /tmp -xzf -"
+curl -s -o - "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/tinyproxy/tinyproxy.tar.gz" | ${ssh_cmd} "tar -C /tmp -xzf -"
 
 # start SOCKS proxy for git access over ssh via netcat (nc) var below
 # also start HTTP proxy (tinyproxy) with auto kill

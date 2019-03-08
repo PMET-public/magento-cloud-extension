@@ -30,13 +30,17 @@ fi
 # clone new environment from master (~5-10 min)
 "${cli_path}" environment:branch -p "${project}" "${environment}"  master --force
 
+msg Disabling cron ...
+disable_cron "${project}" "${environment}"
+
+msg Sending tar file ...
 transfer_local_tar_to_remote "${local_tar_file}" "${project}" "${environment}"
 
-msg Restoring DB from tar
-restore_db_from_tar "${local_tar_file}" "${project}" "${environment}"
-
-msg Restoring files from tar
+msg Restoring files from tar ...
 restore_files_from_tar "${local_tar_file}" "${project}" "${environment}"
+
+msg Restoring DB from tar ...
+restore_db_from_tar "${local_tar_file}" "${project}" "${environment}"
 
 # extract tar file to tmp dir and make git repo to push to cloud
 msg Extract tar locally and create git repo to forcefully push containing updated composer.* files

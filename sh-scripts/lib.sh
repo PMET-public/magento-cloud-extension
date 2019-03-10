@@ -164,7 +164,10 @@ restore_files_from_tar() {
   local project="${2:-$project}"
   local environment="${3:-$environment}"
   local ssh_cmd=$(get_ssh_cmd ${project} ${environment})
-  ${ssh_cmd} "tar -xf /tmp/${local_tar_file} -C / --anchored ${app_dir#'/'} || :"
+  ${ssh_cmd} "
+    rm -rf \"${app_dir}/var/log/*\" \"${app_dir}/pub/media/catalog/*\"
+    tar -xf /tmp/${local_tar_file} -C / --exclude=\"${app_dir}/pub/media\" --anchored ${app_dir#'/'} || :
+  "
 }
 
 restore_db_from_tar() {

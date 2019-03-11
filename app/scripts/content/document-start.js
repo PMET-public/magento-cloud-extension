@@ -8,7 +8,7 @@ if (MCExt.isCurrentTabCloudProjects()) {
   })()
 } else if (MCExt.isCurrentTabCloudEnv()) {
   console.log('cloud env')
-  MCExt.parseCloudEnvVersions()
+  // MCExt.parseCloudEnvVersions()
 } else {
   console.log('not cloud')
 }

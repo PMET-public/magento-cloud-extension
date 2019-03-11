@@ -1,6 +1,10 @@
 msg Backing up env. Depending on the size, this may take a couple min ...
 
-
+backup_server="zajhc7u663lak-master-7rqtwti@ssh.demo.magento.cloud"
+already_backed_up_list="/tmp/media-files-on-backup-server"
+all_media_files_plus_md5_list="/tmp/media-files"
+potential_backup_list="/tmp/potential-media-files-to-send"
+differential_list="/tmp/media-files-to-send"
 tmp_git_dir="/tmp/delete-me-${project}-${environment}"
 
 set_db_vars
@@ -19,9 +23,31 @@ $ssh_cmd "mysqldump ${db_opts} --single-transaction --no-autocommit --quick > ${
     END{print \\\"\n\\\$c base_url replacements\n\\\"}\" ${sql_file}
   gzip ${sql_file}
 
-  # add sql file and other files needed to recreate project/environment
+  # catalog all local media files
+  find ${app_dir}/pub/media -type f -not -path '${app_dir}/pub/media/catalog/product/cache/*' \
+    -exec md5sum \{} \; > ${all_media_files_plus_md5_list}
+  
+  # remove duplicates by md5 and create potential list to send to backup server
+  sort | uniq -w 32 > ${potential_backup_list}
+  
+  # fetch list of media already on backup server
+  ssh ${backup_server} 'find ${app_dir}/pub/media -type f -exec basename \{} \;' 2>/dev/null > ${already_backed_up_list}
+  
+  # calculate differential backup
+  grep -vf ${already_backed_up_list} ${potential_backup_list} > ${differential_list}
+
+  # transfer differential backup
+  perl -pe 's!.*?/pub/media/!!' ${differential_list} | \
+    rsync --stats --files-from=- ${app_dir}/pub/media "${backup_server}:/app/pub/media/${pid}-${env}"
+
+  # rename files with md5 and cleanup dirs on backup server
+  perl -pe \"END { print 'find /app/pub/media -type d -empty -delete' } \
+    s%^(.*?) +.*?/pub/media/(.*)$%mv /app/pub/media/${pid}-${env}/\2 /app/pub/media/\1%\" /tmp/media-files-to-send | \
+    ssh ${backup_server} 'cat - | bash'
+
+  # add sql file, media files list, and other files needed to recreate project/environment
   tar --ignore-failed-read -C / -cf ${remote_tar_file} ${sql_file}.gz \
-    --exclude="${app_dir}/pub/media/catalog/product/cache" \
+    ${all_media_files_plus_md5_list} \
     ${app_dir}/auth.json \
     ${app_dir}/.gitignore \
     ${app_dir}/composer.json \
@@ -30,34 +56,8 @@ $ssh_cmd "mysqldump ${db_opts} --single-transaction --no-autocommit --quick > ${
     ${app_dir}/app/etc/config.php \
     ${app_dir}/m2-hotfixes \
     ${additional_files} \
-    ${app_dir}/pub/media/gene-cms \
-    ${app_dir}/pub/media/wysiwyg \
-    ${app_dir}/pub/media/ThemeCustomizer \
-    ${app_dir}/pub/media/catalog/product \
     2> /dev/null
   rm ${sql_file}.gz
-
-  # find full paths of imported images and create tar file
-  mysql -sN ${db_opts} -e '# all paths of products added after a certain date
-      select cpemg.value from 
-        catalog_product_entity cpe, 
-        catalog_product_entity_media_gallery cpemg, 
-        catalog_product_entity_media_gallery_value_to_entity cpemgvte
-      where 
-        cpemgvte.row_id = cpe.row_id AND
-        cpemgvte.value_id = cpemg.value_id AND
-        updated_at > 
-      # find date of first product plus 30 min
-      (select date_add(min(updated_at), interval 30 minute) from 
-        catalog_product_entity cpe, 
-        catalog_product_entity_media_gallery cpemg, 
-        catalog_product_entity_media_gallery_value_to_entity cpemgvte
-      where 
-        cpemgvte.row_id = cpe.row_id AND
-        cpemgvte.value_id = cpemg.value_id
-      order by updated_at asc)' 2> /dev/null | \
-    perl -pe 's!^!pub/media/catalog/product!' | \
-    tar -rf ${remote_tar_file} --files-from -
 "
 
 mkdir -p "${backups_dir}"

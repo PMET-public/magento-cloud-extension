@@ -86,11 +86,11 @@ get_ssh_url() {
 }
 
 get_ssh_cmd() {
-  echo "ssh -n -i -A $(get_ssh_url $*)"
+  echo "ssh -n -A $(get_ssh_url $*)"
 }
 
 get_interactive_ssh_cmd() {
-  echo "ssh -i -A $(get_ssh_url $*)"
+  echo "ssh -A $(get_ssh_url $*)"
 }
 
 choose_backup() {

@@ -43,7 +43,7 @@ $ssh_cmd "mysqldump ${db_opts} --single-transaction --no-autocommit --quick > ${
   # rename files with md5 and cleanup dirs on backup server
   perl -pe \"END { print 'find /app/pub/media -type d -empty -delete' } \
     s%^(.*?) +.*?/pub/media/(.*)$%mv /app/pub/media/${pid}-${env}/\2 /app/pub/media/\1%\" /tmp/media-files-to-send | \
-    ssh ${backup_server} 'cat - | bash'
+    ssh ${backup_server} 'cat - | bash' 2> /dev/null
 
   # add sql file, media files list, and other files needed to recreate project/environment
   tar --ignore-failed-read -C / -cf ${remote_tar_file} ${sql_file}.gz \

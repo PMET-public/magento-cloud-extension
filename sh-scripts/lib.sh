@@ -86,11 +86,11 @@ get_ssh_url() {
 }
 
 get_ssh_cmd() {
-  echo "ssh -n -i ${identity_file} $(get_ssh_url $*)"
+  echo "ssh -n -i -A $(get_ssh_url $*)"
 }
 
 get_interactive_ssh_cmd() {
-  echo "ssh -i ${identity_file} $(get_ssh_url $*)"
+  echo "ssh -i -A $(get_ssh_url $*)"
 }
 
 choose_backup() {
@@ -206,6 +206,24 @@ install_local_dev_tools_if_needed() {
 }
 install_local_dev_tools_if_needed
 
+start_ssh_agent_and_load_cloud_and_vm_key() {
+  if [[ -z "${SSH_AGENT_PID}" ]]; then
+    eval "$(ssh-agent-s)"
+  fi
+
+  cloud_key="${HOME}/.ssh/id_rsa.magento"
+  vm_key="${HOME}/.ssh/demo-vm-insecure-private-key"
+
+  # verify local vm key exists
+  if [[ ! -f "${vm_key}" ]]; then
+    curl -o "${vm_key}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
+    chmod 600 "${vm_key}"
+  fi
+
+  ssh-add "${cloud_key}" "${vm_key}"
+}
+start_ssh_agent_and_load_cloud_and_vm_key
+
 if is_cloud; then
 
   # determine relevant project and environment
@@ -246,25 +264,18 @@ if is_cloud; then
   if [[ -z $(get_ssh_url) ]]; then
     warning SSH URL could not be determined. Environment inactive?
   fi
-  identity_file="${HOME}/.ssh/id_rsa.magento"
+
   app_dir="/app"
 
   # export to env for child git processes only
   export GIT_SSH_COMMAND="ssh -i ${HOME}/.ssh/id_rsa.magento"
 
 else
-  
-  # if not magento cloud, assume local vm
-  identity_file="${HOME}/.ssh/demo-vm-insecure-private-key"
-  app_dir="/var/www/magento"
 
-  # verify local vm key exists
-  if [[ ! -f "${identity_file}" ]]; then
-    curl -o "${identity_file}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
-    chmod 600 "${identity_file}"
-  fi
+  # if not magento cloud, assume local vm
+  app_dir="/var/www/magento"
 
 fi
 
 ssh_cmd="$(get_ssh_cmd)"
-scp_cmd="scp -i ${identity_file}"
+scp_cmd="scp"

@@ -42,6 +42,12 @@ base_url="${tab_url_simplified}/"
 domain=$(echo "${tab_url_simplified}" | perl -pe "s!https?://!!")
 backups_dir="${HOME}/Downloads/m2-backups"
 sql_file="/tmp/db.sql"
+backup_server="zajhc7u663lak-master-7rqtwti@ssh.demo.magento.cloud"
+media_files_on_backup_server="/tmp/media-files-on-backup-server"
+all_media_files_plus_md5_list_in_orig_env="/tmp/all-media-files-plus-md5-list0-in-orig-env"
+transfer_list="/tmp/transfer_list"
+local_media_files_md5s="/tmp/existing-media-files-md5"
+differential_list_of_media_files="/tmp/differential-list-of-media-files"
 
 is_cloud() {
   [[ "${tab_url_simplified}" =~ .magento(site)?.cloud ]]

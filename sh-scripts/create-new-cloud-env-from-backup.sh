@@ -55,3 +55,34 @@ git add .
 git add -f auth.json
 git commit -m "Creating from backup: ${local_tar_file}"
 git push -f -u cloud "${environment}"
+
+msg Restoring media ...
+$ssh_cmd "
+  rm -rf /app/pub/media/catalog/product/cache/
+
+  # rename any files by md5 hash and cleanup dirs
+  find /app/pub/media -type f -regextype posix-extended -not -regex '^/app/pub/media/[a-f0-9]{32}$' -exec md5sum {} \; | \
+    perl -pe 's%^(.*?) +(.*)$%mv \2 /app/pub/media/\1%' | \
+    bash
+  find /app/pub/media -type d -empty -delete
+
+  # create list of existing media
+  find /app/pub/media -type f | perl -pe 's/.*\///' > ${local_media_files_md5s}
+
+  # remove files that we already have
+  grep -vf ${local_media_files_md5s} ${all_media_files_plus_md5_list_in_orig_env} > ${differential_list_of_media_files}
+
+  # transfer missing media files
+  perl -pe 's/ +.*//' ${differential_list_of_media_files} > ${transfer_list}
+  rsync --files-from=${transfer_list} ${backup_server}:/app/pub/media/ /app/pub/media/ 2>/dev/null
+
+  # sort & for each md5sum, cp each file then rm after last cp to prevent possible > 2x pub/media size
+  sort ${all_media_files_plus_md5_list_in_orig_env} | \
+    perl
+
+
+
+ "
+
+ msg Enabling cron ...
+ enable_cron "${project}" "${environment}"

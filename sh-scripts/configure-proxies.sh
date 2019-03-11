@@ -4,7 +4,6 @@
 
 project=$(${cli_path} projects --pipe | head -1)
 environment=master
-identity_file="${HOME}/.ssh/id_rsa.magento"
 
 # transfer tinyproxy to the env
 ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
@@ -13,8 +12,8 @@ curl -s -o - "https://raw.githubusercontent.com/PMET-public/magento-cloud-extens
 # start SOCKS proxy for git access over ssh via netcat (nc) var below
 # also start HTTP proxy (tinyproxy) with auto kill
 # proper backgrounding when invoked in subshell: https://stackoverflow.com/questions/50613945/bash-run-command-in-background-inside-subshell
-ssh -n -i ${identity_file} $(get_ssh_url ${project} ${environment}) "pkill tinyproxy || :"
-ssh -n -D 8889 -L 8888:localhost:8888 -i ${identity_file} $(get_ssh_url ${project} ${environment}) \
+ssh -n $(get_ssh_url ${project} ${environment}) "pkill tinyproxy || :"
+ssh -n -D 8889 -L 8888:localhost:8888 $(get_ssh_url ${project} ${environment}) \
   "nohup sh -c 'sleep 14400; pkill tinyproxy' > /dev/null 2>&1 & /tmp/tinyproxy/tinyproxy -d -c /tmp/tinyproxy/tinyproxy.conf" > /dev/null &
 
 printf "${red}\nNotes:\n\n1. Access granted for 4 hrs or until local/remote processes stopped.\n" >&2

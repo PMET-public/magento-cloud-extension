@@ -208,7 +208,7 @@ install_local_dev_tools_if_needed
 
 start_ssh_agent_and_load_cloud_and_vm_key() {
   if [[ -z "${SSH_AGENT_PID}" ]]; then
-    eval "$(ssh-agent-s)"
+    eval "$(ssh-agent -s)"
   fi
 
   cloud_key="${HOME}/.ssh/id_rsa.magento"

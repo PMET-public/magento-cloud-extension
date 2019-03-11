@@ -58,9 +58,9 @@ set_db_vars() {
   else
     db_host=127.0.0.1
     db_port=3306
-    db_user=user
-    db_name=main
-    db_pass=""
+    db_user=magento
+    db_name=magento
+    db_pass="password"
   fi
   db_opts="-h \"${db_host}\" -P \"${db_port}\" -u \"${db_user}\" --password=\"${db_pass}\" \"${db_name}\""
 }

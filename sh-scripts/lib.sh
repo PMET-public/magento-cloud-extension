@@ -38,10 +38,10 @@ menu_width=70
 num_visible_choices=10
 # tab_url_simplified has no trailing "/" but by Magento convention base_url does
 tab_url_simplified=$(echo "${tab_url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
-base_url=""
+base_url="${tab_url_simplified}/"
 domain=$(echo "${tab_url_simplified}" | perl -pe "s!https?://!!")
 backups_dir="${HOME}/Downloads/m2-backups"
-sql_file=/tmp/db.sql
+sql_file="/tmp/db.sql"
 
 is_cloud() {
   [[ "${tab_url_simplified}" =~ .magento(site)?.cloud ]]
@@ -232,7 +232,6 @@ if is_cloud; then
     environment=$(echo "${tab_url}" | perl -pe "s!.*?environments/!!;s!/.*!!;")
     base_url=$(get_cloud_base_url "${project}" "${environment}")
   else
-    base_url="${tab_url_simplified}/"
     project=$(echo "${tab_url}" | perl -pe "s/.*-//;s/\..*//;")
     environments=$("${cli_path}" environments -I -p "${project}" --pipe)
     environment=""

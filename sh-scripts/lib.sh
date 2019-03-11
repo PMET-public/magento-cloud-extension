@@ -156,7 +156,7 @@ transfer_local_tar_to_remote() {
   local local_tar_file="${1}"
   local project="${2:-$project}"
   local environment="${3:-$environment}"
-  $(${scp_cmd} "${backups_dir}/${local_tar_file}" $(get_ssh_url "${project}" "${environment}"):/tmp)
+  scp "${backups_dir}/${local_tar_file}" $(get_ssh_url "${project}" "${environment}"):/tmp)
 }
 
 restore_files_from_tar() {

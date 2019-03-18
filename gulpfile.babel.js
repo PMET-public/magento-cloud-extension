@@ -35,6 +35,10 @@ const contentScripts = [
   'app/scripts/content/document-start.js'
 ]
 
+const previewScripts = [
+  'app/scripts/preview/resizer.js'
+]
+
 const distBackgroundScripts = [
   'app/scripts/lib/lib.js',
   'app/scripts/background/my-background.js',
@@ -113,12 +117,18 @@ for (let mode of ['dev', 'dist']) {
       file: 'popup.processed.js',
       ...(mode === 'dev' ? devOpts : distOpts)
     })
+    processJS({
+      srcs: previewScripts,
+      file: 'preview.processed.js',
+      ...(mode === 'dev' ? devOpts : distOpts)
+    })
   })
 
   gulp.task(mode + '-styles', () =>
     gulp.src([
         'app/styles.scss/main.scss',
         'app/styles.scss/content.scss',
+        'app/styles.scss/preview.scss',
       ])
       .pipe($.plumber())
       .pipe($.if(mode === 'dev', $.sourcemaps.init()))

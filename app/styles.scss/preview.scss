@@ -1,0 +1,53 @@
+body.staging-update-preview {
+	/* Remove the forced width so Chrome browser tools can be used */
+	min-width: initial;
+
+	@media only screen and (max-width: 500px) {
+		/* Shrink header items when viewing using browser tools */
+		.staging-preview-header {
+			.logo {
+				margin: 1.8rem 1.5rem;
+			}
+			.staging-preview-item-title {
+				padding: 1.5rem 2rem;
+			}
+		}
+	}
+
+	@media only screen and (max-width: 800px) {
+		/* Shrink header items when viewing using browser tools */
+		.staging-preview-header {
+			.staging-preview-item-resize {
+				display: none;
+			}
+		}
+	}
+
+	.staging-preview-item-resize {
+	    cursor: pointer;
+	    float: right;
+	    font-size: 1.3rem;
+	    min-height: 8.5rem;
+	    padding: 1.5rem 4rem 2.5rem;
+	    position: relative;
+	    a {
+			display: inline-block;
+			text-transform: uppercase;
+			color: #c3bbb1;
+			padding: 0 1rem;
+			&:hover, &:active {
+				color: #c3bbb1;
+			}
+		}
+	}
+
+	.staging-preview-content-dynamic {
+		&.mobile {
+			max-width: 320px;
+		}
+		&.tablet {
+			max-width: 640px;
+		}
+	}
+	
+}

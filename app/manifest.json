@@ -44,6 +44,18 @@
       ],
       "run_at": "document_start",
       "all_frames": false
+    },
+    {
+      "matches": [
+        "*://*.demo.magentosite.cloud/admin/staging/*"
+      ],
+      "js": [
+        "scripts/preview.processed.js"
+      ],
+      "css": [
+        "styles/preview.css"
+      ],
+      "run_at": "document_idle"
     }
   ],
   "browser_action": {

@@ -6,10 +6,10 @@ set_db_vars
 
 if is_cloud; then
     additional_files="${app_dir}/.magento.app.yaml"
-    remote_tar_file="/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar"
+    remote_tar_file="/tmp/$(date "+%m-%d-%H-%M")-${project}-${environment}.tar"
 else
     additional_files=""
-    remote_tar_file="/tmp/$(date "+%Y-%m-%d-%H-%M")-${domain}.tar"
+    remote_tar_file="/tmp/$(date "+%m-%d-%H-%M")-${domain}.tar"
 fi
 
 $ssh_cmd "

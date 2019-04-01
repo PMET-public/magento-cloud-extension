@@ -18,18 +18,14 @@
     "activeTab",
     "background",
     "browsingData",
-    "clipboardRead",
     "clipboardWrite",
     "contentSettings",
-    "cookies",
     "declarativeContent",
     "downloads",
     "https://*.magentosite.cloud/*",
     "https://github.com/*",
     "storage",
-    "tabs",
-    "webRequest",
-    "webRequestBlocking"
+    "tabs"
   ],
   "content_scripts": [
     {

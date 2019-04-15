@@ -2,8 +2,6 @@ msg Backing up env. Depending on the size, this may take a couple min ...
 
 tmp_git_dir="/tmp/delete-me-${domain}"
 
-set_db_vars
-
 if is_cloud; then
     additional_files="${app_dir}/.magento.app.yaml"
     remote_tar_file="/tmp/$(date "+%m-%d-%H-%M")-${project}-${environment}.tar"

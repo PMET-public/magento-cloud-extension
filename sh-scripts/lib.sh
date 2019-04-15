@@ -54,22 +54,20 @@ is_cloud() {
   return $?
 }
 
-set_db_vars() {
-  if is_cloud; then
-    db_host=database.internal
-    db_port=3306
-    db_user=user
-    db_name=main
-    db_pass=""
-  else
-    db_host=127.0.0.1
-    db_port=3306
-    db_user=magento
-    db_name=magento
-    db_pass="password"
-  fi
-  db_opts="-h \"${db_host}\" -P \"${db_port}\" -u \"${db_user}\" --password=\"${db_pass}\" \"${db_name}\""
-}
+if is_cloud; then
+  db_host=database.internal
+  db_port=3306
+  db_user=user
+  db_name=main
+  db_pass=""
+else
+  db_host=127.0.0.1
+  db_port=3306
+  db_user=magento
+  db_name=magento
+  db_pass="password"
+fi
+db_opts="-h \"${db_host}\" -P \"${db_port}\" -u \"${db_user}\" --password=\"${db_pass}\" \"${db_name}\""
 
 get_cloud_base_url() {
   echo "$(${cli_path} url -p "${1}" -e "${2}" --pipe | grep https -m 1 | perl -pe 's/\s+//')"

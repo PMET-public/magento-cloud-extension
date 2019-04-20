@@ -6,8 +6,10 @@ if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
   # that may still be running and blocking a proper shutdown
   $ssh_cmd "for i in {1..10}; do pkill php; sleep 60; done &" &
 
-  # --delete-branch appears to be incompatible with the --no-wait flag
-  "${cli_path}" environment:delete -p "${project}" -e "${environment}" --delete-branch
+  # in v1.23, --delete-branch appears to be incompatible with the --no-wait flag, so it must be run twice
+  "${cli_path}" environment:delete -p "${project}" -e "${environment}" --delete-branch --no-wait --yes
+  sleep 30
+  "${cli_path}" environment:delete -p "${project}" -e "${environment}" --delete-branch --no-wait --yes
 else
   exit
 fi

@@ -1,7 +1,7 @@
 {
   "name": "Magento Cloud Extension",
   "short_name": "mce",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "manifest_version": 2,
   "description": "Collection of tools to help Magento Solution Consultants",
   "icons": {
@@ -18,18 +18,14 @@
     "activeTab",
     "background",
     "browsingData",
-    "clipboardRead",
     "clipboardWrite",
     "contentSettings",
-    "cookies",
     "declarativeContent",
     "downloads",
     "https://*.magentosite.cloud/*",
     "https://github.com/*",
     "storage",
-    "tabs",
-    "webRequest",
-    "webRequestBlocking"
+    "tabs"
   ],
   "content_scripts": [
     {

@@ -38,32 +38,36 @@ menu_width=70
 num_visible_choices=10
 # tab_url_simplified has no trailing "/" but by Magento convention base_url does
 tab_url_simplified=$(echo "${tab_url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
-base_url=""
+base_url="${tab_url_simplified}/"
 domain=$(echo "${tab_url_simplified}" | perl -pe "s!https?://!!")
 backups_dir="${HOME}/Downloads/m2-backups"
-sql_file=/tmp/db.sql
+sql_file="/tmp/db.sql"
+backup_server="zajhc7u663lak-master-7rqtwti@ssh.demo.magento.cloud"
+media_files_on_backup_server="/tmp/media-files-on-backup-server"
+all_media_files_plus_md5_list_in_orig_env="/tmp/all-media-files-plus-md5-list0-in-orig-env"
+transfer_list="/tmp/transfer_list"
+local_media_files_md5s="/tmp/existing-media-files-md5"
+differential_list_of_media_files="/tmp/differential-list-of-media-files"
 
 is_cloud() {
   [[ "${tab_url_simplified}" =~ .magento(site)?.cloud ]]
   return $?
 }
 
-set_db_vars() {
-  if is_cloud; then
-    db_host=database.internal
-    db_port=3306
-    db_user=user
-    db_name=main
-    db_pass=""
-  else
-    db_host=127.0.0.1
-    db_port=3306
-    db_user=user
-    db_name=main
-    db_pass=""
-  fi
-  db_opts="-h \"${db_host}\" -P \"${db_port}\" -u \"${db_user}\" --password=\"${db_pass}\" \"${db_name}\""
-}
+if is_cloud; then
+  db_host=database.internal
+  db_port=3306
+  db_user=user
+  db_name=main
+  db_pass=""
+else
+  db_host=127.0.0.1
+  db_port=3306
+  db_user=magento
+  db_name=magento
+  db_pass="password"
+fi
+db_opts="-h \"${db_host}\" -P \"${db_port}\" -u \"${db_user}\" --password=\"${db_pass}\" \"${db_name}\""
 
 get_cloud_base_url() {
   echo "$(${cli_path} url -p "${1}" -e "${2}" --pipe | grep https -m 1 | perl -pe 's/\s+//')"
@@ -86,11 +90,11 @@ get_ssh_url() {
 }
 
 get_ssh_cmd() {
-  echo "ssh -n -i ${identity_file} $(get_ssh_url $*)"
+  echo "ssh -n -A $(get_ssh_url $*)"
 }
 
 get_interactive_ssh_cmd() {
-  echo "ssh -i ${identity_file} $(get_ssh_url $*)"
+  echo "ssh -A $(get_ssh_url $*)"
 }
 
 choose_backup() {
@@ -111,10 +115,9 @@ choose_backup() {
 }
 
 reset_env() {
-  local project="${1}"
-  local environment="${2}"
-  local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
-  ${ssh_cmd} "
+  msg Resetting env ...
+  local ssh_url="${1}"
+  ssh -n "${ssh_url}" "
     mysql -h ${db_host} -e 'drop database if exists ${db_name}; 
     create database if not exists ${db_name} default character set utf8;'; 
     # can not remove var/export so or noop cmd (|| :) in case it exists
@@ -122,27 +125,72 @@ reset_env() {
   "
 }
 
+reindex_env() {
+  msg Reindexing env ...
+  local ssh_url="${1}"
+  ssh -n "${ssh_url}" "
+    php ${app_dir}/bin/magento indexer:reset; php ${app_dir}/bin/magento indexer:reindex
+  "
+}
+
+enable_maintenance_mode() {
+  msg Enabling maintenance mode ...
+  local ssh_url="${1}"
+  ssh -n "${ssh_url}" "
+    php bin/magento maintenance:enable
+  "
+}
+
+disble_maintenance_mode() {
+  msg Disabling maintenance mode ...
+  local ssh_url="${1}"
+  ssh -n "${ssh_url}" "
+    php bin/magento maintenance:disable
+  "
+}
+
+
+enable_cron() {
+  msg Enabling cron ...
+  local ssh_url="${1}"
+  ssh -n "${ssh_url}" "
+    sed -i.bak '/cron.*enabled/d' /app/app/etc/env.php
+  "
+}
+
+disable_cron() {
+  msg Disabling cron ...
+  local ssh_url="${1}"
+  ssh -n "${ssh_url}" "
+    # prevent duplicate lines
+    sed -i.bak '/cron.*enabled/d' /app/app/etc/env.php
+    # insert disable line
+    sed -i.bak '\$i\\\x27cron\x27 => array ( \x27enabled\x27 => 0, ),' /app/app/etc/env.php
+  "
+}
+
 transfer_local_tar_to_remote() {
-  local local_tar_file="${1}"
-  local project="${2}"
-  local environment="${3}"
-  $("${scp_cmd}" "${backups_dir}/${local_tar_file}" $(get_ssh_url "${project}" "${environment}"):/tmp)
+  msg Sending tar file ...
+  local ssh_url="${1}"
+  local local_tar_file="${2}"
+  scp "${backups_dir}/${local_tar_file}" ${ssh_url}:/tmp
 }
 
 restore_files_from_tar() {
-  local local_tar_file="${1}"
-  local project="${2}"
-  local environment="${3}"
-  local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
-  ${ssh_cmd} "tar -xf /tmp/${local_tar_file} -C / ${app_dir#'/'}"
+  msg Restoring files from tar ...
+  local ssh_url="${1}"
+  local local_tar_file="${2}"
+  ssh -n ${ssh_url} "
+    rm -rf \"${app_dir}/var/log/*\" \"${app_dir}/pub/media/catalog/*\"
+    tar -xf /tmp/${local_tar_file} -C / --exclude=\"${app_dir}/pub/media\" --anchored ${app_dir#'/'} || :
+  "
 }
 
 restore_db_from_tar() {
-  local local_tar_file="${1}"
-  local project="${2}"
-  local environment="${3}"
-  local ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
-  ${ssh_cmd} "
+  msg Restoring DB from tar ...
+  local ssh_url="${1}"
+  local local_tar_file="${2}"
+  ssh -n ${ssh_url} "
     rm ${sql_file} 2> /dev/null # if an old file exists from previous attempt
     tar -xf /tmp/${local_tar_file} -C / tmp
     gunzip ${sql_file}.gz
@@ -156,6 +204,33 @@ restore_db_from_tar() {
     create database if not exists ${db_name} default character set utf8;'
     mysql ${db_opts} < ${sql_file}
     php bin/magento maintenance:disable
+  "
+}
+
+restore_media_from_backup_server() {
+  msg Restoring media from backup server ...
+  ${ssh_cmd} "
+    rm -rf /app/pub/media/catalog/product/cache/
+
+    # rename any files by md5 hash and cleanup dirs
+    find /app/pub/media -type f -regextype posix-extended -not -regex '^/app/pub/media/[a-f0-9]{32}$' -exec md5sum {} \; | \
+      perl -pe 's%^(.*?) +(.*)$%mv \2 /app/pub/media/\1%' | \
+      bash
+    find /app/pub/media -type d -empty -delete
+
+    # create list of existing media
+    find /app/pub/media -type f | perl -pe 's/.*\///' > ${local_media_files_md5s}
+
+    # remove files that we already have
+    grep -vf ${local_media_files_md5s} ${all_media_files_plus_md5_list_in_orig_env} > ${differential_list_of_media_files}
+
+    # transfer missing media files
+    perl -pe 's/ +.*//' ${differential_list_of_media_files} > ${transfer_list}
+    rsync --files-from=${transfer_list} ${backup_server}:/app/pub/media/ /app/pub/media/ 2>/dev/null
+
+    # sort & for each md5sum, cp each file then rm after last cp to prevent possible > 2x pub/media size
+    sort ${all_media_files_plus_md5_list_in_orig_env} | \
+      perl
   "
 }
 
@@ -173,6 +248,24 @@ install_local_dev_tools_if_needed() {
 }
 install_local_dev_tools_if_needed
 
+start_ssh_agent_and_load_cloud_and_vm_key() {
+  if [[ -z "${SSH_AUTH_SOCK}" ]]; then
+    eval "$(ssh-agent -s)"
+  fi
+
+  cloud_key="${HOME}/.ssh/id_rsa.magento"
+  vm_key="${HOME}/.ssh/demo-vm-insecure-private-key"
+
+  # verify local vm key exists
+  if [[ ! -f "${vm_key}" ]]; then
+    curl -o "${vm_key}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
+    chmod 600 "${vm_key}"
+  fi
+
+  ssh-add "${cloud_key}" "${vm_key}" 2> /dev/null
+}
+start_ssh_agent_and_load_cloud_and_vm_key
+
 if is_cloud; then
 
   # determine relevant project and environment
@@ -181,7 +274,6 @@ if is_cloud; then
     environment=$(echo "${tab_url}" | perl -pe "s!.*?environments/!!;s!/.*!!;")
     base_url=$(get_cloud_base_url "${project}" "${environment}")
   else
-    base_url="${tab_url_simplified}/"
     project=$(echo "${tab_url}" | perl -pe "s/.*-//;s/\..*//;")
     environments=$("${cli_path}" environments -I -p "${project}" --pipe)
     environment=""
@@ -213,25 +305,18 @@ if is_cloud; then
   if [[ -z $(get_ssh_url) ]]; then
     warning SSH URL could not be determined. Environment inactive?
   fi
-  identity_file="${HOME}/.ssh/id_rsa.magento"
+
   app_dir="/app"
 
   # export to env for child git processes only
   export GIT_SSH_COMMAND="ssh -i ${HOME}/.ssh/id_rsa.magento"
 
 else
-  
-  # if not magento cloud, assume local vm
-  identity_file="${HOME}/.ssh/demo-vm-insecure-private-key"
-  app_dir="/var/www/magento"
 
-  # verify local vm key exists
-  if [[ ! -f "${identity_file}" ]]; then
-    curl -o "${identity_file}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
-    chmod 600 "${identity_file}"
-  fi
+  # if not magento cloud, assume local vm
+  app_dir="/var/www/magento"
 
 fi
 
 ssh_cmd="$(get_ssh_cmd)"
-scp_cmd="scp -i ${identity_file}"
+scp_cmd="scp"

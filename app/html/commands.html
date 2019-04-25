@@ -121,6 +121,12 @@
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/configure-proxies.sh | env ext_ver={{version}} tab_url={{tab_url}} bash)&quot;" readonly>
         <span class="mdi mdi-content-copy simple-copy"></span>
       </div>
+      <div class="cli-cmd-container">
+        <b>Turn email on/off</b><br>
+        <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/toggle-email.sh | env ext_ver={{version}} tab_url={{tab_url}} bash" readonly>
+        <span class="mdi mdi-content-copy simple-copy"></span>
+      </div>
     </div>
     <div class="cmds-cloud-only"><h3>Cloud specific cmds</h3>
       <div class="cli-cmd-container">
@@ -136,7 +142,7 @@
         </b>
         <br>
         <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
-          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/create-new-cloud-env-from-backup.sh
+          https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/restore-env.sh
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/reindex.sh 
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/cache-flush.sh 
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/cache-warm.sh | env ext_ver={{version}} tab_url={{tab_url}} bash" readonly>

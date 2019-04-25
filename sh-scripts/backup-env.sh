@@ -1,53 +1,66 @@
 msg Backing up env. Depending on the size, this may take a couple min ...
 
-
-tmp_git_dir="/tmp/delete-me-${project}-${environment}"
-
-set_db_vars
+tmp_git_dir="/tmp/delete-me-${domain}"
 
 if is_cloud; then
     additional_files="${app_dir}/.magento.app.yaml"
-    remote_tar_file="/tmp/$(date "+%Y-%m-%d-%H-%M")-${project}-${environment}.tar"
+    remote_tar_file="/tmp/$(date "+%m-%d-%H-%M")-${project}-${environment}.tar"
 else
     additional_files=""
-    remote_tar_file="/tmp/$(date "+%Y-%m-%d-%H-%M")-${domain}.tar"
+    remote_tar_file="/tmp/$(date "+%m-%d-%H-%M")-${domain}.tar"
 fi
 
-$ssh_cmd "mysqldump ${db_opts} --single-transaction --no-autocommit --quick > ${sql_file}
+$ssh_cmd "
+  mysqldump ${db_opts} --single-transaction --no-autocommit --quick > ${sql_file}
   # replace specific host name with token placeholder
   perl -i -pe \"\\\$c+=s!${base_url}!REPLACEMENT_BASE_URL!g; 
     END{print \\\"\n\\\$c base_url replacements\n\\\"}\" ${sql_file}
+  # rm old if not cleaned up from last run, gzip, and rm sql file
+  rm ${sql_file}.gz || : 2> /dev/null
   gzip ${sql_file}
 
-  # add sql file and other files needed to recreate project/environment
-  tar --ignore-failed-read -C / -cf ${remote_tar_file} ${sql_file}.gz ${app_dir}/auth.json ${app_dir}/.gitignore ${app_dir}/composer.json ${app_dir}/composer.lock ${additional_files} ${app_dir}/pub/media/gene-cms ${app_dir}/pub/media/wysiwyg ${app_dir}/pub/media/ThemeCustomizer 2> /dev/null
-  rm ${sql_file}.gz
+  # catalog all local media files
+  find ${app_dir}/pub/media -type f -not -path '${app_dir}/pub/media/catalog/product/cache/*' \
+    -exec md5sum \{} \; > ${all_media_files_plus_md5_list_in_orig_env}
+  
+  # remove duplicates by md5 and create potential list to send to backup server
+  sort ${all_media_files_plus_md5_list_in_orig_env} | uniq -w 32 > ${transfer_list}
+  
+  # fetch list of media already on backup server
+  ssh ${backup_server} 'find ${app_dir}/pub/media -type f -exec basename \{} \;' 2>/dev/null > ${media_files_on_backup_server}
+  
+  # calculate differential backup
+  grep -vf ${media_files_on_backup_server} ${transfer_list} > ${differential_list_of_media_files}
 
-  # find full paths of imported images and create tar file
-  mysql -sN ${db_opts} -e '# all paths of products added after a certain date
-      select cpemg.value from 
-        catalog_product_entity cpe, 
-        catalog_product_entity_media_gallery cpemg, 
-        catalog_product_entity_media_gallery_value_to_entity cpemgvte
-      where 
-        cpemgvte.row_id = cpe.row_id AND
-        cpemgvte.value_id = cpemg.value_id AND
-        updated_at > 
-      # find date of first product plus 30 min
-      (select date_add(min(updated_at), interval 30 minute) from 
-        catalog_product_entity cpe, 
-        catalog_product_entity_media_gallery cpemg, 
-        catalog_product_entity_media_gallery_value_to_entity cpemgvte
-      where 
-        cpemgvte.row_id = cpe.row_id AND
-        cpemgvte.value_id = cpemg.value_id
-      order by updated_at asc)' 2> /dev/null | \
-    perl -pe 's!^!pub/media/catalog/product!' | \
-    tar -rf ${remote_tar_file} --files-from -
+  # transfer differential backup
+  perl -pe 's!.*?/pub/media/!!' ${differential_list_of_media_files} | \
+    rsync --stats --files-from=- ${app_dir}/pub/media \"${backup_server}:/app/pub/media/${pid}-${env}\"
+
+  # on backup server, rename any files by md5 hash and cleanup dirs
+  ssh ${backup_server} \"
+    find /app/pub/media -type f -regextype posix-extended -not -regex '^/app/pub/media/[a-f0-9]{32}$' -exec md5sum {} \; | \
+      perl -pe 's%^(.*?) +(.*)$%mv \2 /app/pub/media/\1%' | \
+      bash
+    find /app/pub/media -type d -empty -delete
+  \" 2> /dev/null
+
+  # add sql file, media files list, and other files needed to recreate project/environment
+  tar --ignore-failed-read -C / -cf ${remote_tar_file} ${sql_file}.gz \
+    ${all_media_files_plus_md5_list_in_orig_env} \
+    ${app_dir}/auth.json \
+    ${app_dir}/.gitignore \
+    ${app_dir}/composer.json \
+    ${app_dir}/composer.lock \
+    ${app_dir}/app/etc/env.php \
+    ${app_dir}/app/etc/config.php \
+    ${app_dir}/m2-hotfixes \
+    ${additional_files} \
+    2> /dev/null
+  rm ${sql_file}.gz
 "
 
 mkdir -p "${backups_dir}"
-$scp_cmd $(get_ssh_url):${remote_tar_file} "${backups_dir}"
+scp $(get_ssh_url):${remote_tar_file} "${backups_dir}"
 
 if is_cloud; then
   # clean up remote to prevent full disk errors
@@ -58,4 +71,4 @@ if is_cloud; then
   git clone --branch "${environment}" $(${cli_path} project:info -p "${project}" git) "${tmp_git_dir}${app_dir}"
   tar -C "${tmp_git_dir}" -rf "${backups_dir}/${remote_tar_file#/tmp/}" "${app_dir#'/'}/.magento"
   rm -rf "${tmp_git_dir}"
-fi 
+fi

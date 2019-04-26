@@ -1,7 +1,7 @@
 {
   "name": "Magento Cloud Extension",
   "short_name": "mce",
-  "version": "0.0.24",
+  "version": "0.0.25",
   "manifest_version": 2,
   "description": "Collection of tools to help Magento Solution Consultants",
   "icons": {

@@ -1,4 +1,4 @@
 printf "\nReindexing ...\n"
 
-reindex_env
+reindex_env $(get_ssh_url)
 

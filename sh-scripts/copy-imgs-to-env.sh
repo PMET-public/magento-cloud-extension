@@ -3,7 +3,7 @@ msg Copy imgs to an env ...
 # prompt user for tar file and project to create new env on
 backtitle="Copy images to an env ..."
 
-img_dirs=($(find "${HOME}/Downloads" -name "imgs-from-*" -type d 2>/dev/null | sort | perl -pe 's!.*/!!' | cat -n))
+img_dirs=($(find "${HOME}/Downloads" -name "imgs-from-*" -type d 2> /dev/null | sort | perl -pe 's!.*/!!' | cat -n))
 if [[ ${#img_dirs[@]} -lt 1 ]]; then
   error No image dirs from the store scraper found in "${HOME}/Downloads"
 fi

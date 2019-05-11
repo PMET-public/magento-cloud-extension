@@ -99,7 +99,7 @@ get_interactive_ssh_cmd() {
 
 choose_backup() {
   tar_file_pattern="${1}"
-  local_tar_files=($(find "${backups_dir}" -name "*${tar_file_pattern}*.tar" 2>/dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))
+  local_tar_files=($(find "${backups_dir}" -name "*${tar_file_pattern}*.tar" 2> /dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))
   if [[ ${#local_tar_files[@]} -lt 1 ]]; then
     error No files matching "*-${tar_file_pattern}" found in "${backups_dir}"
   fi
@@ -141,7 +141,7 @@ enable_maintenance_mode() {
   "
 }
 
-disble_maintenance_mode() {
+disable_maintenance_mode() {
   msg Disabling maintenance mode ...
   local ssh_url="${1}"
   ssh -n "${ssh_url}" "
@@ -182,7 +182,7 @@ restore_files_from_tar() {
   local local_tar_file="${2}"
   ssh -n ${ssh_url} "
     rm -rf \"${app_dir}/var/log/*\" \"${app_dir}/pub/media/catalog/*\"
-    tar -xf /tmp/${local_tar_file} -C / --exclude=\"${app_dir}/pub/media\" --anchored ${app_dir#'/'} || :
+    tar -xf /tmp/${local_tar_file} -C / --exclude=\"${app_dir}/pub/media\" --anchored ${app_dir#'/'} 2> /dev/null || :
   "
 }
 

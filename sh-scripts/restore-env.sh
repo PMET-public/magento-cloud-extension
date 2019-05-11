@@ -1,14 +1,12 @@
 msg Restoring env from backup ...
 
-set_db_vars
-
 if is_cloud; then
   local_tar_file=$(choose_backup "${project}-${environment}") || exit 1 
-  ssh_url=$(get_ssh_url "${project}" "${environment}")
 else
   local_tar_file=$(choose_backup "${domain}") || exit 1
-  ssh_url=$(get_ssh_url)
 fi
+
+ssh_url=$(get_ssh_url)
 
 disable_cron "${ssh_url}"
 transfer_local_tar_to_remote "${ssh_url}" "${local_tar_file}"

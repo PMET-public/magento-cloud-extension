@@ -30,3 +30,13 @@ To install the Magento Cloud CLI & setup ssh keys:
 4. Note that you may be asked to login once `~/.magento-cloud/bin/magento-cloud login`
 
 Done
+
+
+** Details for Developers **
+
+1. git clone
+2. git submodule update --init --recursive
+3. npm install
+4. cd app; bower install
+5. cd ..; gulp dev-build
+

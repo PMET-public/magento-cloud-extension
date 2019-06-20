@@ -131,7 +131,7 @@ for (let mode of ['dev', 'dist']) {
       .pipe(gulp.dest('dist/styles'))
   )
 
-  gulp.task(mode + '-build', ['clean'], (cb) => {
+  gulp.task(mode + '-build', (cb) => {
       runSequence('copy-remaining-to-dist', 'lint', mode + '-js', mode + '-styles', 'html', 'images', cb)
     })
 }
@@ -163,7 +163,7 @@ gulp.task('html', () =>
     .pipe(gulp.dest('dist/html/'))
 )
 
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']))
+gulp.task('clean', del.bind(null, ['dist']))
 
 gulp.task('watch', ['html', 'lint', 'dev-js', 'dev-styles', 'copy-remaining-to-dist'], () => {
   gulp.watch('app/html/**', ['html'])

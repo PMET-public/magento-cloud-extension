@@ -44,7 +44,7 @@ backups_dir="${HOME}/Downloads/m2-backups"
 sql_file="/tmp/db.sql"
 backup_server="zajhc7u663lak-master-7rqtwti@ssh.demo.magento.cloud"
 media_files_on_backup_server="/tmp/media-files-on-backup-server"
-all_media_files_plus_md5_list_in_orig_env="/tmp/all-media-files-plus-md5-list0-in-orig-env"
+list_of_all_media_filenames_and_their_md5s_in_orig_env="/tmp/list-of-all-media-filenames-and-their-md5s-in-orig-env"
 transfer_list="/tmp/transfer_list"
 local_media_files_md5s="/tmp/existing-media-files-md5"
 differential_list_of_media_files="/tmp/differential-list-of-media-files"
@@ -99,7 +99,7 @@ get_interactive_ssh_cmd() {
 
 choose_backup() {
   tar_file_pattern="${1}"
-  local_tar_files=($(find "${backups_dir}" -name "*${tar_file_pattern}*.tar" 2>/dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))
+  local_tar_files=($(find "${backups_dir}" -name "*${tar_file_pattern}*.tar" 2> /dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))
   if [[ ${#local_tar_files[@]} -lt 1 ]]; then
     error No files matching "*-${tar_file_pattern}" found in "${backups_dir}"
   fi
@@ -141,7 +141,7 @@ enable_maintenance_mode() {
   "
 }
 
-disble_maintenance_mode() {
+disable_maintenance_mode() {
   msg Disabling maintenance mode ...
   local ssh_url="${1}"
   ssh -n "${ssh_url}" "
@@ -169,6 +169,14 @@ disable_cron() {
   "
 }
 
+clean_cache() {
+  msg Cleaning the cache ...
+  local ssh_url="${1}"
+  ssh -n "${ssh_url}" "
+    php bin/magento cache:clean
+  " 
+}
+
 transfer_local_tar_to_remote() {
   msg Sending tar file ...
   local ssh_url="${1}"
@@ -182,7 +190,7 @@ restore_files_from_tar() {
   local local_tar_file="${2}"
   ssh -n ${ssh_url} "
     rm -rf \"${app_dir}/var/log/*\" \"${app_dir}/pub/media/catalog/*\"
-    tar -xf /tmp/${local_tar_file} -C / --exclude=\"${app_dir}/pub/media\" --anchored ${app_dir#'/'} || :
+    tar -xf /tmp/${local_tar_file} -C / --exclude=\"${app_dir}/pub/media\" --anchored ${app_dir#'/'} 2> /dev/null || :
   "
 }
 
@@ -199,38 +207,44 @@ restore_db_from_tar() {
     if [[ $? -ne 0 ]]; then
       echo No replacements made in sql. Not restoring. && exit 1
     fi
-    php bin/magento maintenance:enable
     mysql ${db_opts} -e 'drop database if exists ${db_name}; 
     create database if not exists ${db_name} default character set utf8;'
     mysql ${db_opts} < ${sql_file}
-    php bin/magento maintenance:disable
   "
 }
 
 restore_media_from_backup_server() {
   msg Restoring media from backup server ...
-  ${ssh_cmd} "
+  local ssh_url="${1}"
+  ssh -n -A ${ssh_url} "
     rm -rf /app/pub/media/catalog/product/cache/
 
-    # rename any files by md5 hash and cleanup dirs
-    find /app/pub/media -type f -regextype posix-extended -not -regex '^/app/pub/media/[a-f0-9]{32}$' -exec md5sum {} \; | \
-      perl -pe 's%^(.*?) +(.*)$%mv \2 /app/pub/media/\1%' | \
+    # rename any files to their md5 hash and cleanup dirs
+    # if you want to skip files already renamed to their md5, use: -regextype posix-extended -not -regex '^/app/pub/media/[a-f0-9]{32}$'
+    # but of questionable utility and could skip some media that are not actually files renamed to their md5
+    find /app/pub/media -type f -exec md5sum {} \; | \
+      perl -pe 's%^(.*?) +(.*)\$%mv \2 /app/pub/media/\1 2>>/tmp/restore.err.log%' | \
       bash
     find /app/pub/media -type d -empty -delete
 
-    # create list of existing media
+    # create list of existing media files (now just a list of md5 hashes)
     find /app/pub/media -type f | perl -pe 's/.*\///' > ${local_media_files_md5s}
 
-    # remove files that we already have
-    grep -vf ${local_media_files_md5s} ${all_media_files_plus_md5_list_in_orig_env} > ${differential_list_of_media_files}
+    # remove files from list that we already have
+    grep -vf ${local_media_files_md5s} ${list_of_all_media_filenames_and_their_md5s_in_orig_env} > ${differential_list_of_media_files}
 
     # transfer missing media files
     perl -pe 's/ +.*//' ${differential_list_of_media_files} > ${transfer_list}
-    rsync --files-from=${transfer_list} ${backup_server}:/app/pub/media/ /app/pub/media/ 2>/dev/null
+    rsync --files-from=${transfer_list} ${backup_server}:/app/pub/media/ /app/pub/media/ 2>>/tmp/restore.err.log
 
-    # sort & for each md5sum, cp each file then rm after last cp to prevent possible > 2x pub/media size
-    sort ${all_media_files_plus_md5_list_in_orig_env} | \
-      perl
+    # sort then for each md5sum, cp each file and after the last cp of current md5, rm it 
+    # run rm as a separate step after all copies or current md5 are complete, so we are less likely to run out of disk space
+    sort ${list_of_all_media_filenames_and_their_md5s_in_orig_env} | \
+      perl -pe 's{^(\S+)\s+(.*/)(.*)\$}{(\$prev_match ne \$1 ?
+        \"rm /app/pub/media/\$prev_match 2> /dev/null;\n\".(do {\$prev_match=\"\$1\"; eval \"\"})
+        : \"\").
+        \"mkdir -p \\\"\$2\\\"; cp /app/pub/media/\$1 \\\"\$2\$3\\\";\"}e;END { print \"rm /app/pub/media/\$prev_match;\n\" }' | \
+      bash
   "
 }
 

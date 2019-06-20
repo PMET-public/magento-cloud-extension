@@ -1,4 +1,4 @@
-msg Backing up env. Depending on the size, this may take a couple min ...
+msg Backing up env. Depending on the size, this may take a couple minutes ...
 
 tmp_git_dir="/tmp/delete-me-${domain}"
 
@@ -9,6 +9,7 @@ else
     additional_files=""
     remote_tar_file="/tmp/$(date "+%m-%d-%H-%M")-${domain}.tar"
 fi
+local_backup_file="${backups_dir}/${remote_tar_file#/tmp/}"
 
 $ssh_cmd "
   mysqldump ${db_opts} --single-transaction --no-autocommit --quick > ${sql_file}
@@ -16,18 +17,18 @@ $ssh_cmd "
   perl -i -pe \"\\\$c+=s!${base_url}!REPLACEMENT_BASE_URL!g; 
     END{print \\\"\n\\\$c base_url replacements\n\\\"}\" ${sql_file}
   # rm old if not cleaned up from last run, gzip, and rm sql file
-  rm ${sql_file}.gz || : 2> /dev/null
+  rm ${sql_file}.gz 2> /dev/null || : 
   gzip ${sql_file}
 
   # catalog all local media files
   find ${app_dir}/pub/media -type f -not -path '${app_dir}/pub/media/catalog/product/cache/*' \
-    -exec md5sum \{} \; > ${all_media_files_plus_md5_list_in_orig_env}
+    -exec md5sum \{} \; > ${list_of_all_media_filenames_and_their_md5s_in_orig_env}
   
   # remove duplicates by md5 and create potential list to send to backup server
-  sort ${all_media_files_plus_md5_list_in_orig_env} | uniq -w 32 > ${transfer_list}
+  sort ${list_of_all_media_filenames_and_their_md5s_in_orig_env} | uniq -w 32 > ${transfer_list}
   
   # fetch list of media already on backup server
-  ssh ${backup_server} 'find ${app_dir}/pub/media -type f -exec basename \{} \;' 2>/dev/null > ${media_files_on_backup_server}
+  ssh ${backup_server} 'find ${app_dir}/pub/media -type f -exec basename \{} \;' 2> /dev/null > ${media_files_on_backup_server}
   
   # calculate differential backup
   grep -vf ${media_files_on_backup_server} ${transfer_list} > ${differential_list_of_media_files}
@@ -46,7 +47,7 @@ $ssh_cmd "
 
   # add sql file, media files list, and other files needed to recreate project/environment
   tar --ignore-failed-read -C / -cf ${remote_tar_file} ${sql_file}.gz \
-    ${all_media_files_plus_md5_list_in_orig_env} \
+    ${list_of_all_media_filenames_and_their_md5s_in_orig_env} \
     ${app_dir}/auth.json \
     ${app_dir}/.gitignore \
     ${app_dir}/composer.json \
@@ -72,3 +73,5 @@ if is_cloud; then
   tar -C "${tmp_git_dir}" -rf "${backups_dir}/${remote_tar_file#/tmp/}" "${app_dir#'/'}/.magento"
   rm -rf "${tmp_git_dir}"
 fi
+
+msg Backup saved to "${local_backup_file}"

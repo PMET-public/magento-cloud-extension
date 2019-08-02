@@ -1,8 +1,10 @@
-
 # since this feature only applies to setting up connections via cloud
 # directly set applicable variables
 
 project=$(${cli_path} projects --pipe | head -1)
+if [[ -z "${project}" ]]; then
+  error Could not find a valid cloud project. Are you logged in?
+fi
 environment=master
 
 # transfer tinyproxy to the env

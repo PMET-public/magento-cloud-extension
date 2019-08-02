@@ -119,6 +119,7 @@ for (let mode of ['dev', 'dist']) {
     gulp.src([
         'app/styles.scss/main.scss',
         'app/styles.scss/content.scss',
+        'app/styles.scss/import-cloud-ui.scss',
       ])
       .pipe($.plumber())
       .pipe($.if(mode === 'dev', $.sourcemaps.init()))

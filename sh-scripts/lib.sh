@@ -270,13 +270,18 @@ start_ssh_agent_and_load_cloud_and_vm_key() {
   cloud_key="${HOME}/.ssh/id_rsa.magento"
   vm_key="${HOME}/.ssh/demo-vm-insecure-private-key"
 
+  # if cloud key does not exist, warn user
+  if [[ ! -f "${cloud_key}" ]]; then
+    warning Cloud key does not exist. Please check prerequisites. Continuing anyway but some functions may not work.
+  fi
+
   # verify local vm key exists
   if [[ ! -f "${vm_key}" ]]; then
     curl -o "${vm_key}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
     chmod 600 "${vm_key}"
   fi
 
-  ssh-add "${cloud_key}" "${vm_key}" 2> /dev/null
+  ssh-add "${cloud_key}" "${vm_key}" 2> /dev/null || :
 }
 start_ssh_agent_and_load_cloud_and_vm_key
 

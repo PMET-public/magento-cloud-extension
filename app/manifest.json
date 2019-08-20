@@ -30,7 +30,24 @@
   "content_scripts": [
     {
       "matches": [
+        "*://demo.magento.cloud/*"
+      ],
+      "js": [
+        "scripts/content.processed.js"
+      ],
+      "css": [
+        "styles/content.css",
+        "styles/import-cloud-ui.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
         "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://demo.magento.cloud/*"
       ],
       "js": [
         "scripts/content.processed.js"

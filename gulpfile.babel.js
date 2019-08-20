@@ -117,6 +117,7 @@ for (let mode of ['dev', 'dist']) {
 
   gulp.task(mode + '-styles', () =>
     gulp.src([
+        'app/styles.scss/vendor.scss',
         'app/styles.scss/main.scss',
         'app/styles.scss/content.scss',
         'app/styles.scss/import-cloud-ui.scss',

@@ -11,9 +11,16 @@
   width: 25%;
   display: inline-block;
   font-size: 90%;
-  margin-bottom: 12px;
+  padding-bottom: 12px;
   position: relative;
+  cursor: pointer;
 }
+
+// .cli-cmd-container:hover {
+//     background-color: $color-primary;
+//     color: #fff;
+//     cursor: pointer;
+// }
 
 #password-dialog {
   text-align: right;
@@ -28,30 +35,42 @@
 }
 
 .cli-cmd {
-  width: 50px;
-  padding: 5px;
-  left: 5px;
+  width: 1px;
+  padding: 0;
+  border: 0;
+  left: -9999px;
+  z-index: -1;
+  position: absolute;
+}
+
+.cli-cmd-container > .mdi {
   position: relative;
-  ~ .mdi {
-    position: relative;
-    top: 2px;
-    left: 5px;
-    &:hover {
-      background-color: $color-primary;
-      color: #fff;
-      cursor: pointer;
-    }
-  }
+  top: 2px;
+  left: 5px;
+  padding: 0;
+}
+
+.cli-cmd-container .simple-copy {
+  padding-right: 5px;
 }
 
 .copied-to-clipboard-alert {
   color: red;
   font-weight: bold;
   margin-left: 10px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: block;
+  background-color: rgba(255,255,255,1);
+  text-align: center;
+  padding: 5px;
+  left: -12px;
 }
 
 .cmds-prequisites, .cmds-cloud-and-vm {
   padding: 5px;
+  display: inline-block;
 }
 
 .cmds-cloud-only, .cmds-vm-only {

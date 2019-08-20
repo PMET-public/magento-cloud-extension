@@ -60,10 +60,10 @@ h3 {
   border-radius: 4px;
   text-align: center;
   line-height: 24px;
-  &:hover {
-    color: #fff;
-    background-color: $color-primary;
-  }
+  // &:hover {
+  //   color: #fff;
+  //   background-color: $color-primary;
+  // }
 }
 .not-interactive.mdi {
   background-color: inherit;
@@ -122,17 +122,18 @@ input {
 
 .update-available {
   color: red;
-  text-transform: uppercase;
+  width: auto;
+  //text-transform: uppercase;
   opacity: 1;
-  animation: fade-in ease-in 2; 
+  animation: fade-in ease-in 3; 
   animation-fill-mode: forwards;
   animation-duration:3s;
-  animation-delay: 0s
+  animation-delay: 0s;
 }
 
 @keyframes fade-in { 
   0% { opacity: 1; } 
-  50% { opacity: 0; } 
+  50% { opacity: 0.35; } 
   100% { opacity: 1; } 
 }
 

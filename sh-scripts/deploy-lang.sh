@@ -7,5 +7,5 @@ $ssh_cmd "
     perl -pe 's/zh_CN/zh_Hans_CN/;s/sr_SP/sr_Cyrl_RS/;s/zh_TW/zh_Hant_TW/' | \
     # remove duplicates
     sort -u)
-  php ./bin/magento setup:static-content:deploy --ansi --no-interaction -f --jobs $(nproc) -s standard \${LANGS}
+  php ./bin/magento setup:static-content:deploy --ansi --no-interaction -f --jobs $(nproc) -s compact \${LANGS}
 "

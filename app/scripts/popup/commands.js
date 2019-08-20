@@ -37,17 +37,15 @@ function setFormButtonState() {
 
 function copyToClipboard(el) {
   const copyClass = 'copied-to-clipboard-alert'
-  const jCopyEl = $(el)
+  const jInput = $(el)
     .focus()
     .select()
-    .parent()
-    .append('<span class="' + copyClass + '">copied!</span>')
+  const jMsg = jInput.parent()
+    .append('<span class="' + copyClass + '">Copied!</span>')
     .find('.' + copyClass)
-    .fadeOut(1000, function () {
-      $(this).remove()
-    })
+  setTimeout(() => jMsg.remove(), 1000)
   document.execCommand('copy')
-
+  jInput[0].blur()
 }
 
 $(function () {
@@ -122,16 +120,28 @@ $(function () {
   })
   
   const curManifestVersion = chrome.runtime.getManifest().version
-  $('.cli-cmd').each(function () {
-    const jCmdInput = $(this)
+
+  // $('.cli-cmd').each(function () {
+  //   const jCmdInput = $(this)
+  //   // if url is part of magento.cloud (not magentosite.cloud or VM), use full url else just base url
+  //   const url = /magento\.cloud/.test(tabBaseUrl) ? tabUrl : tabBaseUrl
+  //   jCmdInput.val(jCmdInput.val().replace(/{{tab_url}}/g, url).replace(/{{version}}/g, curManifestVersion))
+  //     .prevAll('.simple-copy')
+  //     .click(function (ev) {
+  //       copyToClipboard(jCmdInput)
+  //     })
+  // })
+
+  $('body').on('click', '.cli-cmd-container', function (ev) {
+    const jCmdInput = $(this).find('input')
     // if url is part of magento.cloud (not magentosite.cloud or VM), use full url else just base url
     const url = /magento\.cloud/.test(tabBaseUrl) ? tabUrl : tabBaseUrl
     jCmdInput.val(jCmdInput.val().replace(/{{tab_url}}/g, url).replace(/{{version}}/g, curManifestVersion))
-      .next('.simple-copy')
-      .click(function (ev) {
-        copyToClipboard(jCmdInput)
-      })
+    copyToClipboard(jCmdInput)
+    
   })
+
+
   
   $('#password-prompt').click(function () {
     $('#password-dialog').dialog('open')

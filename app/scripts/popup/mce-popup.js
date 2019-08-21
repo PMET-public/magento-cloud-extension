@@ -1,4 +1,25 @@
 $(function() {
+
+  // attempt to provide a direct link to the environment in the cloud ui when on a specific storefront
+  // need to match an environment subdomain to a corresponding actual env name in the project list
+  // use the list from the version css for matching
+  fetch('https://master-7rqtwti-zajhc7u663lak.demo.magentosite.cloud/media/cloud-ui.css')
+  .then(response => response.text())
+  .then(txt => {
+    const subdomainMatches = tabUrl.match(/.*?:\/\/([^.]+)-[^-]*-([^-]*)\.demo\.magentosite\.cloud\/.*/)
+    if (subdomainMatches) {
+      debugger
+      const environmentInSubdomain = subdomainMatches[1]
+      const projectInSubdomain = subdomainMatches[2]
+      const matchesFromCss = txt.match(new RegExp('"/projects/' + projectInSubdomain + '/environments/' +  environmentInSubdomain.replace(/-/g,'[_\.\-]') + '"', 'ig'))
+      if (matchesFromCss && matchesFromCss.length === 1) {
+        $('#cloud-ui-link')[0].href='https://demo.magento.cloud' + matchesFromCss[0].replace(/"/g,'')
+      } else {
+        $('#cloud-ui-link')[0].href='https://demo.magento.cloud/projects/' + projectInSubdomain + '/environments/master'
+      }
+    }
+  })
+
   $('#tabs').tabs({
     activate: function (event, ui ) {
       // when a tab is clicked, store it as the current active one

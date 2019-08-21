@@ -12,7 +12,7 @@ $ssh_cmd "
 echo Which language code to deploy?
 read lang_code </dev/tty
 
-if [[ ! -z \"\${lang_code}\" ]]; then
+if [[ ! -z "${lang_code}" ]]; then
   $ssh_cmd "
     php ./bin/magento setup:static-content:deploy --ansi --no-interaction -f --jobs $(nproc) -s standard ${lang_code}
     echo Cleaning layout cache ...

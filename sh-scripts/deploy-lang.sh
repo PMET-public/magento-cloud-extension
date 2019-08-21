@@ -9,7 +9,8 @@ $ssh_cmd "
     sort -u
   "
 
-echo Which language code to deploy?
+echo
+echo ^^ Which language code to deploy?
 read lang_code </dev/tty
 
 if [[ ! -z "${lang_code}" ]]; then

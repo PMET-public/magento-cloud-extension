@@ -137,13 +137,13 @@ $(function () {
     // if url is part of magento.cloud (not magentosite.cloud or VM), use full url else just base url
     const url = /magento\.cloud/.test(tabBaseUrl) ? tabUrl : tabBaseUrl
     jCmdInput.val(jCmdInput.val().replace(/{{tab_url}}/g, url).replace(/{{version}}/g, curManifestVersion))
+    if (jCmdInput[0].id == "password-cli-cmd") {
+      return false
+    }
     copyToClipboard(jCmdInput)
-    
   })
 
-
-  
-  $('#password-prompt').click(function () {
+  $('#password-prompt-container').click(function () {
     $('#password-dialog').dialog('open')
     if (!isPasswordValid($('#password-dialog-input').val())) {
       $('#password-dialog  ~ .ui-dialog-buttonpane button').button('disable')

@@ -9,8 +9,13 @@ $ssh_cmd "
     perl -pe 's/zh_CN/zh_Hans_CN/;s/sr_SP/sr_Cyrl_RS/;s/zh_TW/zh_Hant_TW/' | \
     # remove duplicates
     sort -u
-  read -p 'Choose language code to deploy: ' lang_code 
-  php ./bin/magento setup:static-content:deploy --ansi --no-interaction -f --jobs $(nproc) -s standard \${lang_code}
-  echo Cleaning layout cache ...
-  php ./bin/magento cache:clean layout
+  echo Which language code to deploy?
+  read lang_code
+  if [[ ! -z ${lang_code} ]]; then
+    php ./bin/magento setup:static-content:deploy --ansi --no-interaction -f --jobs $(nproc) -s standard \${lang_code}
+    echo Cleaning layout cache ...
+    php ./bin/magento cache:clean layout
+  else
+    echo No code entered.
+  fi
 "

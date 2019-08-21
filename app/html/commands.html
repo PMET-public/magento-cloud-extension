@@ -22,7 +22,7 @@
   <div>
     <div class="cmds-cloud-and-vm">
       <h3>Cloud or VM cmds</h3>
-      <a class="cli-cmd-container">
+      <a class="cli-cmd-container" id="password-prompt-container">
         <span id="password-prompt" class="mdi mdi-pencil-lock"></span>
         Create/reset admin
         <input id="password-cli-cmd" class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
@@ -130,7 +130,7 @@
       </a>
       <a class="cli-cmd-container">
         <span class="mdi mdi-content-copy simple-copy"></span>
-        Enable all languages
+        Deploy a language
         <input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh
           https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/deploy-lang.sh | env ext_ver={{version}} tab_url={{tab_url}} bash" readonly>
       </a>

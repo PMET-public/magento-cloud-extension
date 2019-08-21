@@ -1,6 +1,8 @@
 msg Finding available languages ...
 
-get_interactive_ssh_cmd "${project}" "${environment}" "
+ssh_cmd=$(get_interactive_ssh_cmd ${project} ${environment})
+
+$ssh_cmd "
   # find languages
   find vendor -name language.xml -exec perl -ne '/<code>(.*)<\/code>/ and print \"\$1\n\"' {} \; | \
     # fix invalid lang codes

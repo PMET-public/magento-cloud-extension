@@ -57,7 +57,7 @@ $(function() {
       if (remoteIsNewer) {
         $('.extension-title').append('<div class="cli-cmd-container update-available">' +
         '<span class="mdi mdi-content-copy simple-copy"></span>' +
-        '<div class="help-wrapper" data-descr="Click to copy. Then paste in terminal.">Update! <span  class="mdi mdi-help"></span></div>' +
+        '<div class="help-wrapper" data-descr="Click to copy. Then paste in terminal.">Update! <span  class="mdi mdi-bell-ring"></span></div>' +
         '<input class="cli-cmd" type="text" value="curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/lib.sh ' +
         'https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/{{version}}/sh-scripts/update-extension.sh | ' +
         'env ext_ver={{version}} tab_url={{tab_url}} bash" readonly></div>')

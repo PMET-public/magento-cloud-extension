@@ -10,7 +10,7 @@ $ssh_cmd "
   "
 
 echo Which language code to deploy?
-read lang_code
+read lang_code </dev/tty
 
 if [[ ! -z \"\${lang_code}\" ]]; then
   $ssh_cmd "

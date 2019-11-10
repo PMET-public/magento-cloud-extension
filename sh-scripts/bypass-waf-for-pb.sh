@@ -73,6 +73,7 @@ case ${REPLY} in
     echo "Flushing the cache ..."
     php bin/magento cache:flush > /dev/null
     echo "Env reverted to ${url}"
+    pkill sleep
   '
   ;;
 *)

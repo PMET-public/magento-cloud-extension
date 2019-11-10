@@ -61,7 +61,7 @@ case ${REPLY} in
     php bin/magento cache:flush > /dev/null
     printf "\033[1;33mREMEMBER to rerun this script and revert the change when done!!! (option #2)\033[0m\n"
     echo "Your env is now accessible at http://demo.the1umastory.com/ until you press Ctrl-c to quit."
-    sleep 9999999
+    sleep 99999
   '
   ;;
 2)

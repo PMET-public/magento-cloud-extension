@@ -187,7 +187,7 @@ gulp.task('package', ['dist-build'], () => {
   gulp.src([
       'dist/**'
     ])
-    .pipe($.zip('mcm-chrome-ext-' + manifest.version + '.zip'))
+    .pipe($.zip('mcm-chrome-ext.zip'))
     .pipe(gulp.dest('package'))
 })
 

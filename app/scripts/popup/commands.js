@@ -136,7 +136,12 @@ $(function () {
     const jCmdInput = $(this).find('input')
     // if url is part of magento.cloud (not magentosite.cloud or VM), use full url else just base url
     const url = /magento\.cloud/.test(tabBaseUrl) ? tabUrl : tabBaseUrl
-    jCmdInput.val(jCmdInput.val().replace(/{{tab_url}}/g, url).replace(/{{version}}/g, curManifestVersion))
+    jCmdInput.val(
+      jCmdInput.val()
+        .replace(/{{tab_url}}/g, url)
+        .replace(/{{version}}/g, curManifestVersion)
+        .replace(/{{rawGitUrl}}/g, 'https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/')
+      )
     if (jCmdInput[0].id == "password-cli-cmd") {
       return false
     }

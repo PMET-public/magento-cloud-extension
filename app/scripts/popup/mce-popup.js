@@ -37,7 +37,13 @@ $(function() {
       $('.ui-tabs-tab a').get(activeTab).click()
     }
   })
-  $('.applied-domain').text(appliedDomain)
+  $('.current-domain').text(appliedDomain)
+  if (/\.magento\.cloud/.test(tabBaseUrl)) {
+    const environment = tabUrl.replace(/.*\//,'')
+    $('.target-env').text(`Env id: ${environment}`)
+  } else {
+    $('.target-env').text(tabBaseUrl)
+  }
 
   const curManifestVersion = chrome.runtime.getManifest().version
   $('#manifest-version').text('(cur ver: ' + curManifestVersion + ')')
@@ -54,7 +60,7 @@ $(function() {
           break
         }
       }
-      if (remoteIsNewer) {
+      if (remoteIsNewer||true) {
         $('.extension-title').append('<div class="cli-cmd-container update-available">' +
         '<span class="mdi mdi-content-copy simple-copy"></span>' +
         '<div class="help-wrapper" data-descr="Click to copy. Then paste in terminal.">Update! <span  class="mdi mdi-bell-ring"></span></div>' +

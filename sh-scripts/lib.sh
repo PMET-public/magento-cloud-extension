@@ -94,7 +94,7 @@ get_ssh_cmd() {
 }
 
 get_interactive_ssh_cmd() {
-  echo "ssh -A $(get_ssh_url $*)"
+  echo "ssh -A $(get_ssh_url $*) < /dev/tty"
 }
 
 choose_backup() {

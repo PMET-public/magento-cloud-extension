@@ -1,6 +1,6 @@
 msg Downloading and extracting extension ...
 
-rm ~/Downloads/mcm-chrome-ext.zip || :
+rm -rf ~/Downloads/mcm-chrome-ext.zip ~/Downloads/mcm-chrome-ext-*.zip ~/Downloads/mcm-chrome-ext-0.0.24 || :
 
 if [[ -z "${master_ver}" ]]; then
   master_ver=$(curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/app/manifest.json | perl -ne 's/^\s*"version"\s*:\s*"(.*)".*/\1/ and print')

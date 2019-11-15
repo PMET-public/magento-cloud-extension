@@ -46,7 +46,7 @@ $(function() {
   }
 
   const curManifestVersion = chrome.runtime.getManifest().version
-  $('#manifest-version').text('(cur ver: ' + curManifestVersion + ')')
+  $('#manifest-version').text('(ver: ' + curManifestVersion + ')')
   const curManifestVersionParts = curManifestVersion.split('.')
   // check current manifest vs remote manifest
   fetch('https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/app/manifest.json')

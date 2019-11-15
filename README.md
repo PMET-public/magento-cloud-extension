@@ -29,7 +29,7 @@ To install the Magento Cloud CLI & setup ssh keys:
 
 Done
 
-## Update
+## Update - 1 min video
 [![Quick Install Video](http://img.youtube.com/vi/JDBgG4Hs_No/0.jpg)](https://www.youtube.com/watch?v=JDBgG4Hs_No "Quick Update Video")
 
 1. Quick the update link in the extension

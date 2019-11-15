@@ -1,6 +1,4 @@
-
-
-## Installation
+## Installation (how to update below)
 
 
 [![Quick Install Video](http://img.youtube.com/vi/x3KF-Y_8R00/0.jpg)](https://www.youtube.com/watch?v=x3KF-Y_8R00 "Quick Install Video")
@@ -28,5 +26,18 @@ To install the Magento Cloud CLI & setup ssh keys:
 2. Click "Prerequisites"
 3. Copy and paste those commands in your terminal
 4. Note that you may be asked to login once `~/.magento-cloud/bin/magento-cloud login`
+
+Done
+
+## Update
+[![Quick Install Video](http://img.youtube.com/vi/JDBgG4Hs_No/0.jpg)](https://www.youtube.com/watch?v=JDBgG4Hs_No "Quick Update Video")
+
+1. Quick the update link in the extension
+2. Download & open zip file
+3. Chrome settings (⋮) → More Tools → Extensions
+4. Remove old extension
+5. Turn on "Developer Mode" (if not already on)
+6. Click "Load Unpacked"
+7. Select unzipped folder at Downloads > mcm-chrome-ext
 
 Done

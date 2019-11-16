@@ -182,10 +182,10 @@ gulp.task('html', () =>
 )
 
 gulp.task('watch', gulp.series('html', 'lint', 'dev-js', 'dev-styles', 'copy-remaining-to-dist', () => {
-    gulp.watch('app/html/**', ['html'])
-    gulp.watch('app/scripts/**/*.js', ['lint', 'dev-js'])
-    gulp.watch('app/styles.scss/**/*.scss', ['dev-styles'])
-    gulp.watch('app/image-downloader/**', ['copy-remaining-to-dist'])
+    gulp.watch('app/html/**', gulp.series('html'))
+    gulp.watch('app/scripts/**/*.js', gulp.series('lint', 'dev-js'))
+    gulp.watch('app/styles.scss/**/*.scss', gulp.series('dev-styles'))
+    gulp.watch('app/image-downloader/**', gulp.series('copy-remaining-to-dist'))
   })
 )
 

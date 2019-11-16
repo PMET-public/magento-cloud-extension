@@ -60,7 +60,7 @@ $(function() {
           break
         }
       }
-      if (remoteIsNewer||true) {
+      if (remoteIsNewer) {
         $('.extension-title').append('<div class="cli-cmd-container update-available">' +
         '<span class="mdi mdi-content-copy simple-copy"></span>' +
         '<div class="help-wrapper" data-descr="Click to copy. Then paste in terminal.">Update! <span  class="mdi mdi-bell-ring"></span></div>' +

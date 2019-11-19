@@ -250,14 +250,8 @@ restore_media_from_backup_server() {
 
 install_local_dev_tools_if_needed() {
   if ! git --version > /dev/null 2>&1; then
-    warning Local developer tools are not installed. You will need to accept the agreement from Apple. Initiating install ...
-    sudo xcode-select --install || :
-    read -p "Continue when the installer has finished. Continue? (y/n): " -n 1 -r < /dev/tty
-    if [[ "${REPLY}" =~ ^[Yy]$ ]]; then
-      install_local_dev_tools_if_needed # check again
-    else
-      exit
-    fi
+    warning Local developer tools are not installed, or you need to accept the agreement from Apple. Please run this command first:
+    error "sudo xcode-select --install; sudo xcodebuild -license"
   fi
 }
 install_local_dev_tools_if_needed

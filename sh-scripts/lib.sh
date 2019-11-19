@@ -276,12 +276,17 @@ start_ssh_agent_and_load_cloud_and_vm_key() {
   fi
 
   # verify local vm key exists
-  if [[ ! -f "${vm_key}" ]]; then
-    curl -o "${vm_key}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
+  if ! grep -q "BEGIN RSA PRIVATE KEY" "${vm_key}"; then
+    curl -so "${vm_key}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
     chmod 600 "${vm_key}"
   fi
 
-  ssh-add "${cloud_key}" "${vm_key}" 2> /dev/null || :
+  if ! ssh-add "${cloud_key}" 2> /dev/null; then
+    error Could not add cloud ssh key.
+  fi
+  if ! ssh-add "${vm_key}" 2> /dev/null; then
+    error Could not add vm ssh key.
+  fi
 }
 start_ssh_agent_and_load_cloud_and_vm_key
 

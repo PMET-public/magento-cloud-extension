@@ -24,6 +24,7 @@ const mcmExt = [
   'app/scripts/popup/custom-autocomplete.js',
   'app/scripts/lib/lib.js',
   'app/scripts/popup/css-injector/*.js',
+  'app/scripts/popup/commands-data.js',
   'app/scripts/popup/commands.js',
   'app/scripts/popup/mce-popup.js'
 ]

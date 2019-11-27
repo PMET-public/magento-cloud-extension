@@ -1,36 +1,20 @@
-#commands p, #commands .ui-accordion-content h3 {
-    text-align: center;
-    margin: 5px auto;
-}
-
-#commands .ui-accordion-content {
-  padding: 0;
-}
-
 .cli-cmd-container {
-  display: inline-block;
-  font-size: 90%;
+  white-space: nowrap;
+  //font-size: 90%;
   padding-bottom: 12px;
   position: relative;
   cursor: pointer;
+  background-color: #f6f6f6;
+  border: 1px solid #c5c5c5;
+  border-radius: 5px 5px 5px 5px;
+  padding: 2px 5px 2px 5px;
+  margin: 1px 0 1px 0;
+  display: inline-block;
 }
 
-// .cli-cmd-container:hover {
-//     background-color: $color-primary;
-//     color: #fff;
-//     cursor: pointer;
-// }
-
-#password-dialog {
-  text-align: right;
-  input {
-    margin: 5px 30px 5px 5px;
-    width: 200px;
-  }
-  p {
-    text-align: left;
-    margin: 5px auto 5px 20px;
-  }
+.cli-cmd-container:hover {
+  background-color: $color-secondary;
+  border: 1px solid $color-primary;
 }
 
 .cli-cmd {
@@ -49,10 +33,6 @@
   padding: 0;
 }
 
-.cli-cmd-container .simple-copy {
-  padding-right: 5px;
-}
-
 .copied-to-clipboard-alert {
   color: red;
   font-weight: bold;
@@ -67,17 +47,41 @@
   left: -12px;
 }
 
-.cmds-prequisites {
-  padding: 5px;
-  display: inline-block;
+// #cmds-prequisites, #cmds-useful {
+//   padding: 5px;
+// }
+
+.cmds-container {
+  // border: 1px dashed gray;
+  width: fit-content;
+  height: fit-content;
+  padding: 3px 3px 3px 3px;
 }
 
-.cmd-cloud, .cmd-vm {
-  display: inline-block;
-  vertical-align: top;
-  padding-left: 5px;
+.cmds-container:before{
+  content:attr(aria-label);
+  font-size: 120%;
+  font-weight: bold;
 }
 
-#admin-reset-note {
-  color: $color-error-text;
+#cmds-grid {
+  // display: flex;
+  // flex-direction: column;
+  // flex-wrap: wrap;
+  // align-content: flex-start;
+  // height: 300px;
+
+  display: grid;
+  grid-template:
+    'grid-magento grid-magento grid-magento grid-monitor'
+    'grid-maintenance grid-maintenance grid-access grid-access';
+}
+
+.grid-magento { grid-area: grid-magento; }
+.grid-access { grid-area: grid-access; }
+.grid-maintenance { grid-area: grid-maintenance; }
+.grid-monitor { grid-area: grid-monitor; }
+
+#cmds-filter {
+  text-align: center;
 }

@@ -1,10 +1,9 @@
-/* selector to for cloud sites */
+/* selector for cloud sites */
 html[ng-app="platformApp"] {
   a[on="environment.enable_smtp"]::after {
     content: 'You must "rebuild" using the chrome extension cmd after turning emails on.';
     float: right;
     font-size: 0.75em;
     color: red;
-    
   }
 }

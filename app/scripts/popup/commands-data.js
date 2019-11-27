@@ -29,7 +29,17 @@ const commands = [
   {
     text: 'Backup',
     scriptsInValue: ['lib.sh', 'backup-env.sh', 'maintenance'],
-    tags: ['cloud', 'vm'],
+    tags: ['cloud', 'vm', 'maintenance'],
+  },
+  {
+    text: 'Unlock admin account',
+    scriptsInValue: ['lib.sh', 'admin-unlock.sh'],
+    tags: ['cloud', 'vm', 'magento'],
+  },
+  {
+    text: 'Create admin account',
+    scriptsInValue: ['lib.sh', 'admin-create.sh'],
+    tags: ['cloud', 'vm', 'magento'],
   },
   {
     text: 'Reindex',
@@ -37,7 +47,12 @@ const commands = [
     tags: ['cloud', 'vm', 'magento'],
   },
   {
-    text: 'Run Magento cron jobs',
+    text: 'Run cron once',
+    scriptsInValue: ['lib.sh', 'run-cron.sh'],
+    tags: ['cloud', 'vm', 'magento'],
+  },
+  {
+    text: 'Run cron repeatedly',
     scriptsInValue: ['lib.sh', 'run-cron.sh'],
     tags: ['cloud', 'vm', 'magento'],
     help: 'Run Magento cron jobs each min for 1 hr'
@@ -68,9 +83,14 @@ const commands = [
     tags: ['cloud', 'vm', 'monitor'],
   },
   {
-    text: 'Send imgs to env',
+    text: 'Copy imgs to env',
     scriptsInValue: ['lib.sh', 'copy-imgs-to-env.sh'],
-    tags: ['cloud', 'vm'],
+    tags: ['cloud', 'vm', 'image-copy'],
+  },
+  {
+    text: 'Update Available!',
+    scriptsInValue: ['lib.sh', 'update-extension.sh'],
+    tags: ['self-update'],
   },
   {
     text: 'Watch logs',

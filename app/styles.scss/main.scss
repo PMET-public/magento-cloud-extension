@@ -4,11 +4,17 @@
 
 @import 'css-injector';
 @import 'commands';
+@import 'update-available';
 
 $body-width: 700px;
 
 ::-webkit-scrollbar { 
   display: none; 
+}
+
+.ui-accordion .ui-accordion-content {
+  padding: 0;
+  margin: 0;
 }
 
 body {
@@ -17,6 +23,30 @@ body {
   min-height: 600px;
   width: $body-width;
   margin: 0;
+}
+
+ul, li {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+h3 {
+  line-height: 2em;
+  font-size: 1.5em;
+  margin: 0.5em;
+}
+
+input {
+  padding: 5px;
+  border: 1px solid $color-border;
+  &:disabled {
+    background-color: $color-disabled;
+    border-color: $color-disabled;
+  }
+  &.has-error {
+    outline: red auto 5px;
+  }
 }
 
 #top-nav {
@@ -46,12 +76,6 @@ body {
   font-style: italic;
 }
 
-h3 {
-  line-height: 2em;
-  font-size: 1.5em;
-  margin: 0.5em;
-}
-
 .mdi {
   font-size: 20px;
   height: 24px;
@@ -73,7 +97,7 @@ h3 {
   }
 }
 
-.mdi-help, h3 .mdi-open-in-new {
+h3 .mdi-open-in-new {
   font-size: 16px;
   position: relative;
   top: -10px;
@@ -100,18 +124,6 @@ h3 {
   outline: $color-primary auto 5px;
 }
 
-input {
-  padding: 5px;
-  border: 1px solid $color-border;
-  &:disabled {
-    background-color: $color-disabled;
-    border-color: $color-disabled;
-  }
-  &.has-error {
-    outline: red auto 5px;
-  }
-}
-
 .target-env, .current-domain {
   font-weight: bold;
   font-size: 1em;
@@ -120,45 +132,4 @@ input {
   display: inline-block;
 }
 
-.update-available {
-  color: red;
-  width: auto;
-  //text-transform: uppercase;
-  opacity: 1;
-  animation: fade-in ease-in 3; 
-  animation-fill-mode: forwards;
-  animation-duration:3s;
-  animation-delay: 0s;
-}
 
-@keyframes fade-in { 
-  0% { opacity: 1; } 
-  50% { opacity: 0.35; } 
-  100% { opacity: 1; } 
-}
-
-
-.env-previews {
-  height: 95%;
-  .env-preview {
-    height: 200px;
-    width: 150px;
-    display: inline-block;
-    padding: 3px 8px;
-    box-sizing: border-box;
-    .screenshot-wrapper {
-      height: 100px;
-      overflow: hidden;
-      .screenshot {
-        width: 100%;
-        height: auto;
-      }
-    }
-    &:hover {
-      color: #454545;
-      cursor: pointer;
-      background-color: $color-secondary;
-      border: 1px solid $color-primary;
-    }
-  }
-}

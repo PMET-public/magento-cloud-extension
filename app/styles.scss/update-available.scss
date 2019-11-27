@@ -1,0 +1,43 @@
+.update-available {
+  color: red;
+  width: auto;
+  position: absolute;
+  //text-transform: uppercase;
+  opacity: 1;
+  animation: fade-in ease-in 3; 
+  animation-fill-mode: forwards;
+  animation-duration:3s;
+  animation-delay: 0s;
+}
+
+@keyframes fade-in { 
+  0% { opacity: 1; } 
+  50% { opacity: 0.35; } 
+  100% { opacity: 1; } 
+}
+
+
+.env-previews {
+  height: 95%;
+  .env-preview {
+    height: 200px;
+    width: 150px;
+    display: inline-block;
+    padding: 3px 8px;
+    box-sizing: border-box;
+    .screenshot-wrapper {
+      height: 100px;
+      overflow: hidden;
+      .screenshot {
+        width: 100%;
+        height: auto;
+      }
+    }
+    &:hover {
+      color: #454545;
+      cursor: pointer;
+      background-color: $color-secondary;
+      border: 1px solid $color-primary;
+    }
+  }
+}

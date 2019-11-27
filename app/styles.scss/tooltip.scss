@@ -1,18 +1,6 @@
-[data-descr] {
-  position: relative;
-  // color: $color-primary;
-  display: inline-block;
-}
-
-[data-descr]:hover::after {
-  content: attr(data-descr);
-  position: absolute;
-  left: -250px;
-  top: 24px;
-  // min-width: 250px;
-  //text-align: justify;
-  border: 1px $color-primary solid;
-  border-radius: 10px;
+.cmd-help {
+  //border: 1px $color-primary solid;
+  //border-radius: 10px;
   background-color: $color-secondary;
   padding: 10px;
   color: $color-normal-text;
@@ -20,14 +8,21 @@
   font-weight: 400;
   line-height: 16px;
   z-index: 2;
-  opacity: 0.95;
+  opacity: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: block;
+  white-space: normal;
+  text-align: center;
 }
 
 //$cmd-tip-width: 200px;
 
 .cli-cmd-container {
-  .helo-wrapper {
-    display: inline;
+  &:hover .cmd-help {
+    opacity: 1;
   }
   .mdi-help {
     position: relative;
@@ -36,23 +31,14 @@
     overflow: visible;
     height: 0;
     width: 0;
-    top: -10px;
+    // top: -10px;
     //left: -10px;
-    &::before {
-      line-height: 10px;
-    }
-  }
-  // [data-descr] {
-  //   color: $color-normal-text;
-  // }
-  [data-descr]:hover::after {
-    top: -60px;
-    padding: 5px;
-    //min-width: $cmd-tip-width;
-    left: -150px;
+    // &::before {
+    //   line-height: 10px;
+    // }
   }
 }
 
-.extension-title [data-descr]:hover::after {
-  top: 30px;
-}
+// .extension-title [data-descr]:hover::after {
+//   top: 30px;
+// }

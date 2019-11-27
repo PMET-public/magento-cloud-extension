@@ -1,0 +1,2 @@
+--ignore-dir=bower_components
+--ignore-dir=dist

@@ -1,0 +1,3 @@
+msg Creating/resetting admin user ...
+
+$ssh_cmd "php ${app_dir}/bin/magento admin:user:unlock ${user};"

@@ -22,11 +22,12 @@ const imageDownloader = [
 
 const mcmExt = [
   'app/scripts/popup/custom-autocomplete.js',
-  'app/scripts/lib/lib.js',
+  'app/scripts/lib/lib-open.js',
   'app/scripts/popup/css-injector/*.js',
   'app/scripts/popup/commands-data.js',
   'app/scripts/popup/commands.js',
-  'app/scripts/popup/mce-popup.js'
+  'app/scripts/popup/mce-popup.js',
+  'app/scripts/lib/lib-close.js'
 ]
 
 const contentScripts = [
@@ -37,9 +38,10 @@ const contentScripts = [
 ]
 
 const distBackgroundScripts = [
-  'app/scripts/lib/lib.js',
+  'app/scripts/lib/lib-open.js',
   'app/scripts/background/my-background.js',
-  'app/image-downloader/scripts/defaults.js'
+  'app/image-downloader/scripts/defaults.js',
+  'app/scripts/lib/lib-close.js'
 ]
 
 const devBackgroundScripts = ['app/crx-hotreload/hot-reload.js', ...distBackgroundScripts]

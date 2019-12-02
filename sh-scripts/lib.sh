@@ -5,7 +5,7 @@ fi
 # stop on errors
 set -e
 
-cli_required_version="1.23.0"
+cli_required_version="1.32.0"
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("${cli_path}" --version | perl -pe 's/.*?([\d\.]+)/\1/')
 if [[ "${cli_actual_version}" != "${cli_required_version}" ]]; then

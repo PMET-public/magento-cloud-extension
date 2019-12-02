@@ -31,7 +31,7 @@ function cmdsToHtml(cmds) {
     ${cmd.text}
     ${cmd.help ? `<span class="cmd-help">${cmd.help}</span>` : ''}
     <input class="cli-cmd" type="text" readonly
-      value="curl -sS ${cmd.scriptsInValue.map(s => `${rawGitPrefix}${s}`).join(' ')} | env ext_ver=${curManifestVersion} tab_url=${url} bash">
+      value="curl -sS ${rawGitPrefix}{${cmd.scriptsInValue.join(',')}} | env ext_ver=${curManifestVersion} tab_url=${url} bash">
     </div>
   `)
   return html

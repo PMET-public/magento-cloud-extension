@@ -1,6 +1,7 @@
 node_modules
 temp
 .tmp
+*.secret
 dist
 .sass-cache
 app/bower_components

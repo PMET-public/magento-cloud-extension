@@ -7,6 +7,8 @@ $(function() {
     $('.target-env').text(`Env id: ${tabUrl.replace(/.*\//,'')}`)
   } else {
     $('.target-env').text(tabBaseUrl)
+    // append cur domain name to link
+    $('#bw-link')[0].href = `https://builtwith.com/${tabBaseUrl.replace(/https?:\/\//,'').replace(/\/.*/,'')}`
   }
   
 

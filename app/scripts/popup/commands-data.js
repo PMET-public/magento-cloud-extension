@@ -113,6 +113,18 @@ const commands = [
     tags: ['cloud', 'vm', 'access'],
   },
   {
+    text: 'Enable password access',
+    scriptsInValue: ['lib.sh', 'auth-pass.sh'],
+    tags: ['cloud', 'vm', 'access'],
+    help: 'Username will be "admin". Password will be the project id.'
+  },
+  {
+    text: 'Enable IP based access',
+    scriptsInValue: ['lib.sh', 'auth-list.enc.sh', 'auth-ip.sh'],
+    tags: ['cloud', 'vm', 'access'],
+    help: 'All office & VPN IPs will be allowed. You may add 1 more IP temporarily.'
+  },
+  {
     text: 'Turn email on/off',
     scriptsInValue: ['lib.sh', 'toggle-email.sh'],
     tags: ['cloud', 'vm', 'maintenance'],

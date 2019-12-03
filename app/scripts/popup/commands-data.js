@@ -169,7 +169,13 @@ const commands = [
     text: 'Enable IP based access',
     scriptsInValue: ['lib.sh', 'auth-list.enc.sh', 'auth-ip.sh'],
     tags: ['cloud', 'vm', 'access'],
-    help: 'All office & VPN IPs will be allowed. You may add 1 more IP temporarily.'
+    help: 'All office & VPN IPs will be allowed. You may add 1 more IP address temporarily.'
+  },
+  {
+    text: 'Show "Authorization" header',
+    scriptsInValue: ['lib.sh', 'auth-show.sh'],
+    tags: ['cloud', 'vm', 'access'],
+    help: 'This header can be used by applications when passwords are not an option.'
   },
 
 ]

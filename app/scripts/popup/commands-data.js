@@ -3,7 +3,7 @@
 //   scriptsInValue: [''],
 //   additionalEnvVarsInValue: '',
 //   suffixToValue: '',
-//   tags: ['cloud', 'vm', 'prerequiste', 'magento', 'monitor', 'maintenance', 'access'],
+//   tags: ['cloud', 'vm', 'prerequisite', 'magento', 'monitor', 'maintenance', 'access'],
 //   help: ''
 // }
 
@@ -11,13 +11,13 @@ const commands = [
   {
     text: '1) Install the Cloud CLI',
     scriptsInValue: ['install-cli-and-login.sh'],
-    tags: ['prerequiste'],
+    tags: ['prerequisite'],
     help: 'You should only need to run this command on your computer once.'
   },
   {
     text: '2) Setup local ssh keys',
     scriptsInValue: ['setup-ssh-key.sh'],
-    tags: ['prerequiste'],
+    tags: ['prerequisite'],
     help: 'You should only need to run this command on your computer once.'
   },
   {

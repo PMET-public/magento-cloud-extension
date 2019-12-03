@@ -18,7 +18,7 @@ function copyToClipboard(el) {
 
 function matchCmd(cmd, key) {
   const re = new RegExp(key.trim(),'i')
-  if(key.trim() === '' || re.test(cmd.title) || re.test(cmd.help) || re.test(cmd.tag)) {
+  if(key.trim() === '' || re.test(cmd.text) || re.test(cmd.help) || re.test(cmd.tag)) {
     return true
   }
   return false
@@ -47,14 +47,14 @@ function tagsToHtml(tags, keywordFilter = '') {
   return html
 }
 
-  $('#cmds-grid').html(tagsToHtml(['magento', 'access', 'monitor', 'maintenance']))
+$('#cmds-grid').html(tagsToHtml(['magento', 'access', 'monitor', 'maintenance']))
 
-  $('body').on('click', '.cli-cmd-container', function (ev) {
-    const jCmdInput = $(this).find('input')
-    copyToClipboard(jCmdInput)
-  })
+$('body').on('click', '.cli-cmd-container', function (ev) {
+  const jCmdInput = $(this).find('input')
+  copyToClipboard(jCmdInput)
+})
 
-  $('body').on('keyup', '#search-cmds', function (ev) {
-    const key = $('#search-cmds').val()
-    $('#cmds-grid').html(tagsToHtml(['magento', 'access', 'monitor', 'maintenance'], key))
-  })
+$('body').on('keyup', '#search-cmds', function (ev) {
+  const key = $('#search-cmds').val()
+  $('#cmds-grid').html(tagsToHtml(['magento', 'access', 'monitor', 'maintenance'], key))
+})

@@ -47,17 +47,7 @@ function tagsToHtml(tags, keywordFilter = '') {
   return html
 }
 
-$(function () {
-
-  $('#cmds-prequisites').append(tagsToHtml(['prerequiste']))
-
   $('#cmds-grid').html(tagsToHtml(['magento', 'access', 'monitor', 'maintenance']))
-
-  $('#cmds-accordion').accordion({
-    active: 1,
-    collapsible: true,
-    heightStyle: "content"
-  })
 
   $('body').on('click', '.cli-cmd-container', function (ev) {
     const jCmdInput = $(this).find('input')
@@ -68,5 +58,3 @@ $(function () {
     const key = $('#search-cmds').val()
     $('#cmds-grid').html(tagsToHtml(['magento', 'access', 'monitor', 'maintenance'], key))
   })
-
-})

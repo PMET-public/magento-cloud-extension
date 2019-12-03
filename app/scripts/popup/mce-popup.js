@@ -8,7 +8,12 @@ if (/\.magento\.cloud/.test(tabBaseUrl)) {
   // append cur domain name to link
   $('#bw-link')[0].href = `https://builtwith.com/${tabBaseUrl.replace(/https?:\/\//,'').replace(/\/.*/,'')}`
 }
-
+$('#prereqs-cmds').append(cmdsToHtml(commands.filter(cmd => cmd.tags.includes('prerequisite'))))
+$('#prereqs-accordion').accordion({
+  active: 1,
+  collapsible: true,
+  heightStyle: "content"
+})
 
 // attempt to provide a direct link to the environment in the cloud ui when on a specific storefront
 // need to match an environment subdomain to a corresponding actual env name in the project list

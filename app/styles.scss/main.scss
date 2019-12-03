@@ -124,6 +124,17 @@ h3 .mdi-open-in-new {
   outline: $color-primary auto 5px;
 }
 
+#prereqs-accordion {
+  h3 {
+    display: inline-block;
+  }
+  .ui-widget-content {
+    border: none;
+    text-align: center;
+    padding: 8px 0 15px;
+  }
+}
+
 .target-env, .current-domain {
   font-weight: bold;
   font-size: 1em;

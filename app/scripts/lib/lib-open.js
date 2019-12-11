@@ -16,7 +16,7 @@ function handleExtensionIcon() {
       if (available) {
         chrome.browserAction.setBadgeText({text: 'up ⇪'})
       }
-  })
+    })
   })
 }
 
@@ -30,7 +30,7 @@ async function checkExtUpdateAvailable() {
       remoteIsNewer = true;
       break;
     }
-}
+  }
   return remoteIsNewer || true
 }
 
@@ -38,4 +38,5 @@ const tabUrl = tabs[0].url
 const tabBaseUrl = tabUrl.substring(0,tabUrl.indexOf('/', 8))
 const appliedDomain = tabBaseUrl.replace(/.*\/\//,'')
 const curManifestVersion = chrome.runtime.getManifest().version
-
+const isCloud = /\.magento(site)?\.cloud/.test(tabBaseUrl)
+const isVM = !isCloud

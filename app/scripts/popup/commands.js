@@ -39,11 +39,15 @@ function cmdsToHtml(cmds) {
 
 function tagsToHtml(tags, keywordFilter = '') {
   var html = ''
-  tags.forEach(tag => html += `
-    <div class="cmds-container grid-${tag}" aria-label="${tag}">
-      ${cmdsToHtml(commands.filter(cmd => cmd.tags.includes(tag)).filter(cmd => matchCmd(cmd, keywordFilter)))}
-    </div>
-  `)
+  tags.forEach(tag => {
+    const cmds = commands
+      .filter(cmd => cmd.tags.includes(isCloud ? 'cloud' : 'vm'))
+      .filter(cmd => cmd.tags.includes(tag))
+      .filter(cmd => matchCmd(cmd, keywordFilter))
+    html += `<div class="cmds-container grid-${tag}" aria-label="${tag}">
+        ${cmdsToHtml(cmds)}
+      </div>`
+  })
   return html
 }
 

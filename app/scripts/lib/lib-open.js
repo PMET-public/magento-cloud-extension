@@ -34,7 +34,8 @@ async function checkExtUpdateAvailable() {
   return remoteIsNewer || true
 }
 
-const tabUrl = tabs[0].url
+// replace method removes any password
+const tabUrl = tabs[0].url.replace(/:\/\/[^/]*@/,'://')
 const tabBaseUrl = tabUrl.substring(0,tabUrl.indexOf('/', 8))
 const appliedDomain = tabBaseUrl.replace(/.*\/\//,'')
 const curManifestVersion = chrome.runtime.getManifest().version

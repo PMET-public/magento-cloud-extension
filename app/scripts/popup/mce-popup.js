@@ -23,7 +23,6 @@ fetch('https://master-7rqtwti-zajhc7u663lak.demo.magentosite.cloud/media/cloud-u
   .then(txt => {
     const subdomainMatches = tabUrl.match(/.*?:\/\/([^.]+)-[^-]*-([^-]*)\.demo\.magentosite\.cloud\/.*/)
     if (subdomainMatches) {
-      debugger
       const environmentInSubdomain = subdomainMatches[1]
       const projectInSubdomain = subdomainMatches[2]
       const matchesFromCss = txt.match(new RegExp('"/projects/' + projectInSubdomain + '/environments/' +  environmentInSubdomain.replace(/-/g,'[_\.\-]') + '"', 'ig'))

@@ -51,7 +51,7 @@ function tagsToHtml(tags, keywordFilter = '') {
   return html
 }
 
-$('#cmds-grid').html(tagsToHtml(['magento', 'access', 'health', 'maintenance']))
+$('#cmds-grid').html(tagsToHtml(['magento', 'access', 'debug', 'maintenance']))
 
 $('body').on('click', '.cli-cmd-container', function (ev) {
   const jCmdInput = $(this).find('input')
@@ -60,5 +60,5 @@ $('body').on('click', '.cli-cmd-container', function (ev) {
 
 $('body').on('keyup', '#search-cmds', function (ev) {
   const key = $('#search-cmds').val()
-  $('#cmds-grid').html(tagsToHtml(['magento', 'access', 'health', 'maintenance'], key))
+  $('#cmds-grid').html(tagsToHtml(['magento', 'access', 'debug', 'maintenance'], key))
 })

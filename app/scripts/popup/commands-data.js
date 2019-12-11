@@ -1,7 +1,7 @@
 // const sampleCmdObj = {
 //   text: '',
 //   scriptsInValue: [''],
-//   tags: ['cloud', 'vm', 'prerequisite', 'magento', 'health', 'maintenance', 'access'],
+//   tags: ['cloud', 'vm', 'prerequisite', 'magento', 'debug', 'maintenance', 'access'],
 //   help: ''
 // }
 
@@ -113,27 +113,28 @@ const commands = [
     tags: ['cloud', 'vm', 'magento'],
   },
 
-  // health
+  // debug
   {
-    text: 'Check current load',
-    scriptsInValue: ['lib.sh', 'check-load.sh'],
-    tags: ['cloud', 'vm', 'health'],
-  },
-  {
-    text: 'Check services',
-    scriptsInValue: ['lib.sh', 'check-services.sh'],
-    tags: ['cloud', 'vm', 'health'],
+    text: 'Diagnose and report',
+    scriptsInValue: ['lib.sh', 'diagnose.sh'],
+    tags: ['cloud', 'vm', 'debug'],
   },
   {
     text: 'Watch logs',
     scriptsInValue: ['lib.sh', 'watch-logs.sh'],
-    tags: ['cloud', 'vm', 'health'],
+    tags: ['cloud', 'vm', 'debug'],
   },
   {
-    text: 'Diagnose and report',
-    scriptsInValue: ['lib.sh', 'diagnose.sh'],
-    tags: ['cloud', 'vm', 'health'],
+    text: 'Screen capture',
+    scriptsInValue: ['lib.sh', 'check-load.sh'],
+    tags: ['cloud', 'vm', 'debug'],
   },
+  {
+    text: 'Screen record',
+    scriptsInValue: ['lib.sh', 'check-services.sh'],
+    tags: ['cloud', 'vm', 'debug'],
+  },
+
 
   // maintenance
   {

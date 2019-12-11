@@ -12,7 +12,26 @@ function handleExtensionIcon() {
         '48': '../images/cloud-' + (isOn ? '' : 'disabled-') + '48.png'
       }
     })
+    checkExtUpdateAvailable().then(available => {
+      if (available) {
+        chrome.browserAction.setBadgeText({text: 'up ⇪'})
+      }
   })
+  })
+}
+
+async function checkExtUpdateAvailable() {
+  const response = await fetch('https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/app/manifest.json')
+  const json = await response.json()
+  const remoteManifestParts = json.version.split('.')
+  var remoteIsNewer = false
+  for (let i = 0; i < remoteManifestParts.length; i++) {
+    if (parseInt(remoteManifestParts[i], 10) > parseInt(curManifestVersion.split('.')[i], 10)) {
+      remoteIsNewer = true;
+      break;
+    }
+}
+  return remoteIsNewer || true
 }
 
 const tabUrl = tabs[0].url

@@ -2,7 +2,7 @@ $('.current-domain').text(appliedDomain)
 $('#manifest-version').text('(ver: ' + curManifestVersion + ')')
 $('#download_button').after(`<span class="image-copy">${cmdsToHtml(commands.filter(cmd => cmd.tags.includes('image-copy')))}</span>`)
 if (/\.magento\.cloud/.test(tabBaseUrl)) {
-  $('.target-env').text(`Env id: ${tabUrl.replace(/.*\//,'')}`)
+  $('.target-env').text(`Env id: ${tabUrl.replace(/.*environments\/([^/]*).*/,'$1')}`)
 } else {
   $('.target-env').text(tabBaseUrl)
   // append cur domain name to link
@@ -54,20 +54,6 @@ chrome.storage.local.get(['activeTab'], function (result) {
   }
 })
 
-
-// check current manifest vs remote manifest
-fetch('https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/app/manifest.json')
-  .then(response => response.json())
-  .then(json => {
-    const remoteManifestParts = json.version.split('.')
-    var remoteIsNewer = false
-    for (let i = 0; i < remoteManifestParts.length; i++) {
-      if (parseInt(remoteManifestParts[i], 10) > parseInt(curManifestVersion.split('.')[i], 10)) {
-        remoteIsNewer = true
-        break
-      }
-    }
-    if (remoteIsNewer||true) {
-      $('.extension-title').append(`<span class="update-available">${cmdsToHtml(commands.filter(cmd => cmd.tags.includes('self-update')))}</span>`)
-    }
-  })
+checkExtUpdateAvailable().then(available => {
+  if (available) $('.extension-title').append(`<span class="update-available">${cmdsToHtml(commands.filter(cmd => cmd.tags.includes('self-update')))}</span>`)
+})

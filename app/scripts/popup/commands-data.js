@@ -87,6 +87,31 @@ const commands = [
     scriptsInValue: ['lib.sh', 'deploy-lang.sh'],
     tags: ['cloud', 'vm', 'magento'],
   },
+  {
+    text: 'Disable cms cache',
+    scriptsInValue: ['lib.sh', 'cache-disable-cms.sh'],
+    tags: ['cloud', 'vm', 'magento'],
+  },
+  {
+    text: 'Enable all caches',
+    scriptsInValue: ['lib.sh', 'cache-enable.sh'],
+    tags: ['cloud', 'vm', 'magento'],
+  },
+  {
+    text: 'Switch to dev mode',
+    scriptsInValue: ['lib.sh', 'mode-dev.sh', 'cache-flush.sh'],
+    tags: ['vm', 'magento'],
+  },
+  {
+    text: 'Switch to prod mode',
+    scriptsInValue: ['lib.sh', 'mode-prod.sh', 'cache-flush.sh'],
+    tags: ['vm', 'magento'],
+  },
+  {
+    text: 'Upgrade modules',
+    scriptsInValue: ['lib.sh', ''],
+    tags: ['cloud', 'vm', 'magento'],
+  },
 
   // health
   {
@@ -104,6 +129,10 @@ const commands = [
     scriptsInValue: ['lib.sh', 'watch-logs.sh'],
     tags: ['cloud', 'vm', 'health'],
   },
+  {
+    text: 'Diagnose and report',
+    scriptsInValue: ['lib.sh', 'diagnose.sh'],
+    tags: ['cloud', 'vm', 'health'],
   },
 
   // maintenance
@@ -138,6 +167,11 @@ const commands = [
     scriptsInValue: ['lib.sh', 'rebuild-cloud-env.sh'],
     tags: ['cloud', 'vm', 'maintenance'],
     help: 'Some operations (e.g. enabling email) require the env to be rebuilt. Please backup first.'
+  },
+  {
+    text: 'Restart service',
+    scriptsInValue: ['lib.sh', ''],
+    tags: ['cloud', 'vm', 'maintenance'],
   },
 
 

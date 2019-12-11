@@ -1,4 +1,4 @@
-msg Enabling IP based access ...
+msg Updating access ...
 
 read -p "You may add 1 additional, temporary IP (such as your current IP address) to the default egress list.
 
@@ -23,5 +23,5 @@ y)
   ;;
 esac
 
-# ${cli_path} httpaccess -p ${project} -e ${environment} --no-wait --auth ""
-echo ${cli_path} httpaccess -p ${project} -e ${environment} --no-wait ${extra_ip_opt} ${auth_opts}
+# pass and ip list
+echo ${cli_path} httpaccess -p ${project} -e ${environment} --no-wait --auth "admin:${project}" ${extra_ip_opt} ${auth_opts}

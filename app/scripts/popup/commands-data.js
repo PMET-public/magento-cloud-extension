@@ -90,21 +90,22 @@ const commands = [
     tags: ['cloud', 'vm', 'magento'],
   },
 
-  // monitor
+  // health
   {
     text: 'Check current load',
     scriptsInValue: ['lib.sh', 'check-load.sh'],
-    tags: ['cloud', 'vm', 'monitor'],
+    tags: ['cloud', 'vm', 'health'],
   },
   {
     text: 'Check services',
     scriptsInValue: ['lib.sh', 'check-services.sh'],
-    tags: ['cloud', 'vm', 'monitor'],
+    tags: ['cloud', 'vm', 'health'],
   },
   {
     text: 'Watch logs',
     scriptsInValue: ['lib.sh', 'watch-logs.sh'],
-    tags: ['cloud', 'vm', 'monitor'],
+    tags: ['cloud', 'vm', 'health'],
+  },
   },
 
   // maintenance

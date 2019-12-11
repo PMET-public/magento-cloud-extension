@@ -50,6 +50,11 @@ local_media_files_md5s="/tmp/existing-media-files-md5"
 differential_list_of_media_files="/tmp/differential-list-of-media-files"
 shared_k=$(${cli_path} auth:info --format=csv | perl -pe 's/,.*//;s/\n//')
 
+# if small terminal, attempt to set a more reasonable terminal size
+if [[ $COLUMNS -lt 81 ]];
+  printf '\e[8;50;120t'
+fi
+
 is_cloud() {
   [[ "${tab_url_simplified}" =~ .magento(site)?.cloud ]]
   return $?

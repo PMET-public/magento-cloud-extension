@@ -9,14 +9,19 @@ echo ""
 case ${REPLY} in
 y)
   cur_ip=$(curl -s ifconfig.co)
-  read -p "Enter additional IP address or hit return to accept your current detected IP [${cur_ip}]:
-  " -r < /dev/tty
-  echo "Adding ${REPLY}"
+  read -p "Hit return to accept your current detected IP [${cur_ip}] or enter an additional IP address:
+" -r < /dev/tty
+  if [[ -z "${REPLY}" ]]; then
+    REPLY=${cur_ip}
+  elif [[ ! $REPLY =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then
+    error Invalid IP address: "${REPLY}"
+  fi
+  extra_ip_opt="--access allow:${REPLY}"
   ;;
 *)
   echo "Using default egress list only."
   ;;
 esac
 
-${cli_path} httpaccess -p ${project} -e ${environment} --no-wait --auth ""
-${cli_path} httpaccess -p ${project} -e ${environment} --no-wait ${auth_opts}
+# ${cli_path} httpaccess -p ${project} -e ${environment} --no-wait --auth ""
+echo ${cli_path} httpaccess -p ${project} -e ${environment} --no-wait ${extra_ip_opt} ${auth_opts}

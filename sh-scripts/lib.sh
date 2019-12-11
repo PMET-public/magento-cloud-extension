@@ -51,7 +51,7 @@ differential_list_of_media_files="/tmp/differential-list-of-media-files"
 shared_k=$(${cli_path} auth:info --format=csv | perl -pe 's/,.*//;s/\n//')
 
 # if small terminal, attempt to set a more reasonable terminal size
-if [[ $COLUMNS -lt 81 ]];
+if [[ $COLUMNS -lt 81 ]]; then
   printf '\e[8;50;120t'
 fi
 

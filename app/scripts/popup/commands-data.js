@@ -1,9 +1,7 @@
 // const sampleCmdObj = {
 //   text: '',
 //   scriptsInValue: [''],
-//   additionalEnvVarsInValue: '',
-//   suffixToValue: '',
-//   tags: ['cloud', 'vm', 'prerequisite', 'magento', 'monitor', 'maintenance', 'access'],
+//   tags: ['cloud', 'vm', 'prerequisite', 'magento', 'health', 'maintenance', 'access'],
 //   help: ''
 // }
 
@@ -148,7 +146,6 @@ const commands = [
     text: 'SSH',
     scriptsInValue: ['lib.sh', 'ssh.sh'],
     tags: ['cloud', 'vm', 'access'],
-    suffixToValue: ' | bash'
   },
   {
     text: 'Access private repos',

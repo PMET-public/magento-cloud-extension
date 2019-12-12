@@ -1,0 +1,3 @@
+msg Diagnosing, attempting to repair, and reporting ...
+
+$ssh_cmd "curl -s https://raw.githubusercontent.com/PMET-public/magento-cloud-manager/diagnose-repair-report/cli/bin/env-scripts/diagnose-repair-report.sh | bash"

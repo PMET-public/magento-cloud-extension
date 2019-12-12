@@ -115,8 +115,8 @@ const commands = [
 
   // debug
   {
-    text: 'Diagnose and report',
-    scriptsInValue: ['lib.sh', 'diagnose.sh'],
+    text: 'Diagnose, repair, report',
+    scriptsInValue: ['lib.sh', 'diagnose-repair-report.sh'],
     tags: ['cloud', 'vm', 'debug'],
   },
   {

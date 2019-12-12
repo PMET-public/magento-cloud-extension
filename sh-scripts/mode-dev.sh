@@ -1,3 +1,3 @@
-printf "\nTurning on developer mode ...\n"
+msg Turning on developer mode ...
 
 $ssh_cmd "php ${app_dir}/bin/magento deploy:mode:set developer"

@@ -140,13 +140,13 @@ const commands = [
   },
   {
     text: 'Screen capture',
-    scriptsInValue: ['lib.sh', 'check-load.sh'],
+    scriptsInValue: ['lib.sh', 'screen-capture.sh'],
     tags: ['cloud', 'vm', 'debug'],
     help: 'Quickly snapshot a window. Useful to paste in slack (or anywhere) for support.'
   },
   {
     text: 'Screen record',
-    scriptsInValue: ['lib.sh', 'check-services.sh'],
+    scriptsInValue: ['lib.sh', 'screen-record.sh'],
     tags: ['cloud', 'vm', 'debug'],
     help: 'Record a portion of your screen (plus mic audio) to describe and demo an issue.'
   },

@@ -108,15 +108,15 @@ const commands = [
   },
   {
     text: 'Switch to developer mode',
-    scriptsInValue: ['lib.sh', 'mode-dev.sh', 'cache-flush.sh'],
+    scriptsInValue: ['lib.sh', 'mode-dev.sh'],
     tags: ['vm', 'magento'],
-    help: 'Switch to Magenot\'s "developer" mode'
+    help: 'Switch to Magento\'s "developer" mode'
   },
   {
     text: 'Switch to prod mode',
-    scriptsInValue: ['lib.sh', 'mode-prod.sh', 'cache-flush.sh'],
+    scriptsInValue: ['lib.sh', 'mode-prod.sh'],
     tags: ['vm', 'magento'],
-    help: 'Switch to Magenot\'s "productioon" mode'
+    help: 'Switch to Magento\'s "productioon" mode'
   },
   {
     text: 'Upgrade modules',
@@ -211,20 +211,20 @@ const commands = [
     tags: ['cloud', 'vm', 'access'],
   },
   {
-    text: 'Local access; bypass firewall',
+    text: 'Local access; bypass cloud firewall',
     scriptsInValue: ['lib.sh', 'bypass-waf-for-pb.sh'],
-    tags: ['cloud', 'vm', 'access'],
+    tags: ['cloud', 'access'],
   },
   {
     text: 'Give another IP access',
     scriptsInValue: ['lib.sh', 'auth-list.enc.sh', 'auth-ip.sh'],
-    tags: ['cloud', 'vm', 'access'],
+    tags: ['cloud', 'access'],
     help: 'All office & VPN IPs will be allowed. You may add 1 more IP address temporarily.'
   },
   {
     text: 'Show "Authorization" header',
     scriptsInValue: ['lib.sh', 'auth-show.sh'],
-    tags: ['cloud', 'vm', 'access'],
+    tags: ['cloud', 'access'],
     help: 'This header can be used by applications when passwords are not an option.'
   },
 

@@ -26,6 +26,7 @@ const commands = [
     text: 'Copy imgs to env',
     scriptsInValue: ['lib.sh', 'copy-imgs-to-env.sh'],
     tags: ['cloud', 'vm', 'image-copy'],
+    help: 'Send images to the remote magento media/import/products folder'
   },
 
   // self-update
@@ -33,6 +34,7 @@ const commands = [
     text: 'Update Available!',
     scriptsInValue: ['lib.sh', 'update-extension.sh'],
     tags: ['self-update'],
+    help: 'Get the latest extension features.'
   },
 
   // magento
@@ -61,36 +63,43 @@ const commands = [
     text: 'Reindex',
     scriptsInValue: ['lib.sh', 'reindex.sh'],
     tags: ['cloud', 'vm', 'magento'],
+    help: 'Run all indexes immediately.'
   },
   {
     text: 'Reindex; flush; warm',
     scriptsInValue: ['lib.sh', 'reindex.sh', 'cache-flush.sh', 'cache-warm.sh'],
     tags: ['cloud', 'vm', 'magento'],
+    help: 'Run all indexes immediately. Flush then begin warming all caches.'
   },
   {
     text: 'Warm cache',
     scriptsInValue: ['lib.sh', 'cache-warm.sh'],
     tags: ['cloud', 'vm', 'magento'],
+    help: 'Warm (prepopulate) the cache for faster access. A scripte will begin crawling the site.'
   },
   {
     text: 'Flush; then warm cache',
     scriptsInValue: ['lib.sh', 'cache-flush.sh', 'cache-warm.sh'],
     tags: ['cloud', 'vm', 'magento'],
+    help: 'Flush then begin warming all caches.'
   },
   {
     text: 'Install PWA',
     scriptsInValue: ['lib.sh', 'sc-pwa-setup.sh'],
     tags: ['cloud', 'vm', 'magento'],
+    help: 'Install and run PWA studio locally backed by a cloud env or vm.'
   },
   {
     text: 'Deploy a language',
     scriptsInValue: ['lib.sh', 'deploy-lang.sh'],
     tags: ['cloud', 'vm', 'magento'],
+    help: 'Choose a languages to deploy from the pre-bundled optioons.'
   },
   {
     text: 'Disable cms cache',
     scriptsInValue: ['lib.sh', 'cache-disable-cms.sh'],
     tags: ['cloud', 'vm', 'magento'],
+    help: 'Disable relevant caches while setting up the store front.'
   },
   {
     text: 'Enable all caches',
@@ -98,19 +107,22 @@ const commands = [
     tags: ['cloud', 'vm', 'magento'],
   },
   {
-    text: 'Switch to dev mode',
+    text: 'Switch to developer mode',
     scriptsInValue: ['lib.sh', 'mode-dev.sh', 'cache-flush.sh'],
     tags: ['vm', 'magento'],
+    help: 'Switch to Magenot\'s "developer" mode'
   },
   {
     text: 'Switch to prod mode',
     scriptsInValue: ['lib.sh', 'mode-prod.sh', 'cache-flush.sh'],
     tags: ['vm', 'magento'],
+    help: 'Switch to Magenot\'s "productioon" mode'
   },
   {
     text: 'Upgrade modules',
     scriptsInValue: ['lib.sh', ''],
     tags: ['cloud', 'vm', 'magento'],
+    help: 'Run upgrade'
   },
 
   // debug
@@ -118,23 +130,26 @@ const commands = [
     text: 'Diagnose, repair, report',
     scriptsInValue: ['lib.sh', 'diagnose-repair-report.sh'],
     tags: ['cloud', 'vm', 'debug'],
+    help: 'Find and attempt to repair common issues. Generate useful debugging info about the env.'
   },
   {
     text: 'Watch logs',
     scriptsInValue: ['lib.sh', 'watch-logs.sh'],
     tags: ['cloud', 'vm', 'debug'],
+    help: 'Show access and error logs in real time while accessing the site.'
   },
   {
     text: 'Screen capture',
     scriptsInValue: ['lib.sh', 'check-load.sh'],
     tags: ['cloud', 'vm', 'debug'],
+    help: 'Quickly snapshot a window. Useful to paste in slack (or anywhere) for support.'
   },
   {
     text: 'Screen record',
     scriptsInValue: ['lib.sh', 'check-services.sh'],
     tags: ['cloud', 'vm', 'debug'],
+    help: 'Record a portion of your screen (plus mic audio) to describe and demo an issue.'
   },
-
 
   // maintenance
   {
@@ -145,12 +160,14 @@ const commands = [
   {
     text: 'Turn email on/off',
     scriptsInValue: ['lib.sh', 'toggle-email.sh'],
-    tags: ['cloud', 'vm', 'maintenance'],
+    tags: ['cloud', 'maintenance'],
+    help: 'To enable/disable outgoing emails on cloud, the env must redeploy.'
   },
   {
     text: 'Delete env immediately',
     scriptsInValue: ['lib.sh', 'delete-env.sh'],
-    tags: ['cloud', 'vm', 'maintenance'],
+    tags: ['cloud', 'maintenance'],
+    help: 'Cloud\'s delete only deactivates. Use this to actually delete.'
   },
   {
     text: 'Restore env',
@@ -178,12 +195,13 @@ const commands = [
     text: 'Update VM v1',
     scriptsInValue: ['lib.sh', 'update-vm.sh'],
     tags: ['vm', 'maintenance'],
+    help: 'Apply fixes, compatibility updates, etc. to the vm.'
   },
 
 
   // access
   {
-    text: 'SSH',
+    text: 'SSH into env',
     scriptsInValue: ['lib.sh', 'ssh.sh'],
     tags: ['cloud', 'vm', 'access'],
   },
@@ -198,7 +216,7 @@ const commands = [
     tags: ['cloud', 'vm', 'access'],
   },
   {
-    text: 'Update access',
+    text: 'Give another IP access',
     scriptsInValue: ['lib.sh', 'auth-list.enc.sh', 'auth-ip.sh'],
     tags: ['cloud', 'vm', 'access'],
     help: 'All office & VPN IPs will be allowed. You may add 1 more IP address temporarily.'

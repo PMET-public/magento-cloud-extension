@@ -1,9 +1,8 @@
-msg Unlocking admin user ...
-
-read -p "Enter username of admin account or leave blank for 'admin':
-" -n 1 -r < /dev/tty
-
-if [[ -z "${REPLY}" ]]; then
+read -p "
+Enter username of admin account to unlock or leave blank for 'admin':
+" -r < /dev/tty
+user="$REPLY"
+if [[ -z "$user" ]]; then
   user=admin
 fi
 

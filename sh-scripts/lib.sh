@@ -1,4 +1,4 @@
-if [[ ! -z "${debug}" ]]; then
+if [[ ! -z "$debug" ]]; then
   set -x
 fi
 

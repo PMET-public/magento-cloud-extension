@@ -5,6 +5,11 @@ fi
 # stop on errors
 set -e
 
+red='\033[0;31m'
+green='\033[0;32m'
+yellow='\033[1;33m'
+no_color='\033[0m'
+
 cli_required_version="1.32.0"
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("${cli_path}" --version | perl -pe 's/.*?([\d\.]+)/\1/')
@@ -15,11 +20,7 @@ if [[ "${cli_actual_version}" != "${cli_required_version}" ]]; then
     chmod +x "${cli_path}"
   fi
 fi
-
-red='\033[0;31m'
-green='\033[0;32m'
-yellow='\033[1;33m'
-no_color='\033[0m'
+ext_raw_git_url="https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/$ext_ver"
 
 error() {
   printf "\n${red}${@}${no_color}\n\n" && exit 1
@@ -277,7 +278,7 @@ start_ssh_agent_and_load_cloud_and_vm_key() {
 
   # verify local vm key exists
   if ! grep -q "BEGIN RSA PRIVATE KEY" "${vm_key}"; then
-    curl -so "${vm_key}" "https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/${ext_ver}/sh-scripts/demo-vm-insecure-private-key"
+    curl -so "${vm_key}" "$ext_raw_git_url/sh-scripts/demo-vm-insecure-private-key"
     chmod 600 "${vm_key}"
   fi
 

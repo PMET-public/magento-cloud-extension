@@ -55,7 +55,7 @@ const commands = [
   },
   {
     text: 'Run cron repeatedly',
-    scriptsInValue: ['lib.sh', 'run-cron.sh'],
+    scriptsInValue: ['lib.sh', 'run-cron-repeatedly.sh'],
     tags: ['cloud', 'vm', 'magento'],
     help: 'Run Magento cron jobs each min for 1 hr'
   },

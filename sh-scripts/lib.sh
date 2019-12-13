@@ -49,7 +49,16 @@ list_of_all_media_filenames_and_their_md5s_in_orig_env="/tmp/list-of-all-media-f
 transfer_list="/tmp/transfer_list"
 local_media_files_md5s="/tmp/existing-media-files-md5"
 differential_list_of_media_files="/tmp/differential-list-of-media-files"
-shared_k=$(${cli_path} auth:info --format=csv | perl -pe 's/,.*//;s/\n//')
+is_cloud() {
+  [[ "${tab_url_simplified}" =~ .magento(site)?.cloud ]]
+  return $?
+}
+is_cloud &&
+  # var only needed for cloud and causes error when offline (vm use case)
+  shared_k=$(
+    ${cli_path} auth:info --format=csv |
+    perl -pe 's/,.*//;s/\n//'
+  )
 
 # if small terminal, attempt to set a more reasonable terminal size
 if [[ $COLUMNS -lt 81 ]]; then

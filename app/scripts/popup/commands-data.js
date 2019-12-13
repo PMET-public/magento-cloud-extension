@@ -174,6 +174,11 @@ const commands = [
     scriptsInValue: ['lib.sh', ''],
     tags: ['cloud', 'vm', 'maintenance'],
   },
+  {
+    text: 'Update VM v1',
+    scriptsInValue: ['lib.sh', 'update-vm.sh'],
+    tags: ['vm', 'maintenance'],
+  },
 
 
   // access

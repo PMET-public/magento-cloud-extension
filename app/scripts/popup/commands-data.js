@@ -125,13 +125,13 @@ const commands = [
   //   help: 'Run upgrade'
   // },
 
-  // debug
-  // {
-  //   text: 'Diagnose, repair, report',
-  //   scriptsInValue: ['lib.sh', 'diagnose-repair-report.sh'],
-  //   tags: ['cloud', 'vm', 'debug'],
-  //   help: 'Find and attempt to repair common issues. Generate useful debugging info about the env.'
-  // },
+  debug
+  {
+    text: 'Diagnose, repair, report',
+    scriptsInValue: ['lib.sh', 'diagnose-repair-report.sh'],
+    tags: ['cloud', 'vm', 'debug'],
+    help: 'Find and attempt to repair common issues. Generate useful debugging info about the env.'
+  },
   {
     text: 'Screen capture',
     scriptsInValue: ['lib.sh', 'screen-capture.sh'],

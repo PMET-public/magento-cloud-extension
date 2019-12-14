@@ -15,8 +15,20 @@ report () {
   printf "${@}" | tee -a /tmp/$cur_unix_ts-report.log
 }
 
-# keep cron success status msg
-crontab -l |
-  tee /tmp/$cur_unix_ts-crontab |
-  perl -pe 's/Ran jobs by schedule/DONT REMOVE CRON STATUS MSG/' |
-  crontab -
+# update crontab
+# first del old magento tasks
+crontab -l | perl -p00e 's/#~ MAGENTO[\S\s]*#~ MAGE.*?\n//' > /tmp/new-cron
+# append modified version
+cat << 'EOF' >> /tmp/new-cron
+#~ MAGENTO START d1958f62aa710cc367525c9ec68dd7456d4311756b5aa37d2143c4a98b25318c
+lf=/var/www/magento/var/log/magento.cron.log
+* * * * * echo "\n$(date +[\%Y-\%m-\%d\ \%H:\%M:\%S])\n" >> $lf && /usr/bin/php7.3 /var/www/magento/bin/magento cron:run 2>&1 >> $lf
+* * * * * /usr/bin/php7.3 /var/www/magento/update/cron.php >> /var/www/magento/var/log/update.cron.log
+* * * * * /usr/bin/php7.3 /var/www/magento/bin/magento setup:cron:run >> /var/www/magento/var/log/setup.cron.log
+#~ MAGENTO END d1957f62aa710cc367525c9ec68dd7456d4311756b5aa37d2143c4a98b25318c
+EOF
+# load new
+crontab /tmp/new-cron
+
+# delete anything from magento logs older than 180 days
+# delete all /var/log/*.1 and *.gz

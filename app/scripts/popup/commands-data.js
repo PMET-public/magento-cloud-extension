@@ -118,26 +118,20 @@ const commands = [
     tags: ['vm', 'magento'],
     help: 'Switch to Magento\'s "productioon" mode'
   },
-  {
-    text: 'Upgrade modules',
-    scriptsInValue: ['lib.sh', ''],
-    tags: ['cloud', 'vm', 'magento'],
-    help: 'Run upgrade'
-  },
+  // {
+  //   text: 'Upgrade modules',
+  //   scriptsInValue: ['lib.sh', ''],
+  //   tags: ['cloud', 'vm', 'magento'],
+  //   help: 'Run upgrade'
+  // },
 
   // debug
-  {
-    text: 'Diagnose, repair, report',
-    scriptsInValue: ['lib.sh', 'diagnose-repair-report.sh'],
-    tags: ['cloud', 'vm', 'debug'],
-    help: 'Find and attempt to repair common issues. Generate useful debugging info about the env.'
-  },
-  {
-    text: 'Watch logs',
-    scriptsInValue: ['lib.sh', 'watch-logs.sh'],
-    tags: ['cloud', 'vm', 'debug'],
-    help: 'Show access and error logs in real time while accessing the site.'
-  },
+  // {
+  //   text: 'Diagnose, repair, report',
+  //   scriptsInValue: ['lib.sh', 'diagnose-repair-report.sh'],
+  //   tags: ['cloud', 'vm', 'debug'],
+  //   help: 'Find and attempt to repair common issues. Generate useful debugging info about the env.'
+  // },
   {
     text: 'Screen capture',
     scriptsInValue: ['lib.sh', 'screen-capture.sh'],
@@ -149,6 +143,12 @@ const commands = [
     scriptsInValue: ['lib.sh', 'screen-record.sh'],
     tags: ['cloud', 'vm', 'debug'],
     help: 'Record a portion of your screen (plus mic audio) to describe and demo an issue.'
+  },
+  {
+    text: 'Watch logs',
+    scriptsInValue: ['lib.sh', 'watch-logs.sh'],
+    tags: ['cloud', 'vm', 'debug'],
+    help: 'Show access and error logs in real time while accessing the site.'
   },
 
   // maintenance

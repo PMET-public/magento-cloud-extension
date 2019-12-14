@@ -8,4 +8,8 @@ $ssh_cmd "curl -s https://raw.githubusercontent.com/PMET-public/magento-cloud-ma
   # copy report to clipboard and strip color characters
   perl -pe 's/\e\[\d+(?>(;\d+)*)m//g;' | pbcopy
 
-warning Report copied to clipboard. If you have questions or need assistance, please paste it in the \#m2-demo-support slack channel.
+test ! -z "$(pbpaste)" &&
+  warning Report copied to clipboard. If you have questions or need assistance, please paste it in the \#m2-demo-support slack channel. ||
+  error Report did not run successfully. Check internet connection.
+
+

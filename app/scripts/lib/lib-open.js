@@ -31,7 +31,7 @@ async function checkExtUpdateAvailable() {
       break;
     }
   }
-  return remoteIsNewer || true
+  return remoteIsNewer
 }
 
 // replace method removes any password

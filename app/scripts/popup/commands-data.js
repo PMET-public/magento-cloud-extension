@@ -125,7 +125,6 @@ const commands = [
   //   help: 'Run upgrade'
   // },
 
-  debug
   {
     text: 'Diagnose, repair, report',
     scriptsInValue: ['lib.sh', 'diagnose-repair-report.sh'],

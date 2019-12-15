@@ -8,6 +8,6 @@ fi
 
 curl -L -o ~/Downloads/mcm-chrome-ext.zip --create-dirs https://github.com/PMET-public/magento-cloud-extension/releases/download/${master_ver}/mcm-chrome-ext.zip
 
-find ~/Downloads/mcm-chrome-ext -type f ! -name 'manifest.json' -delete
+find ~/Downloads/mcm-chrome-ext -type f ! -name 'manifest.json' -delete 2> /dev/null
 
 unzip -o -d ~/Downloads/mcm-chrome-ext ~/Downloads/mcm-chrome-ext.zip

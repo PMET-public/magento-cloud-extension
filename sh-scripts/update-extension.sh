@@ -10,4 +10,4 @@ curl -L -o ~/Downloads/mcm-chrome-ext.zip --create-dirs https://github.com/PMET-
 
 find ~/Downloads/mcm-chrome-ext -type f ! -name 'manifest.json' -delete
 
-unzip -o -d ~/Downloads/mcm-chrome-ext ~/Downloads/mcm-chrome-ext.zip
+unzip -o -d ~/Downloads/mcm-chrome-ext ~/Downloads/mcm-chrome-ext.zip 2> /dev/null || :

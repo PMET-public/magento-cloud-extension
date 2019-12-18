@@ -8,12 +8,14 @@ function copyToClipboard(el) {
   const jInput = $(el)
     .focus()
     .select()
-  const jMsg = jInput.parent()
-    .append('<span class="' + copyClass + '">Copied!</span>')
-    .find('.' + copyClass)
-  setTimeout(() => jMsg.remove(), 1000)
+  // const jMsg = jInput.parent()
+  //   .append('<span class="' + copyClass + '">Copied!</span>')
+  //   .find('.' + copyClass)
+  // setTimeout(() => jMsg.remove(), 1000)
   document.execCommand('copy')
   jInput[0].blur()
+  $('#copy-overlay').css('display', 'flex')
+  setTimeout(() => window.close(), 2000)
 }
 
 function matchCmd(cmd, key) {

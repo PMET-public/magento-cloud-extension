@@ -29,6 +29,14 @@ const commands = [
     help: 'Send images to the remote magento media/import/products folder'
   },
 
+    // lighthouse
+    {
+      text: 'Run lighthouse',
+      scriptsInValue: ['lib.sh', 'run-lighthouse.sh'],
+      tags: ['cloud', 'vm', 'lighthouse'],
+      help: 'Install and run Google\'s Lighthouse performance tool'
+    },
+
   // self-update
   {
     text: 'Update Available!',
@@ -69,7 +77,7 @@ const commands = [
     text: 'Reindex; flush; warm',
     scriptsInValue: ['lib.sh', 'reindex.sh', 'cache-flush.sh', 'cache-warm.sh'],
     tags: ['cloud', 'vm', 'magento'],
-    help: 'Run all indexes immediately. Flush then begin warming all caches.'
+    help: 'Run all indexes immediately. Flush (clean) then begin warming all caches.'
   },
   {
     text: 'Warm cache',
@@ -81,7 +89,7 @@ const commands = [
     text: 'Flush; then warm cache',
     scriptsInValue: ['lib.sh', 'cache-flush.sh', 'cache-warm.sh'],
     tags: ['cloud', 'vm', 'magento'],
-    help: 'Flush then begin warming all caches.'
+    help: 'Flush  (clean) then begin warming all caches.'
   },
   {
     text: 'Install PWA',
@@ -127,7 +135,7 @@ const commands = [
 
   {
     text: 'Diagnose, repair, report',
-    scriptsInValue: ['lib.sh', 'diagnose-repair-report.sh'],
+    scriptsInValue: ['lib.sh', 'dl-and-run-drr.sh'],
     tags: ['cloud', 'vm', 'debug'],
     help: 'Find and attempt to repair common issues. Generate useful debugging info about the env.'
   },

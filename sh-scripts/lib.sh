@@ -10,6 +10,18 @@ green='\033[0;32m'
 yellow='\033[1;33m'
 no_color='\033[0m'
 
+error() {
+  printf "\n${red}${@}${no_color}\n\n" && exit 1
+}
+
+warning() {
+  printf "\n${yellow}${@}${no_color}\n\n"
+}
+
+msg() {
+  printf "\n${green}${@}${no_color}\n\n"
+}
+
 cli_required_version="1.32.0"
 if [[ "${HOME}" == "/app" ]]; then
   error "You are probably attempting to run the command in the cloud env. Commands are intended to be run in a local terminal."
@@ -24,18 +36,6 @@ if [[ "${cli_actual_version}" != "${cli_required_version}" ]]; then
   fi
 fi
 ext_raw_git_url="https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/$ext_ver"
-
-error() {
-  printf "\n${red}${@}${no_color}\n\n" && exit 1
-}
-
-warning() {
-  printf "\n${yellow}${@}${no_color}\n\n"
-}
-
-msg() {
-  printf "\n${green}${@}${no_color}\n\n"
-}
 
 menu_height=20
 menu_width=70

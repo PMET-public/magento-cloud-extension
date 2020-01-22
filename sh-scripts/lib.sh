@@ -11,6 +11,9 @@ yellow='\033[1;33m'
 no_color='\033[0m'
 
 cli_required_version="1.32.0"
+if [[ "${HOME}" -eq "/app"]]; then
+  error "You are probably attempting to run the command in the cloud env. Commands are intended to be run in a local terminal."
+fi
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("${cli_path}" --version | perl -pe 's/.*?([\d\.]+)/\1/')
 if [[ "${cli_actual_version}" != "${cli_required_version}" ]]; then
@@ -33,10 +36,6 @@ warning() {
 msg() {
   printf "\n${green}${@}${no_color}\n\n"
 }
-
-if [[ "${HOME}" -eq "/app"]]; then
-  error "You are probably attempting to run the command in the cloud env. Commands are intended to be run in a local terminal."
-fi
 
 menu_height=20
 menu_width=70

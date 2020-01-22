@@ -11,7 +11,7 @@ yellow='\033[1;33m'
 no_color='\033[0m'
 
 cli_required_version="1.32.0"
-if [[ "${HOME}" -eq "/app"]]; then
+if [[ "${HOME}" -eq "/app" ]]; then
   error "You are probably attempting to run the command in the cloud env. Commands are intended to be run in a local terminal."
 fi
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"

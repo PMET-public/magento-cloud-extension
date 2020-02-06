@@ -362,5 +362,5 @@ else
 
 fi
 
-ssh_cmd="$(get_ssh_cmd)"
+cmd_prefix="$(get_ssh_cmd)"
 scp_cmd="scp"

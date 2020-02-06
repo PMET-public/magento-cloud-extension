@@ -6,4 +6,4 @@ if [[ -z "$user" ]]; then
   user=admin
 fi
 
-$ssh_cmd "php ${app_dir}/bin/magento admin:user:unlock ${user};"
+$cmd_prefix "php ${app_dir}/bin/magento admin:user:unlock ${user};"

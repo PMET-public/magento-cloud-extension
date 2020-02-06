@@ -24,7 +24,7 @@ if [[ -z "$email" ]]; then
   error Username can not be empty.
 fi
 
-$ssh_cmd "php ${app_dir}/bin/magento admin:user:create \
+$cmd_prefix "php ${app_dir}/bin/magento admin:user:create \
   --admin-user=${user} \
   --admin-password=${password} \
   --admin-email=${email} \

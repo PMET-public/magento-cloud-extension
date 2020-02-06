@@ -1,6 +1,6 @@
 msg Toggling system emails ...
 
-$ssh_cmd "
+$cmd_prefix "
   val=\$(mysql ${db_opts} -sNe \"select value from core_config_data where path = 'system/smtp/disable';\")
   if [[ \"\${val}\" =~ 0 ]]; then
     toggled_val=1

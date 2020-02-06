@@ -11,7 +11,7 @@ else
 fi
 local_backup_file="${backups_dir}/${remote_tar_file#/tmp/}"
 
-$ssh_cmd "
+$cmd_prefix "
   mysqldump ${db_opts} --single-transaction --no-autocommit --quick > ${sql_file}
   # replace specific host name with token placeholder
   perl -i -pe \"\\\$c+=s!${base_url}!REPLACEMENT_BASE_URL!g; 
@@ -65,7 +65,7 @@ scp $(get_ssh_url):${remote_tar_file} "${backups_dir}"
 
 if is_cloud; then
   # clean up remote to prevent full disk errors
-  $ssh_cmd "rm ${remote_tar_file}"
+  $cmd_prefix "rm ${remote_tar_file}"
   # still not done b/c need .magento/services.yml & .magento/routes.yml but they do not exist on the remote cloud filesystem
   # so grab them from the env's repo
   rm -rf "${tmp_git_dir}" # ensure tmp_git_dir doesn't exist from a previously aborted cmd 

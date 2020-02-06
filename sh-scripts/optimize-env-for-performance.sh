@@ -1,4 +1,5 @@
-# https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html
+# when bundling, don't merge https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/themes/js-bundling.html
+# static signing should be enabled https://devdocs.magento.com/guides/v2.3/config-guide/cache/static-content-signing.html
 
 $cmd_prefix "
   php ${app_dir}/bin/magento config:set dev/static/sign 1

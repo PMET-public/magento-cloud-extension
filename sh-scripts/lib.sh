@@ -81,6 +81,11 @@ is_cloud() {
   return $?
 }
 
+is_local_env() {
+  [[ $domain =~ \.(test|local|dev)$ ]]
+  return $?
+}
+
 if is_cloud; then
   db_host=database.internal
   db_port=3306
@@ -117,7 +122,7 @@ get_ssh_url() {
 }
 
 get_cmd_prefix() {
-  [[ $domain =~ \.(test|local|dev)$ ]] &&
+  is_local_env &&
     echo "bash -c" ||
     echo "ssh -n -A $(get_ssh_url $*)"
 }
@@ -352,17 +357,18 @@ if is_cloud; then
     warning SSH URL could not be determined. Environment inactive?
   fi
 
-  app_dir="/app"
-
   # export to env for child git processes only
   export GIT_SSH_COMMAND="ssh -i ${HOME}/.ssh/id_rsa.magento"
 
-else
-
-  # if not magento cloud, assume local vm
-  app_dir="/var/www/magento"
-
 fi
+
+is_cloud &&
+  app_dir="/app" ||
+  {
+    is_local_env &&
+      app_dir="." ||
+      app_dir="/var/www/magento" # vm
+  }
 
 cmd_prefix="$(get_cmd_prefix)"
 scp_cmd="scp"

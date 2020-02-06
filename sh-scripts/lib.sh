@@ -116,8 +116,10 @@ get_ssh_url() {
   fi
 }
 
-get_ssh_cmd() {
-  echo "ssh -n -A $(get_ssh_url $*)"
+get_cmd_prefix() {
+  [[ $domain =~ \.(test|local|dev)$ ]] &&
+    echo "bash -c" ||
+    echo "ssh -n -A $(get_ssh_url $*)"
 }
 
 get_interactive_ssh_cmd() {
@@ -362,5 +364,5 @@ else
 
 fi
 
-cmd_prefix="$(get_ssh_cmd)"
+cmd_prefix="$(get_cmd_prefix)"
 scp_cmd="scp"

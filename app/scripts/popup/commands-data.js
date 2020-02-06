@@ -101,7 +101,7 @@ const commands = [
     text: 'Deploy a language',
     scriptsInValue: ['lib.sh', 'deploy-lang.sh'],
     tags: ['cloud', 'vm', 'magento'],
-    help: 'Choose a languages to deploy from the pre-bundled optioons.'
+    help: 'Choose a languages to deploy from the pre-bundled options.'
   },
   {
     text: 'Disable cms cache',

@@ -29,13 +29,13 @@ const commands = [
     help: 'Send images to the remote magento media/import/products folder'
   },
 
-    // lighthouse
-    {
-      text: 'Run lighthouse',
-      scriptsInValue: ['lib.sh', 'run-lighthouse.sh'],
-      tags: ['cloud', 'vm', 'lighthouse'],
-      help: 'Install and run Google\'s Lighthouse performance tool'
-    },
+  // lighthouse
+  {
+    text: 'Run lighthouse',
+    scriptsInValue: ['lib.sh', 'run-lighthouse.sh'],
+    tags: ['cloud', 'vm', 'lighthouse'],
+    help: 'Install and run Google\'s Lighthouse performance tool'
+  },
 
   // self-update
   {
@@ -113,6 +113,18 @@ const commands = [
     text: 'Enable all caches',
     scriptsInValue: ['lib.sh', 'cache-enable.sh'],
     tags: ['cloud', 'vm', 'magento'],
+  },
+  {
+    text: 'Optimize for performance',
+    scriptsInValue: ['lib.sh', 'cache-enable.sh', 'optimize-env-for-performance.sh'],
+    tags: ['cloud', 'vm', 'magento'],
+    help: 'Enable all caches. Optimize JS & CSS.'
+  },
+  {
+    text: 'Optimize for dev',
+    scriptsInValue: ['lib.sh', 'cache-disable-cms.sh', 'optimize-env-for-customization.sh'],
+    tags: ['cloud', 'vm', 'magento'],
+    help: 'Enable all caches. Unbunlde JS & CSS.'
   },
   {
     text: 'Switch to developer mode',

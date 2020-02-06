@@ -26,16 +26,23 @@ cli_required_version="1.32.0"
 if [[ "${HOME}" == "/app" ]]; then
   error "You are probably attempting to run this command in a cloud env. Commands are intended to be run in a local terminal."
 fi
+
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("${cli_path}" --version | perl -pe 's/.*?([\d\.]+)/\1/')
 if [[ "${cli_actual_version}" != "${cli_required_version}" ]]; then
+  normal_cli_path="${cli_path}"
   cli_path="${cli_path}-${cli_required_version}"
   if [[ ! -f "${cli_path}" ]]; then
     curl -s -o "${cli_path}" "https://accounts.magento.cloud/sites/default/files/magento-cloud-v${cli_required_version}.phar" ||
       error "Could not retrieve required cli version."
     chmod +x "${cli_path}"
   fi
+  # edge case when IT moved user's files and magento-cloud-version existed but magento-cloud did not
+  if [[ ! -f "${normal_cli_path}" ]]; then
+    cp "${cli_path}" "${normal_cli_path}"
+  fi
 fi
+
 ext_raw_git_url="https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/$ext_ver"
 
 menu_height=20

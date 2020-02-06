@@ -24,7 +24,7 @@ msg() {
 
 cli_required_version="1.32.0"
 if [[ "${HOME}" == "/app" ]]; then
-  error "You are probably attempting to run the command in the cloud env. Commands are intended to be run in a local terminal."
+  error "You are probably attempting to run this command in a cloud env. Commands are intended to be run in a local terminal."
 fi
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("${cli_path}" --version | perl -pe 's/.*?([\d\.]+)/\1/')
@@ -97,7 +97,7 @@ get_cloud_ssh_url() {
 }
 
 get_ssh_url() {
-  # if parameters are passed, used those
+  # if parameters are passed, use those
   # otherwise determine from env vars
   if [[ $# -eq 2 ]]; then
     get_cloud_ssh_url $*
@@ -167,7 +167,6 @@ disable_maintenance_mode() {
     php bin/magento maintenance:disable
   "
 }
-
 
 enable_cron() {
   msg Enabling cron ...

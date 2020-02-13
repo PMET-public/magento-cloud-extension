@@ -1,14 +1,15 @@
 $('.current-domain').text(appliedDomain)
 $('#manifest-version').text('(ver: ' + curManifestVersion + ')')
-$('#download_button').after(`<span class="image-copy">${cmdsToHtml(commands.filter(cmd => cmd.tags.includes('image-copy')))}</span>`)
+$('#download_button').after(`<span class="image-copy">${cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('image-copy')))}</span>`)
 if (/\.magento\.cloud/.test(tabBaseUrl)) {
   $('.target-env').text(`Env id: ${tabUrl.replace(/.*environments\/([^/]*).*/,'$1')}`)
 } else {
   $('.target-env').text(tabBaseUrl)
   // append cur domain name to link
   $('#bw-link')[0].href = `https://builtwith.com/${tabBaseUrl.replace(/https?:\/\//,'').replace(/\/.*/,'')}`
+  $('#bw-link').after(`<span class="lighthouse">${cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('lighthouse')))}</span>`)
 }
-$('#prereqs-cmds').append(cmdsToHtml(commands.filter(cmd => cmd.tags.includes('prerequisite'))))
+$('#prereqs-cmds').append(cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('prerequisite'))))
 $('#prereqs-accordion').accordion({
   active: 1,
   collapsible: true,

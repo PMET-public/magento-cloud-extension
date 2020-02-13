@@ -8,10 +8,6 @@ function copyToClipboard(el) {
   const jInput = $(el)
     .focus()
     .select()
-  // const jMsg = jInput.parent()
-  //   .append('<span class="' + copyClass + '">Copied!</span>')
-  //   .find('.' + copyClass)
-  // setTimeout(() => jMsg.remove(), 1000)
   document.execCommand('copy')
   jInput[0].blur()
   $('#copy-overlay').css('display', 'flex')
@@ -20,7 +16,7 @@ function copyToClipboard(el) {
 
 function matchCmd(cmd, key) {
   const re = new RegExp(key.trim(),'i')
-  if(key.trim() === '' || re.test(cmd.text) || re.test(cmd.help) || re.test(cmd.tag)) {
+  if(key.trim() === '' || re.test(cmd.text) || re.test(cmd.help) || re.test(cmd.cmdType) || re.test(cmd.additionalSearchTerms)) {
     return true
   }
   return false
@@ -39,28 +35,31 @@ function cmdsToHtml(cmds) {
   return html
 }
 
-function tagsToHtml(tags, keywordFilter = '') {
+function cmdTypesToHtml(cmdTypes, keywordFilter = '') {
   var html = ''
-  tags.forEach(tag => {
+  cmdTypes.forEach(cmdType => {
     const cmds = commands
-      .filter(cmd => cmd.tags.includes(isCloud ? 'cloud' : 'vm'))
-      .filter(cmd => cmd.tags.includes(tag))
+      .filter(cmd => cmd.envTypes.includes(isCloud ? 'cloud' : 'vm'))
+      .filter(cmd => cmd.cmdTypes.includes(cmdType))
       .filter(cmd => matchCmd(cmd, keywordFilter))
-    html += `<div class="cmds-container grid-${tag}" aria-label="${tag}">
+    html += `<div class="cmds-container grid-${cmdType}" aria-label="${cmdType}">
         ${cmdsToHtml(cmds)}
       </div>`
   })
   return html
 }
 
-$('#cmds-grid').html(tagsToHtml(['magento', 'access', 'debug', 'maintenance']))
+// $('#cmds-grid').html(cmdTypesToHtml(['magento', 'access', 'debug', 'maintenance']))
+
+function renderCmdsGrid(ev) {
+  const key = $('#search-cmds').val()
+  $('#cmds-grid').html(cmdTypesToHtml(['magento', 'access', 'debug', 'maintenance'], key))
+}
 
 $('body').on('click', '.cli-cmd-container', function (ev) {
   const jCmdInput = $(this).find('input')
   copyToClipboard(jCmdInput)
 })
 
-$('body').on('keyup', '#search-cmds', function (ev) {
-  const key = $('#search-cmds').val()
-  $('#cmds-grid').html(tagsToHtml(['magento', 'access', 'debug', 'maintenance'], key))
-})
+$('body').on('keyup', '#search-cmds', renderCmdsGrid)
+renderCmdsGrid()

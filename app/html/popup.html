@@ -20,11 +20,15 @@
     </div>
     <div id="tabs">
       <ul id="tab-list">
+        <li><a href="#resources"><span class="mdi mdi-open-in-new not-interactive"></span> Resources</a></li>
         <li><a href="#store-scraper"><span class="mdi mdi-briefcase-download not-interactive"></span> Store Scraper</a></li>
         <li><a href="#commands"><span class="mdi mdi-console not-interactive"></span> Commands</a></li>
         <li><a href="#css-injector-container"><span class="mdi mdi-bullseye-arrow not-interactive"></span> CSS Injector</a></li>
         <!-- <li><a href="#env-library"><span class="mdi mdi-console not-interactive"></span> Env Library</a></li> -->
       </ul>
+      <div id="resources">
+        @@include('resources.html')
+      </div>
       <div id="store-scraper">
         <a id="bw-link" href="https://www.builtwith.com/" title="BuiltWith" target="_blank"><span>bw</span></a>
         @@include('image-downloader.html')

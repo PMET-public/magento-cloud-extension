@@ -20,7 +20,7 @@ echo "
 
 "
 
-declare -a "environments=($(${cli_path} environments -p ${project} --format=tsv --no-header --columns=name,id | perl -pe 's/\t/ (/g;s/^/"/;s/\s+$/)"\n/'))"
+declare -a "environments=($(${cli_path} environments -p ${project} --format=tsv --no-header --columns=title,id | perl -pe 's/\t/ (/g;s/^/"/;s/\s+$/)"\n/'))"
 if [[ ${#environments[@]} -lt 1 ]]; then
   error No environments found. Should not be possible.
 fi

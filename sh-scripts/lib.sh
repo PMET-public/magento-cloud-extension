@@ -10,7 +10,7 @@ green='\033[0;32m'
 yellow='\033[1;33m'
 no_color='\033[0m'
 
-cli_required_version="1.32.0"
+cli_required_version="1.34.4"
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("${cli_path}" --version | perl -pe 's/.*?([\d\.]+)/\1/')
 if [[ "${cli_actual_version}" != "${cli_required_version}" ]]; then

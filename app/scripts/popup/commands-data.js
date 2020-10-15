@@ -159,7 +159,14 @@ const commands = [
     scriptsInValue: ['lib.sh', 'mode-prod.sh'],
     cmdTypes: ['magento'],
     envTypes: ['vm'],
-    help: 'Switch to Magento\'s "productioon" mode'
+    help: 'Switch to Magento\'s "production" mode'
+  },
+  {
+    text: 'Add Grocery',
+    scriptsInValue: ['lib.sh', 'add-grocery.sh', 'reindex-on-save.sh', 'reindex.sh', 'cache-flush.sh', 'cache-warm.sh'],
+    cmdTypes: ['magento'],
+    envTypes: ['cloud'],
+    help: 'Add New Grocery Vertical to a Cloud environment.'
   },
   // {
   //   text: 'Upgrade modules',

@@ -1,4 +1,4 @@
-msg Deleting env ...
+msg "Deleting env ..."
 
 read -p "Confirm deletion of project: ${project} environment: ${environment} (y/n): " -n 1 -r < /dev/tty
 if [[ "${REPLY}" =~ ^[Yy]$ ]]; then

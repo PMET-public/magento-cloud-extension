@@ -1,4 +1,4 @@
-msg Rebuilding env ...
+msg "Rebuilding env ..."
 
 tmp_git_dir="/tmp/delete-me-${project}-${environment}"
 rm -rf "${tmp_git_dir}" # ensure tmp_git_dir doesn't exist from a previously aborted cmd 

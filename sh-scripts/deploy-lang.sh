@@ -1,4 +1,4 @@
-msg Finding available languages. May take a minute ...
+msg "Finding available languages. May take a minute ..."
 
 $cmd_prefix "
   cd $app_dir/vendor

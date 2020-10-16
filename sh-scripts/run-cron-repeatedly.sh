@@ -1,4 +1,4 @@
-msg Running cron jobs every min for 1 hr. Press control-c to cancel.
+msg "Running cron jobs every min for 1 hr. Press control-c to cancel."
 
 $cmd_prefix "for i in \$(seq 60 -1 1); do
     php ${app_dir}/bin/magento cron:run; 

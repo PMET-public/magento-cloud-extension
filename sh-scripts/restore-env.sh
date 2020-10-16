@@ -1,4 +1,4 @@
-msg Restoring env from backup ...
+msg "Restoring env from backup ..."
 
 if is_cloud; then
   local_tar_file=$(choose_backup "${project}-${environment}") || exit 1 

@@ -1,4 +1,4 @@
-msg Backing up env. Depending on the size, this may take a couple minutes ...
+msg "Backing up env. Depending on the size, this may take a couple minutes ..."
 
 tmp_git_dir="/tmp/delete-me-${domain}"
 
@@ -74,4 +74,4 @@ if is_cloud; then
   rm -rf "${tmp_git_dir}"
 fi
 
-msg Backup saved to "${local_backup_file}"
+msg "Backup saved to ${local_backup_file}"

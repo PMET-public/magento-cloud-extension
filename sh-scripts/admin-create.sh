@@ -1,4 +1,4 @@
-msg Creating admin user. You will be prompted for a username, password, and email address.
+msg "Creating admin user. You will be prompted for a username, password, and email address."
 
 read -p "
 Enter username of new admin account:

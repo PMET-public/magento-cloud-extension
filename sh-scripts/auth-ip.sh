@@ -1,4 +1,4 @@
-msg Updating access ...
+msg "Updating access ..."
 
 read -p "You may add 1 additional, temporary IP (such as your current IP address) to the default egress list.
 

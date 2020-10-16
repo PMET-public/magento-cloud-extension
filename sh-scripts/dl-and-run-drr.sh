@@ -1,4 +1,4 @@
-msg Diagnosing, attempting to repair, and reporting ...
+msg "Diagnosing, attempting to repair, and reporting ..."
 
 # fetch the mcm version of the diagnose, repair, report script
 # and turn off debugging (by default, debugging is on)

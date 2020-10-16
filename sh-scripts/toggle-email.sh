@@ -1,4 +1,4 @@
-msg Toggling system emails ...
+msg "Toggling system emails ..."
 
 $cmd_prefix "
   val=\$(mysql ${db_opts} -sNe \"select value from core_config_data where path = 'system/smtp/disable';\")

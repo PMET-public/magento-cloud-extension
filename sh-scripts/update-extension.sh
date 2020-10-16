@@ -1,4 +1,4 @@
-msg Downloading and extracting extension ...
+msg "Downloading and extracting extension ..."
 
 rm -rf ~/Downloads/mcm-chrome-ext.zip ~/Downloads/mcm-chrome-ext-*.zip ~/Downloads/mcm-chrome-ext-0.0.24 || :
 

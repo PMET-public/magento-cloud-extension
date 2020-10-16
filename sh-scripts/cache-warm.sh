@@ -1,4 +1,4 @@
-msg Warming cache ...
+msg "Warming cache ..."
 
 wget_url=$(echo "${tab_url}" | perl -pe "s!^(https?://[^/]+).*!\1!")
 wget_domain=$(echo "${wget_url}" | perl -pe "s!https?://!!")

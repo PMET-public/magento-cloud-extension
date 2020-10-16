@@ -1,4 +1,4 @@
-msg Select a window to capture to the clipboard ...
+msg "Select a window to capture to the clipboard ..."
 
 screencapture -i -c -o -W
 

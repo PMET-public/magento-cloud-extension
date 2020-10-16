@@ -167,7 +167,7 @@ reindex_env() {
   "
 }
 
-reindex_on_save() {
+reindex_on_schedule() {
   msg Setting reindex mode to update on schedule ...
   local ssh_url="${1}"
   ssh -n "${ssh_url}" "

@@ -163,7 +163,7 @@ const commands = [
   },
   {
     text: 'Add Grocery',
-    scriptsInValue: ['lib.sh', 'add-grocery.sh', 'reindex-on-save.sh', 'reindex.sh', 'cache-flush.sh', 'cache-warm.sh'],
+    scriptsInValue: ['lib.sh', 'add-grocery.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh', 'cache-warm.sh'],
     cmdTypes: ['magento'],
     envTypes: ['cloud'],
     help: 'Add New Grocery Vertical to a Cloud environment.'

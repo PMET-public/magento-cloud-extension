@@ -167,6 +167,14 @@ reindex_env() {
   "
 }
 
+reindex_on_save() {
+  msg Setting reindex mode to update on schedule ...
+  local ssh_url="${1}"
+  ssh -n "${ssh_url}" "
+    php ${app_dir}/bin/magento indexer:set-mode schedule
+  "
+}
+
 enable_maintenance_mode() {
   msg Enabling maintenance mode ...
   local ssh_url="${1}"

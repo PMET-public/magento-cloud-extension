@@ -30,8 +30,9 @@ jobs:
         run: |
           # for connecting to cloud envs without interaction
           mkdir ~/.ssh && chmod 700 ~/.ssh
-          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          # printf "StrictHostKeyChecking no\n\nHost *.magento.cloud *.magentosite.cloud\nCertificateFile %%d/.magento-cloud/.session/sess-cli-default/ssh/id_ed25519-cert.pub\nIdentityFile %%d/.magento-cloud/.session/sess-cli-default/ssh/id_ed25519\n\n" >> ~/.ssh/config
           ./sh-scripts/install-cli-and-login.sh
+          ~/.magento-cloud/bin/magento-cloud ssh-cert:load --yes
       - name: bats tests
         run: |
           exit 1

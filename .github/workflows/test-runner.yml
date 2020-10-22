@@ -17,11 +17,11 @@ jobs:
     strategy:
       matrix:
         # sample ref, demo, b2b pids with branches named test-env-for-mce
-        # PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
-        PROJECT_ID: [xy4itwbmg2khk]
+        # MCE_PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
+        MCE_PROJECT_ID: [xy4itwbmg2khk]
     runs-on: ubuntu-latest
     env:
-      MDM_OVERRIDE_CONFIG: ${{ matrix.PROJECT_ID }}
+      MCE_PROJECT_ID: ${{ matrix.MCE_PROJECT_ID }}
     steps:
       - uses: actions/checkout@v2
         with:
@@ -43,5 +43,5 @@ jobs:
   # new-branch-tests:
   #   strategy:
   #     matrix:
-  #       PROJECT_ID: []
+  #       MCE_PROJECT_ID: []
   #   runs-on: ubuntu-latest

@@ -13,7 +13,7 @@ load 'bats-lib.sh'
 setup() {
   shopt -s nocasematch
   cd "$proj_dir/sh-scripts" || exit
-  export tab_url="https://demo.magento.cloud/projects/$PROJECT_ID/environments/test-env-for-mce"
+  export tab_url="https://demo.magento.cloud/projects/$MCE_PROJECT_ID/environments/test-env-for-mce"
   export ext_ver="$(get_ext_version)"
 }
 

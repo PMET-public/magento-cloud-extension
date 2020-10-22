@@ -34,6 +34,7 @@ jobs:
           ./sh-scripts/install-cli-and-login.sh
       - name: bats tests
         run: |
+          exit 1
           ./tests/libs/bats/bin/bats -T ./tests/repeatable-commands.bats
       - name: keep alive to debug
         if: ${{ failure() }}

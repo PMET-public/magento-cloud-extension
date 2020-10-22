@@ -17,7 +17,8 @@ jobs:
     strategy:
       matrix:
         # sample ref, demo, b2b pids with branches named test-env-for-mce
-        PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
+        # PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
+        PROJECT_ID: [xy4itwbmg2khk]
     runs-on: ubuntu-latest
     env:
       MDM_OVERRIDE_CONFIG: ${{ matrix.PROJECT_ID }}
@@ -30,6 +31,7 @@ jobs:
           # for connecting to cloud envs without interaction
           mkdir ~/.ssh && chmod 700 ~/.ssh
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          ./sh-scripts/install-cli-and-login.sh
       - name: bats tests
         run: |
           ./tests/libs/bats/bin/bats -T ./tests/repeatable-commands.bats

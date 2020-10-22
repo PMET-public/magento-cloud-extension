@@ -319,10 +319,10 @@ start_ssh_agent_and_load_cloud_and_vm_key() {
   fi
 
   if ! ssh-add "$cloud_key" 2> /dev/null; then
-    error "Could not add cloud ssh key."
+    warning "Could not add cloud ssh key."
   fi
   if ! ssh-add "$vm_key" 2> /dev/null; then
-    error "Could not add vm ssh key."
+    warning "Could not add vm ssh key."
   fi
 }
 start_ssh_agent_and_load_cloud_and_vm_key

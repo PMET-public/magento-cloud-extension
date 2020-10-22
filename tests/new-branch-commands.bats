@@ -9,23 +9,37 @@ load 'libs/bats-file/load'
 
 load 'bats-lib.sh'
 
-
 setup() {
   shopt -s nocasematch
   cd "$proj_dir/sh-scripts" || exit
-  export tab_url="$test_ref_env"
-  export ext_ver="$(get_ext_version)"
+  export tab_url="https://demo.magento.cloud/projects/$MCE_PROJECT_ID/environments/$GITHUB_RUN_ID"
+  export ext_ver="$GITHUB_SHA"
 }
 
 
-@test 'run-cron' {
-  run bash <(cat $(get_scripts_by_id run-cron))
+@test 'add-grocery' {
+  script="$(create_script_from_command_id add-grocery)"
+  run "$script" 3>&-
   assert_success
-  assert_output -e "Ran jobs by schedule.*Ran jobs by schedule"
+  # assert_output -e ""
 }
 
-@test 'reindex' {
-  run bash <(cat $(get_scripts_by_id reindex))
+@test 'admin-create' {
+  script="$(create_script_from_command_id admin-create)"
+  run "$script" 3>&- << RESPONSES
+admin2
+123123q
+admin@test.com
+RESPONSES
   assert_success
-  assert_output -e "been invalidated.*rebuilt successfully"
+  assert_output -e "created.*user"
+}
+
+@test 'delete-env' {
+  script="$(create_script_from_command_id delete-env)"
+  run "$script" 3>&- << RESPONSES
+y
+RESPONSES
+  assert_success
+  assert_output -e "deleted.*branch"
 }

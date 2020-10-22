@@ -1,3 +1,5 @@
+# shellcheck shell=bash
+
 if [[ ! -z "$debug" ]]; then
   set -x
 fi
@@ -28,18 +30,18 @@ if [[ "${HOME}" == "/app" ]]; then
 fi
 
 cli_path="${HOME}/.magento-cloud/bin/magento-cloud"
-cli_actual_version=$("${cli_path}" --version | perl -pe 's/.*?([\d\.]+)/\1/')
+cli_actual_version=$("$cli_path" --version | perl -pe 's/.*?([\d\.]+)/\1/')
 if [[ "${cli_actual_version}" != "${cli_required_version}" ]]; then
-  normal_cli_path="${cli_path}"
-  cli_path="${cli_path}-${cli_required_version}"
-  if [[ ! -f "${cli_path}" ]]; then
-    curl -s -o "${cli_path}" "https://accounts.magento.cloud/sites/default/files/magento-cloud-v${cli_required_version}.phar" ||
+  normal_cli_path="$cli_path"
+  cli_path="$cli_path-${cli_required_version}"
+  if [[ ! -f "$cli_path" ]]; then
+    curl -s -o "$cli_path" "https://accounts.magento.cloud/sites/default/files/magento-cloud-v${cli_required_version}.phar" ||
       error "Could not retrieve required cli version."
-    chmod +x "${cli_path}"
+    chmod +x "$cli_path"
   fi
   # edge case when IT moved user's files and magento-cloud-version existed but magento-cloud did not
   if [[ ! -f "${normal_cli_path}" ]]; then
-    cp "${cli_path}" "${normal_cli_path}"
+    cp "$cli_path" "${normal_cli_path}"
   fi
 fi
 
@@ -67,7 +69,7 @@ is_cloud() {
 is_cloud &&
   # var only needed for cloud and causes error when offline (vm use case)
   shared_k=$(
-    ${cli_path} auth:info --format=csv |
+    $cli_path auth:info --format=csv |
     perl -pe 's/,.*//;s/\n//'
   )
 
@@ -102,11 +104,11 @@ fi
 db_opts="-h \"${db_host}\" -P \"${db_port}\" -u \"${db_user}\" --password=\"${db_pass}\" \"${db_name}\""
 
 get_cloud_base_url() {
-  echo "$(${cli_path} url -p "${1}" -e "${2}" --pipe | grep https -m 1 | perl -pe 's/\s+//')"
+  echo "$($cli_path url -p "${1}" -e "${2}" --pipe | grep https -m 1 | perl -pe 's/\s+//')"
 }
 
 get_cloud_ssh_url() {
-  echo "$(${cli_path} ssh -p "${1}" -e "${2}" --pipe 2> /dev/null || :)"
+  echo "$($cli_path ssh -p "${1}" -e "${2}" --pipe 2> /dev/null || :)"
 }
 
 get_ssh_url() {
@@ -135,7 +137,7 @@ choose_backup() {
   tar_file_pattern="${1}"
   local_tar_files=($(find "${backups_dir}" -name "*${tar_file_pattern}*.tar" 2> /dev/null | sort -r | perl -pe 's!.*/!!' | cat -n))
   if [[ ${#local_tar_files[@]} -lt 1 ]]; then
-    error No files matching "*-${tar_file_pattern}" found in "${backups_dir}"
+    error "No files matching ""*-${tar_file_pattern}" found in "${backups_dir}"
   fi
 
   selection=$(dialog --clear \
@@ -149,9 +151,9 @@ choose_backup() {
 }
 
 reset_env() {
-  msg Resetting env ...
+  msg "Resetting env ..."
   local ssh_url="${1}"
-  ssh -n "${ssh_url}" "
+  ssh -n "$ssh_url" "
     mysql -h ${db_host} -e 'drop database if exists ${db_name}; 
     create database if not exists ${db_name} default character set utf8;'; 
     # can not remove var/export so or noop cmd (|| :) in case it exists
@@ -160,49 +162,49 @@ reset_env() {
 }
 
 reindex_env() {
-  msg Reindexing env ...
+  msg "Reindexing env ..."
   local ssh_url="${1}"
-  ssh -n "${ssh_url}" "
-    php ${app_dir}/bin/magento indexer:reset; php ${app_dir}/bin/magento indexer:reindex
+  ssh -n "$ssh_url" "
+    php $app_dir/bin/magento indexer:reset; php $app_dir/bin/magento indexer:reindex
   "
 }
 
 reindex_on_schedule() {
-  msg Setting reindex mode to update on schedule ...
+  msg "Setting reindex mode to update on schedule ..."
   local ssh_url="${1}"
-  ssh -n "${ssh_url}" "
-    php ${app_dir}/bin/magento indexer:set-mode schedule
+  ssh -n "$ssh_url" "
+    php $app_dir/bin/magento indexer:set-mode schedule
   "
 }
 
 enable_maintenance_mode() {
-  msg Enabling maintenance mode ...
+  msg "Enabling maintenance mode ..."
   local ssh_url="${1}"
-  ssh -n "${ssh_url}" "
+  ssh -n "$ssh_url" "
     php bin/magento maintenance:enable
   "
 }
 
 disable_maintenance_mode() {
-  msg Disabling maintenance mode ...
+  msg "Disabling maintenance mode ..."
   local ssh_url="${1}"
-  ssh -n "${ssh_url}" "
+  ssh -n "$ssh_url" "
     php bin/magento maintenance:disable
   "
 }
 
 enable_cron() {
-  msg Enabling cron ...
+  msg "Enabling cron ..."
   local ssh_url="${1}"
-  ssh -n "${ssh_url}" "
+  ssh -n "$ssh_url" "
     sed -i.bak '/cron.*enabled/d' /app/app/etc/env.php
   "
 }
 
 disable_cron() {
-  msg Disabling cron ...
+  msg "Disabling cron ..."
   local ssh_url="${1}"
-  ssh -n "${ssh_url}" "
+  ssh -n "$ssh_url" "
     # prevent duplicate lines
     sed -i.bak '/cron.*enabled/d' /app/app/etc/env.php
     # insert disable line
@@ -211,39 +213,39 @@ disable_cron() {
 }
 
 clean_cache() {
-  msg Cleaning the cache ...
+  msg "Cleaning the cache ..."
   local ssh_url="${1}"
-  ssh -n "${ssh_url}" "
+  ssh -n "$ssh_url" "
     php bin/magento cache:clean
   " 
 }
 
 transfer_local_tar_to_remote() {
-  msg Sending tar file ...
+  msg "Sending tar file ..."
   local ssh_url="${1}"
   local local_tar_file="${2}"
   scp "${backups_dir}/${local_tar_file}" ${ssh_url}:/tmp
 }
 
 restore_files_from_tar() {
-  msg Restoring files from tar ...
+  msg "Restoring files from tar ..."
   local ssh_url="${1}"
   local local_tar_file="${2}"
   ssh -n ${ssh_url} "
-    rm -rf \"${app_dir}/var/log/*\" \"${app_dir}/pub/media/catalog/*\"
-    tar -xf /tmp/${local_tar_file} -C / --exclude=\"${app_dir}/pub/media\" --anchored ${app_dir#'/'} 2> /dev/null || :
+    rm -rf \"$app_dir/var/log/*\" \"$app_dir/pub/media/catalog/*\"
+    tar -xf /tmp/${local_tar_file} -C / --exclude=\"$app_dir/pub/media\" --anchored ${app_dir#'/'} 2> /dev/null || :
   "
 }
 
 restore_db_from_tar() {
-  msg Restoring DB from tar ...
+  msg "Restoring DB from tar ..."
   local ssh_url="${1}"
   local local_tar_file="${2}"
   ssh -n ${ssh_url} "
     rm ${sql_file} 2> /dev/null # if an old file exists from previous attempt
     tar -xf /tmp/${local_tar_file} -C / tmp
     gunzip ${sql_file}.gz
-    perl -i -pe \"\\\$c+=s!REPLACEMENT_BASE_URL!$(get_cloud_base_url ${project} ${environment})!g;
+    perl -i -pe \"\\\$c+=s!REPLACEMENT_BASE_URL!$(get_cloud_base_url $project $environment)!g;
       END{ if (\\\$c == 0) {exit 1;} print \\\"\n\\\$c base url replacements\n\\\"}\" ${sql_file}
     if [[ $? -ne 0 ]]; then
       echo No replacements made in sql. Not restoring. && exit 1
@@ -255,7 +257,7 @@ restore_db_from_tar() {
 }
 
 restore_media_from_backup_server() {
-  msg Restoring media from backup server ...
+  msg "Restoring media from backup server ..."
   local ssh_url="${1}"
   ssh -n -A ${ssh_url} "
     rm -rf /app/pub/media/catalog/product/cache/
@@ -291,7 +293,7 @@ restore_media_from_backup_server() {
 
 install_local_dev_tools_if_needed() {
   if ! git --version > /dev/null 2>&1; then
-    warning Local developer tools are not installed, or you need to accept the agreement from Apple. Please run this command first:
+    warning "Local developer tools are not installed, or you need to accept the agreement from Apple. Please run this command first:"
     error "sudo xcode-select --install; sudo xcodebuild -license"
   fi
 }
@@ -307,7 +309,7 @@ start_ssh_agent_and_load_cloud_and_vm_key() {
 
   # if cloud key does not exist, warn user
   if [[ ! -f "${cloud_key}" ]]; then
-    warning Cloud key does not exist. Please check prerequisites. Continuing anyway but some functions may not work.
+    warning "Cloud key does not exist. Please check prerequisites. Continuing anyway but some functions may not work."
   fi
 
   # verify local vm key exists
@@ -317,10 +319,10 @@ start_ssh_agent_and_load_cloud_and_vm_key() {
   fi
 
   if ! ssh-add "${cloud_key}" 2> /dev/null; then
-    error Could not add cloud ssh key.
+    error "Could not add cloud ssh key."
   fi
   if ! ssh-add "${vm_key}" 2> /dev/null; then
-    error Could not add vm ssh key.
+    error "Could not add vm ssh key."
   fi
 }
 start_ssh_agent_and_load_cloud_and_vm_key
@@ -331,10 +333,10 @@ if is_cloud; then
   if [[ "${tab_url}" =~ .magento.cloud/projects/.*/environments ]]; then
     project=$(echo "${tab_url}" | perl -pe "s!.*?projects/!!;s!/environments/.*!!;")
     environment=$(echo "${tab_url}" | perl -pe "s!.*?environments/!!;s!/.*!!;")
-    base_url=$(get_cloud_base_url "${project}" "${environment}")
+    base_url=$(get_cloud_base_url "$project" "$environment")
   else
     project=$(echo "${tab_url}" | perl -pe "s/.*-//;s/\..*//;")
-    environments=$("${cli_path}" environments -I -p "${project}" --pipe)
+    environments=$("$cli_path" environments -I -p "$project" --pipe)
     environment=""
     modified_env_pattern=$(echo "${tab_url_simplified}" | perl -pe 's!https://(.*?)-[^-]+-[^-]+$!\1!')
     for e in ${environments}; do
@@ -344,9 +346,9 @@ if is_cloud; then
       fi
     done
     # if we didn't find an env match based on just the url, do a more thorough but time consuming search via the cli
-    if [[ -z "${environment}" ]]; then
+    if [[ -z "$environment" ]]; then
       for e in ${environments}; do
-        if [[ $(get_cloud_base_url "${project}" "${e}") = "${tab_url_simplified}/" ]]; then
+        if [[ $(get_cloud_base_url "$project" "${e}") = "${tab_url_simplified}/" ]]; then
           environment="${e}"
           break
         fi
@@ -354,15 +356,15 @@ if is_cloud; then
     fi
   fi
 
-  if [[ -z "${project}" ]]; then
-    error Project not found in your projects or could not be determined from url.
-  elif [[ -z "${environment}" ]]; then
-    error Environment not found or could not be determined from url.
+  if [[ -z "$project" ]]; then
+    error "Project not found in your projects or could not be determined from url."
+  elif [[ -z "$environment" ]]; then
+    error "Environment not found or could not be determined from url."
   fi
 
   # prevent exit on inactive env but warn
   if [[ -z $(get_ssh_url) ]]; then
-    warning SSH URL could not be determined. Environment inactive?
+    warning "SSH URL could not be determined. Environment inactive?"
   fi
 
   # export to env for child git processes only

@@ -1,11 +1,14 @@
+# shellcheck shell=bash
+: || source lib.sh # trick shellcheck into finding certain referenced vars
+
 msg "Copy imgs to an env ..."
 
 # prompt user for tar file and project to create new env on
 backtitle="Copy images to an env ..."
 
-img_dirs=($(find "${HOME}/Downloads" -name "imgs-from-*" -type d 2> /dev/null | sort | perl -pe 's!.*/!!' | cat -n))
+img_dirs=($(find "$HOME/Downloads" -name "imgs-from-*" -type d 2> /dev/null | sort | perl -pe 's!.*/!!' | cat -n))
 if [[ ${#img_dirs[@]} -lt 1 ]]; then
-  error No image dirs from the store scraper found in "${HOME}/Downloads"
+  error No image dirs from the store scraper found in "$HOME/Downloads"
 fi
 
 selection=$(dialog --clear \
@@ -17,4 +20,4 @@ selection=$(dialog --clear \
 clear
 img_dir="${img_dirs[$(( (${selection} - 1) * 2 + 1))]}"
 
-scp -r "${HOME}/Downloads/${img_dir}/" $(get_ssh_url):${app_dir}/pub/media/import/products
+scp -r "$HOME/Downloads/$img_dir/" $(get_ssh_url):$app_dir/pub/media/import/products

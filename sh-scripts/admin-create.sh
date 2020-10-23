@@ -1,3 +1,6 @@
+# shellcheck shell=bash
+: || source lib.sh # trick shellcheck into finding certain referenced vars
+
 msg "Creating admin user. You will be prompted for a username, password, and email address."
 
 read -r -p "

@@ -1,8 +1,11 @@
+# shellcheck shell=bash
+: || source lib.sh # trick shellcheck into finding certain referenced vars
+
 msg "Adding new grocery vertical ..."
 
 tmp_git_dir="$(mktemp -d)"
 git clone --branch "$environment" "$project@git.demo.magento.cloud:$project.git" "$tmp_git_dir"
-cd "$tmp_git_dir"
+cd "$tmp_git_dir" || exit
 git config user.email "chrome-extension@email.com"
 git config user.name "chrome-extension"
 composer update magentoese/module-data-install --ignore-platform-reqs

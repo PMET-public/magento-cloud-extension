@@ -1,3 +1,6 @@
+# shellcheck shell=bash
+: || source lib.sh # trick shellcheck into finding certain referenced vars
+
 msg "Downloading and extracting extension ..."
 
 rm -rf ~/Downloads/mcm-chrome-ext.zip ~/Downloads/mcm-chrome-ext-*.zip ~/Downloads/mcm-chrome-ext-0.0.24 || :

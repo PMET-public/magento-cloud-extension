@@ -1,3 +1,6 @@
+# shellcheck shell=bash
+: || source lib.sh # trick shellcheck into finding certain referenced vars
+
 read -r -p "
 Enter username of admin account to unlock or leave blank for 'admin':
 "

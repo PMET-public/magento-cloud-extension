@@ -57,19 +57,18 @@ jobs:
           mkdir ~/.ssh && chmod 700 ~/.ssh
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
           ./sh-scripts/install-cli-and-login.sh
-
           # load the cert generated using the API token but do not add the config "--no"
           # manually add the config to ~/.ssh/config b/c incorrect or broken for ubuntu?
           # also mc cmd returns 1 even though successful?
           ~/.magento-cloud/bin/magento-cloud ssh-cert:load --no || :
           echo "IdentityFile %d/.magento-cloud/.session/sess-cli-default/ssh/id_ed25519" >> ~/.ssh/config
-
       - name: bats tests
         run: |
           ./tests/libs/bats/bin/bats -T ./tests/repeatable-commands.bats
       - name: keep alive to debug
         if: ${{ failure() }}
         uses: PMET-public/action-tmate@master
+
 
   new-branch-tests:
     strategy:
@@ -90,13 +89,11 @@ jobs:
           mkdir ~/.ssh && chmod 700 ~/.ssh
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
           ./sh-scripts/install-cli-and-login.sh
-
           # load the cert generated using the API token but do not add the config "--no"
           # manually add the config to ~/.ssh/config b/c incorrect or broken for ubuntu?
           # also mc cmd returns 1 even though successful?
           ~/.magento-cloud/bin/magento-cloud ssh-cert:load --no || :
           echo "IdentityFile %d/.magento-cloud/.session/sess-cli-default/ssh/id_ed25519" >> ~/.ssh/config
-
       - name: create branch
         run: |
           ~/.magento-cloud/bin/magento-cloud environment:branch --force -p "$MCE_PROJECT_ID" -e master "$GITHUB_RUN_ID"

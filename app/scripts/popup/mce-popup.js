@@ -46,14 +46,26 @@ $('#tabs').tabs({
   }
 })
 
-// after tabs created, get the last active tab and restore it
-chrome.storage.local.get(['activeTab'], function (result) {
+chrome.storage.local.get(['activeTab', 'userAttemptedUpdate'], result => {
+  // after tabs created, get the last active tab and restore it
   const activeTab = result['activeTab'] || 0
   if ($('.ui-tabs-tab a').length) {
     $('.ui-tabs-tab a').get(activeTab).click()
   }
+
+  // if user clicked the update cmd, reset the attempt flag and reload
+  if (result['userAttemptedUpdate']) {
+    chrome.storage.local.set({userAttemptedUpdate: false})
+    chrome.runtime.reload()
+  }
 })
 
+
 checkExtUpdateAvailable().then(available => {
-  if (available) $('.extension-title').append(`<span class="update-available">${cmdsToHtml(commands.filter(cmd => cmd.tags.includes('self-update')))}</span>`)
+  if (available) {
+    $('.extension-title').append(`<span class="update-available">${cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('self-update')))}</span>`)
+    $('.update-available').click(() => {
+      chrome.storage.local.set({userAttemptedUpdate: true})
+    })
+  }
 })

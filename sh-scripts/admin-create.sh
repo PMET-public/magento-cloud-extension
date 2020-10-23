@@ -13,7 +13,7 @@ Enter password of new admin account: (7+ chars; must include letters and numbers
 "
 password="$REPLY"
 if [[ -z "$password" ]]; then
-  error "Username can not be empty."
+  error "Password can not be empty."
 fi
 
 read -r -p "
@@ -21,7 +21,7 @@ Enter email of new admin account: (does not need to be real)
 "
 email="$REPLY"
 if [[ -z "$email" ]]; then
-  error "Username can not be empty."
+  error "Email can not be empty."
 fi
 
 $cmd_prefix "php $app_dir/bin/magento admin:user:create \

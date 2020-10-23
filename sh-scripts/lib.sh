@@ -266,7 +266,7 @@ restore_media_from_backup_server() {
 
 install_local_dev_tools_if_needed() {
   if ! git --version > /dev/null 2>&1; then
-    warning Local developer tools are not installed, or you need to accept the agreement from Apple. Please run this command first:
+    warning "Local developer tools are not installed, or you need to accept the agreement from Apple. Please run this command first:"
     error "sudo xcode-select --install; sudo xcodebuild -license"
   fi
 }
@@ -282,7 +282,7 @@ start_ssh_agent_and_load_cloud_and_vm_key() {
 
   # if cloud key does not exist, warn user
   if [[ ! -f "${cloud_key}" ]]; then
-    warning Cloud key does not exist. Please check prerequisites. Continuing anyway but some functions may not work.
+    warning "Cloud key does not exist. Please check prerequisites. Continuing anyway but some functions may not work."
   fi
 
   # verify local vm key exists

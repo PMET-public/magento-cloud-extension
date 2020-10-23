@@ -1,13 +1,15 @@
+# shellcheck shell=bash
+: || source lib.sh # trick shellcheck into finding certain referenced vars
 
-declare -a "projects=($(${cli_path} projects --format=tsv --no-header --columns=title,id | perl -pe 's/\t/ (/g;s/^/"/;s/\s+$/)"\n/'))"
+declare -a "projects=($($cli_path projects --format=tsv --no-header --columns=title,id | perl -pe 's/\t/ (/g;s/^/"/;s/\s+$/)"\n/'))"
 if [[ ${#projects[@]} -lt 1 ]]; then
-  error No projects found. Is your Magento Cloud CLI installed and logged in?
+  error "No projects found. Is your Magento Cloud CLI installed and logged in?"
 fi
 
 PS3="
 Choose which \"Project Title (project id)\" above to update: "
 select project in "${projects[@]}"; do
-  if [[ -z "${project}" ]]; then
+  if [[ -z "$project" ]]; then
     echo "Invalid choice. Exiting ..." && exit
   fi
   project=$(echo $project | perl -pe 's/.*\(//;s/\).*//')
@@ -20,15 +22,15 @@ echo "
 
 "
 
-declare -a "environments=($(${cli_path} environments -p ${project} --format=tsv --no-header --columns=name,id | perl -pe 's/\t/ (/g;s/^/"/;s/\s+$/)"\n/'))"
+declare -a "environments=($($cli_path environments -p $project --format=tsv --no-header --columns=title,id | perl -pe 's/\t/ (/g;s/^/"/;s/\s+$/)"\n/'))"
 if [[ ${#environments[@]} -lt 1 ]]; then
-  error No environments found. Should not be possible.
+  error "No environments found. Should not be possible."
 fi
 
 PS3="
 Choose which \"Environment Name (environment id)\" above to update: "
 select environment in "${environments[@]}"; do
-  if [[ -z "${environment}" ]]; then
+  if [[ -z "$environment" ]]; then
     echo "Invalid choice. Exiting ..." && exit
   fi
   environment=$(echo $environment | perl -pe 's/.*\(//;s/\).*//')
@@ -53,7 +55,7 @@ case ${REPLY} in
     sudo lsof -i4TCP:80 -sTCP:LISTEN -n -P"
   fi
   echo "You may be prompted for your local computer password to listen on port 80."
-  sudo ssh -L 80:127.0.0.1:80 $(${cli_path} ssh -p ${project} -e ${environment} --pipe) '
+  sudo ssh -L 80:127.0.0.1:80 $($cli_path ssh -p $project -e $environment --pipe) '
     echo "Updating ..."
     php bin/magento setup:store-config:set --base-url=http://demo.the1umastory.com/
     php bin/magento setup:store-config:set --use-secure-admin=0
@@ -65,7 +67,7 @@ case ${REPLY} in
   '
   ;;
 2)
-  ssh $(${cli_path} ssh -p ${project} -e ${environment} --pipe) '
+  ssh $($cli_path ssh -p $project -e $environment --pipe) '
     echo "Updating ..."
     url=$(echo $MAGENTO_CLOUD_ROUTES | base64 -d | perl -pe "s#.*?(http://.*?/).*#\1#")
     php bin/magento setup:store-config:set --base-url=${url}

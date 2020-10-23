@@ -1,3 +1,4 @@
-#printf "\nSSHing into ...\n${ssh_cmd}"
+# shellcheck shell=bash
+: || source lib.sh # trick shellcheck into finding certain referenced vars
 
-echo $(get_interactive_ssh_cmd "${project}" "${environment}") | bash
+echo $(get_interactive_ssh_cmd "$project" "$environment") | bash

@@ -1,6 +1,6 @@
-msg Finding available languages. May take a minute ...
+msg "Finding available languages. May take a minute ..."
 
-$ssh_cmd "
+$cmd_prefix "
   cd $app_dir/vendor
   # find languages in known directories
   find magento community-engineering splendidinternet -name language.xml -exec perl -ne '/<code>(.*)<\/code>/ and print \"\$1\n\"' {} \; | \
@@ -15,7 +15,7 @@ echo ^^ Which language code to deploy?
 read lang_code </dev/tty
 
 if [[ ! -z "${lang_code}" ]]; then
-  $ssh_cmd "
+  $cmd_prefix "
     cd $app_dir
     php bin/magento setup:static-content:deploy --ansi --no-interaction -f --jobs $(nproc) -s standard ${lang_code}
     echo Cleaning layout cache ...

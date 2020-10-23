@@ -31,6 +31,7 @@ async function checkExtUpdateAvailable() {
       break;
     }
   }
+  // return remoteIsNewer || true
   return remoteIsNewer
 }
 

@@ -1,3 +1,6 @@
+# shellcheck shell=bash
+: || source lib.sh # trick shellcheck into finding certain referenced vars
+
 printf "\nSetting up PWA Studio ...\n"
 
 NODE_VERSION="v10.15.0"
@@ -40,7 +43,7 @@ cd "${HOME}/pwa-studio/"
 
 if [ "$(git rev-parse @)" != $(git rev-parse @{u}) ]; then
   read -p "There is an update to PWA. It may contain breaking changes. Upgrade? (y/n): " -n 1 -r < /dev/tty
-  if [[ "${REPLY}" =~ ^[Yy]$ ]]
+  if [[ "$REPLY" =~ ^[Yy]$ ]]
   then
     git pull
     npm install

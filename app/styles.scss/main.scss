@@ -150,3 +150,17 @@ h3 .mdi-open-in-new {
   font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
 }
 
+#copy-overlay {
+  height: 100%; 
+  width: 100%; 
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  display: none; 
+  text-align: center; 
+  color: red; 
+  background-color: rgba(255,255,255,0.9);
+  flex-direction: column;
+  justify-content: center;
+  font-size: 2em;
+}

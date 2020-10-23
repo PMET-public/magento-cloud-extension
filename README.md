@@ -41,3 +41,19 @@ Done
 7. Select unzipped folder at Downloads > mcm-chrome-ext
 
 Done
+
+## Developer Setup
+
+Currently tested & built on node 10.x
+
+1. clone, install dependencies, and build
+``` bash
+git git@github.com:PMET-public/magento-cloud-extension.git
+cd magento-cloud-extension
+npm install
+cd app
+../node_modules/bower/bin/bower install
+cd ..
+./node_modules/gulp/bin/gulp.js dev-build
+```
+2. install extension as above

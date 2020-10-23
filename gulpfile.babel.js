@@ -205,7 +205,9 @@ gulp.task('dist-build', gulp.series('clean', 'copy-remaining-to-dist', 'lint', '
 gulp.task('package', gulp.series('dist-build', (done) => {
   const manifest = require('./dist/manifest.json')
   gulp.src([
-      'dist/**'
+      'dist/**',
+      'sh-scripts/*.sh',
+      'sh-scripts/**/*.sh'
     ])
     .pipe($.zip('mcm-chrome-ext.zip'))
     .pipe(gulp.dest('package'))

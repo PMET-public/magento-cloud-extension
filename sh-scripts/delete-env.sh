@@ -3,7 +3,7 @@
 
 msg "Deleting env ..."
 
-read -r -p "Confirm deletion of project: $project environment: $environment (y/n): " -n 1
+read -r -p "Confirm deletion of project: $project environment: $environment (y/n): "
 if [[ "$REPLY" =~ ^[Yy]$ ]]; then
   # kill any php process up to 10 times in the next 10 min
   # that may still be running and blocking a proper shutdown

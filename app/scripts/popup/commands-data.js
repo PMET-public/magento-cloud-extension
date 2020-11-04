@@ -193,7 +193,7 @@ const commands = [
   {
     id: 'run-all-consumers',
     text: 'Run consumers',
-    scriptsInValue: ['lib.sh', 'run-all-conumsers.sh'],
+    scriptsInValue: ['lib.sh', 'run-all-consumers.sh'],
     cmdTypes: ['magento'],
     envTypes: ['cloud', 'vm'],
     help: 'Add New Grocery Vertical to a Cloud environment.'

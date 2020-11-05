@@ -43,10 +43,10 @@ echo "
 
 "
 
-read -p "Choose an option:
+read -r -n 1 -p "Choose an option:
 1) Use ssh to bypass url restrictions and access 1 of your envs at http://demo.the1umastory.com
 2) Revert a previous url change and set your env back to its original url
-" -n 1 -r < /dev/tty
+" < "$read_input_src"
 echo ""
 case ${REPLY} in
 1)

@@ -24,6 +24,9 @@ msg() {
   printf "\n$green$@$no_color\n\n"
 }
 
+read_input_src="/dev/tty"
+[[ "$GITHUB_WORKSPACE" ]] && read_input_src="/dev/stdin"
+
 cli_required_version="1.36.4"
 if [[ "$HOME" == "/app" ]]; then
   error "You are probably attempting to run this command in a cloud env. Commands are intended to be run in a local terminal."

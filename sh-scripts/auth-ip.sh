@@ -3,17 +3,17 @@
 
 msg "Updating access ..."
 
-read -p "You may add 1 additional, temporary IP (such as your current IP address) to the default egress list.
+read -r -n 1 -p "You may add 1 additional, temporary IP (such as your current IP address) to the default egress list.
 
 Add an IP? (y/n)
-" -n 1 -r < /dev/tty
+" < "$read_input_src"
 echo ""
 
 case ${REPLY} in
 y)
   cur_ip=$(curl -s ifconfig.co)
-  read -p "Hit return to accept your current detected IP [$cur_ip] or enter an additional IP address:
-" -r < /dev/tty
+  read -r -p "Hit return to accept your current detected IP [$cur_ip] or enter an additional IP address:
+" < "$read_input_src"
   if [[ -z "$REPLY" ]]; then
     REPLY=${cur_ip}
   elif [[ ! $REPLY =~ ^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$ ]]; then

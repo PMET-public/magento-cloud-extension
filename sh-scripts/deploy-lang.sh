@@ -12,7 +12,7 @@ $cmd_prefix "
 
 echo
 echo ^^ Which language code to deploy?
-read lang_code </dev/tty
+read lang_code < "$read_input_src"
 
 if [[ ! -z "${lang_code}" ]]; then
   $cmd_prefix "

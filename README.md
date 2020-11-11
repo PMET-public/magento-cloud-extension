@@ -42,6 +42,18 @@ Done
 
 Done
 
+## Recommended IDE & Extensions
+
+IDE: [VSC](https://code.visualstudio.com/download)
+
+IDE Extensions:
+1. [Bash Debug](https://github.com/rogalmic/vscode-bash-debug)
+1. [BASH IDE](https://github.com/bash-lsp/bash-language-server)
+1. [Bats](https://github.com/jetmartin/bats)
+1. [shellcheck](https://github.com/timonwong/vscode-shellcheck)
+
+The included `.vscode/launch.json` has some useful debug scenarios pre-configured that you can use to step through.
+
 ## Developer Setup
 
 Currently tested & built on node 10.x
@@ -57,3 +69,31 @@ cd ..
 ./node_modules/gulp/bin/gulp.js dev-build
 ```
 2. install extension as above
+
+## Troubleshooting
+
+Besides the IDE tools listed above, you can set an environmental var `debug=1` that invokes the `set +x` option which enables additional output.
+
+Example: (Note the `debug=1` directly preceding `bash` at the end.)
+
+```bash
+# example c&p cmd
+curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/0.0.30/sh-scripts/{lib.sh,reindex.sh} | env ext_ver=0.0.30 tab_url=https://khb-del-me-vnrx66q-a6terwtbk67os.demo.magentosite.cloud debug=1 bash
+
+# example output
++ set -e
++ red='\033[0;31m'
++ green='\033[0;32m'
++ yellow='\033[1;33m'
++ no_color='\033[0m'
++ read_input_src=/dev/tty
++ [[ -n '' ]]
++ cli_required_version=1.36.4
++ [[ /Users/kbentrup == \/\a\p\p ]]
++ cli_path=/Users/kbentrup/.magento-cloud/bin/magento-cloud
+++ /Users/kbentrup/.magento-cloud/bin/magento-cloud --version
+++ perl -pe 's/.*?([\d\.]+)/\1/'
++ cli_actual_version=1.36.4
++ [[ 1.36.4 != \1\.\3\6\.\4 ]]
+....
+```

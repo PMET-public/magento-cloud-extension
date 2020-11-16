@@ -3,6 +3,8 @@
 
 msg "Adding new grocery vertical ..."
 
+[[ "$(which composer)" ]] || error "Composer is not installed. You must install composer to continue. https://getcomposer.org/download/"
+
 tmp_git_dir="$(mktemp -d)"
 git clone --branch "$environment" "$project@git.demo.magento.cloud:$project.git" "$tmp_git_dir"
 cd "$tmp_git_dir" || exit

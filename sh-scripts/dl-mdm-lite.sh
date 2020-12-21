@@ -5,8 +5,10 @@ msg "Downloading MDM-lite ..."
 
 rm -rf MDM-lite.app
 cd "$HOME/Downloads"
-curl -sL -o mdm.zip https://github.com/PMET-public/mdm/releases/download/1.0.12/MDM-lite.app.zip
+curl -sL -o mdm.zip https://github.com/PMET-public/mdm/releases/download/1.0.12/MDM-lite-2.app.zip
 unzip mdm
 rm mdm.zip
-chmod +x MDM-lite.app/Contents/MacOS/MDM-lite
-open MDM-lite.app
+chmod +x MDM-lite-2.app/Contents/MacOS/MDM-lite-2
+# https://apple.stackexchange.com/questions/202169/how-can-i-open-an-app-from-an-unidentified-developer-without-using-the-gui
+# xattr -dr com.apple.quarantine "MDM-lite.app"
+open MDM-lite-2.app

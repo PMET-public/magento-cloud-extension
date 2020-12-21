@@ -20,12 +20,15 @@
     </div>
     <div id="tabs">
       <ul id="tab-list">
+        <li><a href="#commands"><span class="mdi mdi-console not-interactive"></span> Commands</a></li>
+        <li><a href="#mdm"><span class="mdi mdi-console not-interactive"></span> MDM</a></li>
         <li><a href="#resources"><span class="mdi mdi-open-in-new not-interactive"></span> Resources</a></li>
         <li><a href="#store-scraper"><span class="mdi mdi-briefcase-download not-interactive"></span> Store Scraper</a></li>
-        <li><a href="#commands"><span class="mdi mdi-console not-interactive"></span> Commands</a></li>
         <li><a href="#css-injector-container"><span class="mdi mdi-bullseye-arrow not-interactive"></span> CSS Injector</a></li>
-        <!-- <li><a href="#env-library"><span class="mdi mdi-console not-interactive"></span> Env Library</a></li> -->
       </ul>
+      <div id="commands">
+        @@include('commands.html')
+      </div>
       <div id="resources">
         @@include('resources.html')
       </div>
@@ -33,15 +36,12 @@
         <a id="bw-link" href="https://www.builtwith.com/" title="BuiltWith" target="_blank"><span>bw</span></a>
         @@include('image-downloader.html')
       </div>
-      <div id="commands">
-        @@include('commands.html')
-      </div>
       <div id="css-injector-container">
         @@include('css-injector.html')
       </div>
-      <!-- <div id="env-library">
-        @@include('env-library.html')
-      </div> -->
+      <div id="mdm">
+        @@include('mdm.html')
+      </div>
     </div>
     <div id="copy-overlay">
       Copied! Now paste into your local terminal ...

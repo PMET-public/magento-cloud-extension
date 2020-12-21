@@ -27,6 +27,16 @@ const commands = [
     help: 'You should only need to run this command on your computer once.'
   },
 
+  // mdm
+  {
+    id: 'install-mdm-lite',
+    text: 'Install MDM-lite now!',
+    scriptsInValue: ['dl-mdm-lite.sh'],
+    cmdTypes: ['mdm'],
+    envTypes: ['cloud', 'vm'],
+    help: 'MDM-lite will download to your Downloads folder and run'
+  },
+
   // image-copy
   {
     id: 'copy-imgs-to-env',

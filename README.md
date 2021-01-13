@@ -1,5 +1,6 @@
 - [Installation (how to update below)](#installation-how-to-update-below)
-- [Update - 1 min video (for older versions)](#update---1-min-video-for-older-versions)
+- [Automatic Updates](#automatic-updates)
+- [How to Manually Update - 1 min video (for older versions)](#how-to-manually-update---1-min-video-for-older-versions)
 - [Recommended IDE & Extensions](#recommended-ide--extensions)
 - [Developer Setup](#developer-setup)
 - [Troubleshooting](#troubleshooting)
@@ -34,11 +35,13 @@ To install the Magento Cloud CLI & setup ssh keys:
 
 Done
 
-## Update - 1 min video (for older versions)
+## Automatic Updates
+1. Quick the update link in the extension
+2. Paste the cmd copied to your clipboard in the terminal
+3. If you haven't previously, you may get a dialog to grant the terminal permission to access your Downloads folder in recent versions of OSX.
+
+## How to Manually Update - 1 min video (for older versions)
 [![Quick Install Video](http://img.youtube.com/vi/JDBgG4Hs_No/0.jpg)](https://www.youtube.com/watch?v=JDBgG4Hs_No "Quick Update Video")
-
-
-Note: With more recent versions, there should be a 1 click c&p command to update. If not the process is basically the same, it's just manual.
 
 1. Quick the update link in the extension
 2. Download & open zip file

@@ -1,0 +1,111 @@
+name: test runner
+
+on:
+  push:
+
+env:
+  # set a default terminal for various cmds that expect it
+  TERM: xterm
+  COMPOSER_AUTH: ${{ secrets.COMPOSER_AUTH }}
+  SLACK_WEBHOOK_URL_FOR_TMATE_FROM_GITHUB_WORKFLOW: ${{ secrets.SLACK_WEBHOOK_URL_FOR_TMATE_FROM_GITHUB_WORKFLOW }}
+  TMATE_AUTHORIZED_KEYS_URL: ${{ secrets.TMATE_AUTHORIZED_KEYS_URL }}
+  MAGENTO_CLOUD_CLI_TOKEN: ${{ secrets.MAGENTO_CLOUD_CLI_TOKEN }}
+
+jobs:
+
+  build-install-update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: install reqs & deploy
+        run: |
+          # for connecting to cloud envs without interaction
+          mkdir ~/.ssh && chmod 700 ~/.ssh
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          ./sh-scripts/install-cli-and-login.sh
+          # load the cert generated using the API token but do not add the config "--no"
+          # manually add the config to ~/.ssh/config b/c incorrect or broken for ubuntu?
+          # also mc cmd returns 1 even though successful?
+          ~/.magento-cloud/bin/magento-cloud ssh-cert:load --no || :
+          echo "IdentityFile %d/.magento-cloud/.session/sess-cli-default/ssh/id_ed25519" >> ~/.ssh/config
+      - name: bats tests
+        run: |
+          ./tests/libs/bats/bin/bats -T ./tests/build-install-update.bats
+      - name: keep alive to debug
+        if: ${{ failure() }}
+        uses: PMET-public/action-tmate@master
+
+
+  repeatable-tests:
+    strategy:
+      matrix:
+        # sample ref, demo, b2b pids with branches named test-env-for-mce
+        MCE_PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
+        # MCE_PROJECT_ID: [xy4itwbmg2khk]
+    runs-on: ubuntu-latest
+    env:
+      MCE_PROJECT_ID: ${{ matrix.MCE_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: install reqs & deploy
+        run: |
+          # for connecting to cloud envs without interaction
+          mkdir ~/.ssh && chmod 700 ~/.ssh
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          ./sh-scripts/install-cli-and-login.sh
+          # load the cert generated using the API token but do not add the config "--no"
+          # manually add the config to ~/.ssh/config b/c incorrect or broken for ubuntu?
+          # also mc cmd returns 1 even though successful?
+          ~/.magento-cloud/bin/magento-cloud ssh-cert:load --no || :
+          echo "IdentityFile %d/.magento-cloud/.session/sess-cli-default/ssh/id_ed25519" >> ~/.ssh/config
+      - name: bats tests
+        run: |
+          ./tests/libs/bats/bin/bats -T ./tests/repeatable-commands.bats
+      - name: keep alive to debug
+        if: ${{ failure() }}
+        uses: PMET-public/action-tmate@master
+
+
+  new-branch-tests:
+    strategy:
+      matrix:
+        # sample ref, demo, b2b pids with branches named test-env-for-mce
+        MCE_PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
+        # MCE_PROJECT_ID: [xy4itwbmg2khk]
+    runs-on: ubuntu-latest
+    env:
+      MCE_PROJECT_ID: ${{ matrix.MCE_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: install reqs & deploy
+        run: |
+          # for connecting to cloud envs without interaction
+          mkdir ~/.ssh && chmod 700 ~/.ssh
+          echo "StrictHostKeyChecking no" >> ~/.ssh/config
+          ./sh-scripts/install-cli-and-login.sh
+          # load the cert generated using the API token but do not add the config "--no"
+          # manually add the config to ~/.ssh/config b/c incorrect or broken for ubuntu?
+          # also mc cmd returns 1 even though successful?
+          ~/.magento-cloud/bin/magento-cloud ssh-cert:load --no || :
+          echo "IdentityFile %d/.magento-cloud/.session/sess-cli-default/ssh/id_ed25519" >> ~/.ssh/config
+      - name: create branch
+        run: |
+          ~/.magento-cloud/bin/magento-cloud environment:branch --force -p "$MCE_PROJECT_ID" -e master "$GITHUB_RUN_ID"
+      - name: bats tests
+        run: |
+          ./tests/libs/bats/bin/bats -T ./tests/new-branch-commands.bats
+      - name: delete branch
+        if: ${{ failure() || cancelled() }}
+        run: |
+          # does not actually fully delete unless run 2x (--delete-branch flag seems to have no effect)
+          ~/.magento-cloud/bin/magento-cloud environment:delete --delete-branch --no-wait --yes -p "$MCE_PROJECT_ID" -e "$GITHUB_RUN_ID"
+          ~/.magento-cloud/bin/magento-cloud environment:delete --delete-branch --no-wait --yes -p "$MCE_PROJECT_ID" -e "$GITHUB_RUN_ID"
+      - name: keep alive to debug
+        if: ${{ failure() }}
+        uses: PMET-public/action-tmate@master

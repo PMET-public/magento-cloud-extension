@@ -2,32 +2,49 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link href="../styles/vendor.css" rel="stylesheet">
     <link href="../styles/main.css" rel="stylesheet">
   </head>
   <body>
     <nav id="top-nav">
-      <a href="https://demo.magento.cloud/projects/" title="Magento Cloud Projects" target="_blank"><span class="mdi mdi-cloud-circle"></span></a>
-      <a id="slack-link" href="slack://channel?team=T025FJ55H&id=C0MQZ62DV" title="Slack Support Channel" target="_blank"><img id="slack-link-logo" src="../images/slack-logo.png"></a>
+      <a id="cloud-ui-link" href="https://demo.magento.cloud/projects/" title="Magento Cloud Projects" target="_blank"><span class="mdi mdi-cloud-circle"></span></a>
+      <a id="slack-link" href="slack://channel?team=T016XBMUQLA&id=C018FCG0HHS" title="Slack Support Channel" target="_blank"><img id="slack-link-logo" src="../images/slack-logo.png"></a>
     </nav>
     <h3 class="extension-title">Magento Cloud Extension
-      <a href="https://github.com/PMET-public/magento-cloud-extension" title="Extension Home" target="_blank"><span class="mdi mdi-open-in-new"></span></a><span id="manifest-version"></span>
+      <a href="https://github.com/PMET-public/magento-cloud-extension" title="Extension Home" target="_blank"><span class="mdi mdi-open-in-new"></span></a>
       <span id="manifest-version"></span>
     </h3>
+    <div id="prereqs-accordion">  
+        <h3>Cloud Prerequisites <span>(run once)</span></h3>
+        <div id="prereqs-cmds">Copy & paste into your local terminal </div>
+    </div>
     <div id="tabs">
       <ul id="tab-list">
-        <li><a href="#css-injector-container"><span class="mdi mdi-bullseye-arrow not-interactive"></span> CSS Injector</a></li>
-        <li><a href="#store-scraper"><span class="mdi mdi-briefcase-download not-interactive"></span> Store Scraper</a></li>
         <li><a href="#commands"><span class="mdi mdi-console not-interactive"></span> Commands</a></li>
+        <li><a href="#mdm"><span class="mdi mdi-console not-interactive"></span> MDM</a></li>
+        <li><a href="#resources"><span class="mdi mdi-open-in-new not-interactive"></span> Resources</a></li>
+        <li><a href="#store-scraper"><span class="mdi mdi-briefcase-download not-interactive"></span> Store Scraper</a></li>
+        <li><a href="#css-injector-container"><span class="mdi mdi-bullseye-arrow not-interactive"></span> CSS Injector</a></li>
       </ul>
+      <div id="commands">
+        @@include('commands.html')
+      </div>
+      <div id="resources">
+        @@include('resources.html')
+      </div>
+      <div id="store-scraper">
+        <a id="bw-link" href="https://www.builtwith.com/" title="BuiltWith" target="_blank"><span>bw</span></a>
+        @@include('image-downloader.html')
+      </div>
       <div id="css-injector-container">
         @@include('css-injector.html')
       </div>
-      <div id="store-scraper">
-        @@include('image-downloader.html')
+      <div id="mdm">
+        @@include('mdm.html')
       </div>
-      <div id="commands">
-          @@include('commands.html')
-      </div>
+    </div>
+    <div id="copy-overlay">
+      Copied! Now paste into your local terminal ...
     </div>
     <script src="../scripts/popup.processed.js"></script>
   </body>

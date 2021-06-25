@@ -5,7 +5,7 @@ echo "Downloading MDM-lite ..."
 
 cd "$HOME/Downloads"
 rm -rf MDM-lite.app || :
-curl -sL -o mdm.zip https://github.com/PMET-public/mdm/releases/download/1.0.12/MDM-lite.app.zip
+curl -sL -o mdm.zip https://github.com/PMET-public/mdm/releases/download/1.0.14/MDM-lite.app.zip
 unzip -uo mdm
 rm mdm.zip
 chmod +x MDM-lite.app/Contents/MacOS/MDM-lite

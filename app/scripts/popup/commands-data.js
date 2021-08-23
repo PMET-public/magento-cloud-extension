@@ -195,10 +195,18 @@ const commands = [
   {
     id: 'add-grocery',
     text: 'Add grocery',
-    scriptsInValue: ['lib.sh', 'add-grocery.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh', 'cache-warm.sh'],
+    scriptsInValue: ['lib.sh', 'add-grocery.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh'],
     cmdTypes: ['magento'],
     envTypes: ['cloud', 'vm'],
-    help: 'Add New Grocery Vertical to a Cloud environment.'
+    help: 'Add New Grocery vertical website to a Cloud environment.'
+  },
+  {
+    id: 'toggle-livesearch',
+    text: 'Toggle Live Search',
+    scriptsInValue: ['lib.sh', 'toggle-livesearch.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh'],
+    cmdTypes: ['magento'],
+    envTypes: ['cloud', 'vm'],
+    help: 'Switch between Elasticsearch and Live Search'
   },
   {
     id: 'run-all-consumers',
@@ -206,7 +214,7 @@ const commands = [
     scriptsInValue: ['lib.sh', 'run-all-consumers.sh'],
     cmdTypes: ['magento'],
     envTypes: ['cloud', 'vm'],
-    help: 'Add New Grocery Vertical to a Cloud environment.'
+    help: 'Run Consumers.'
   },
   // {
   //   text: 'Upgrade modules',
@@ -294,15 +302,14 @@ const commands = [
     scriptsInValue: ['lib.sh', 'rebuild-cloud-env.sh'],
     cmdTypes: ['maintenance'],
     envTypes: ['cloud', 'vm'],
-    help: 'Some operations require the env to be rebuilt. Please backup first.'
+    help: 'Some operations (e.g. enabling email) require the env to be rebuilt. Please backup first.'
   },
   {
-    id: 'redeploy-env',
-    text: 'Redeploy env',
-    scriptsInValue: ['lib.sh', 'redeploy-cloud-env.sh'],
+    id: 'restart-service',
+    text: 'Restart service',
+    scriptsInValue: ['lib.sh', ''],
     cmdTypes: ['maintenance'],
     envTypes: ['cloud', 'vm'],
-    help: 'Redeploying will renew certs and force some settings to be applied.'
   },
   {
     id: 'update-vm',

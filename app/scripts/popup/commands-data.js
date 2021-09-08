@@ -294,14 +294,15 @@ const commands = [
     scriptsInValue: ['lib.sh', 'rebuild-cloud-env.sh'],
     cmdTypes: ['maintenance'],
     envTypes: ['cloud', 'vm'],
-    help: 'Some operations (e.g. enabling email) require the env to be rebuilt. Please backup first.'
+    help: 'Some operations require the env to be rebuilt. Please backup first.'
   },
   {
-    id: 'restart-service',
-    text: 'Restart service',
-    scriptsInValue: ['lib.sh', ''],
+    id: 'redeploy-env',
+    text: 'Redeploy env',
+    scriptsInValue: ['lib.sh', 'redeploy-cloud-env.sh'],
     cmdTypes: ['maintenance'],
     envTypes: ['cloud', 'vm'],
+    help: 'Redeploying will renew certs and force some settings to be applied.'
   },
   {
     id: 'update-vm',

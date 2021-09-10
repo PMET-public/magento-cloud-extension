@@ -42,7 +42,7 @@ function cmdTypesToHtml(cmdTypes, keywordFilter = '') {
       .filter(cmd => cmd.envTypes.includes(isCloud ? 'cloud' : 'vm'))
       .filter(cmd => cmd.cmdTypes.includes(cmdType))
       .filter(cmd => matchCmd(cmd, keywordFilter))
-    html += `<div class="cmds-container grid-${cmdType}" aria-label="${cmdType}">
+    html += `<div id="cmds_container" class="cmds-container grid-${cmdType}" aria-label="${cmdType}">
         ${cmdsToHtml(cmds)}
       </div>`
   })
@@ -59,6 +59,7 @@ function renderCmdsGrid(ev) {
 $('body').on('click', '.cli-cmd-container', function (ev) {
   const jCmdInput = $(this).find('input')
   copyToClipboard(jCmdInput)
+  trackEvent($(this), "");
 })
 
 $('body').on('keyup', '#search-cmds', renderCmdsGrid)

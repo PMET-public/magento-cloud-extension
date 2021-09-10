@@ -39,7 +39,8 @@ fetch('https://master-7rqtwti-zajhc7u663lak.demo.magentosite.cloud/media/cloud-u
 $('#tabs').tabs({
   activate: function (event, ui ) {
     // when a tab is clicked, store it as the current active one
-    $('.ui-tabs-tab').each(function (i) { 
+    trackPageViews( ui.newTab[0] );
+    $('.ui-tabs-tab').each(function (i, v) { 
       if (this === ui.newTab[0]) { 
         chrome.storage.local.set({activeTab: i})
       }
@@ -53,6 +54,9 @@ chrome.storage.local.get(['activeTab', 'userAttemptedUpdate'], result => {
   if ($('.ui-tabs-tab a').length) {
     $('.ui-tabs-tab a').get(activeTab).click()
   }
+
+  if(activeTab == 0)
+  trackPageViews( $('.ui-tabs-tab a').get(activeTab) )
 
   // if user clicked the update cmd, reset the attempt flag and reload
   if (result['userAttemptedUpdate']) {

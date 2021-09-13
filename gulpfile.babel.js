@@ -21,7 +21,7 @@ const imageDownloader = [
 ]
 
 const mcmExt = [
-  'app/scripts/popup/googleAnalytics.js',
+  'app/scripts/popup/analytics.js',
   'app/scripts/popup/custom-autocomplete.js',
   'app/scripts/lib/lib-open.js',
   'app/scripts/popup/css-injector/*.js',

@@ -7,9 +7,9 @@ const MCExt = {
       // github needs more than dynamic query parameter
       if (/\/\/github.com/.test(url)) {
         // find latest commit and make request directly
-        
+
       }
-    } 
+    }
     // if url is a github.com url, use raw github instead of API to avoid limits
     url = url.replace(/\/\/github.com(.*?)\/blob\/(.*)/, '//raw.githubusercontent.com$1/$2')
     this.removeCSS()
@@ -31,8 +31,8 @@ const MCExt = {
   loadSavedCSS: function () {
     chrome.storage.local.get(['isCssInjectorOn', 'cssUrls'], result => {
       if (result['isCssInjectorOn']) {
-        const cssUrls = result['cssUrls'] || {}
-        const domain = MCExt.getDomain(location.href)
+        const cssUrls = result['cssUrls'] || {},
+          domain = MCExt.getDomain(location.href)
         if (cssUrls[domain] && cssUrls[domain].rawUrl) {
           MCExt.loadCSS(cssUrls[domain].rawUrl)
         }

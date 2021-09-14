@@ -14,7 +14,7 @@ $('#mdm-tab').prepend(cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('m
 $('#prereqs-accordion').accordion({
   active: 1,
   collapsible: true,
-  heightStyle: "content"
+  heightStyle: 'content'
 })
 
 // attempt to provide a direct link to the environment in the cloud ui when on a specific storefront
@@ -25,13 +25,12 @@ fetch('https://master-7rqtwti-zajhc7u663lak.demo.magentosite.cloud/media/cloud-u
   .then(txt => {
     const subdomainMatches = tabUrl.match(/.*?:\/\/([^.]+)-[^-]*-([^-]*)\.demo\.magentosite\.cloud\/.*/)
     if (subdomainMatches) {
-      const environmentInSubdomain = subdomainMatches[1]
-      const projectInSubdomain = subdomainMatches[2]
-      const matchesFromCss = txt.match(new RegExp('"/projects/' + projectInSubdomain + '/environments/' +  environmentInSubdomain.replace(/-/g,'[_\.\-]') + '"', 'ig'))
+      const [environmentInSubdomain, projectInSubdomain] = subdomainMatches,
+        matchesFromCss = txt.match(new RegExp('"/projects/' + projectInSubdomain + '/environments/' + environmentInSubdomain.replace(/-/g,'[_.-]') + '"', 'ig'))
       if (matchesFromCss && matchesFromCss.length === 1) {
-        $('#cloud-ui-link')[0].href='https://demo.magento.cloud' + matchesFromCss[0].replace(/"/g,'')
+        $('#cloud-ui-link')[0].href = 'https://demo.magento.cloud' + matchesFromCss[0].replace(/"/g,'')
       } else {
-        $('#cloud-ui-link')[0].href='https://demo.magento.cloud/projects/' + projectInSubdomain + '/environments/master'
+        $('#cloud-ui-link')[0].href = 'https://demo.magento.cloud/projects/' + projectInSubdomain + '/environments/master'
       }
     }
   })

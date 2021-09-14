@@ -1,5 +1,5 @@
-'use strict';
+'use strict'
 
 // placeholder file
 
-console.log('MC Demo Option');
+console.log('MC Demo Option')

@@ -1,6 +1,6 @@
 $('.order-actions-toolbar .actions').append('<a id="edit-order">Edit</a>')
 
-$(document).on('click', '#edit-order', function(){
+$(document).on('click', '#edit-order', function() {
   $('ul.items-qty').replaceWith('<input id="items-qty" class="items-qty" type="number" value="1">')
   $('#my-orders-table').before('<a id="add-item">Add Product</a>')
   $('strong.product.name.product-item-name').append('<a id="del-item"></a>')
@@ -8,15 +8,15 @@ $(document).on('click', '#edit-order', function(){
   $('#maincontent > div.page.messages > div > div > div').remove()
 })
 
-$(document).on('click', '#add-item', function(){
+$(document).on('click', '#add-item', function() {
   $('tr[id^="order-item-row"]').after('<tr id="order-item-new-row"><td class="col name"><input id="items-sku" class="items-sku" type="text" value="Search Name or SKU"  onfocus="this.value=\'\'"><a id="del-item"></a></td><td class="col sku"> </td><td class="col price"> </td><td class="col qty"> </td><td class="col subtotal"> </td></tr>')
 })
 
-$(document).on('click', '#del-item', function(){
+$(document).on('click', '#del-item', function() {
   $(this).closest('tr').remove()
 })
 
-$(document).on('click', '#items-sku', function(){
+$(document).on('click', '#items-sku', function() {
   let validcode = 'MIL230622'
   $('#items-sku').keyup(function () {
     let code = $(this).val()
@@ -30,7 +30,7 @@ $(document).on('click', '#items-sku', function(){
   })
 })
 
-$(document).on('click', '#save-order', function(){
+$(document).on('click', '#save-order', function() {
   $('#maincontent > div.page.messages').append('<div data-bind="scope: \'messages\'"><div role="alert" data-bind=" " class="messages"><div class="message-success success message" data-ui-id="message-success"><div data-bind="">You saved the order.</div></div></div></div>')
   $('#save-order').replaceWith('<a id="edit-order">Edit</a>')
   $('input[id^="items-qty"]').replaceWith( '<span>1</span>' )

@@ -51,6 +51,8 @@
       "consecutive"
     ],
     "space-infix-ops": "error",
+    "keyword-spacing": "error",
+    "space-before-blocks": "error",
     "no-multi-spaces": "error",
     "no-trailing-spaces": "error",
     "no-unused-vars": "off",

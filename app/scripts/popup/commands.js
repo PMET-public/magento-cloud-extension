@@ -16,7 +16,7 @@ function copyToClipboard(el) {
 
 function matchCmd(cmd, key) {
   const re = new RegExp(key.trim(),'i')
-  if(key.trim() === '' || re.test(cmd.text) || re.test(cmd.help) || re.test(cmd.cmdType) || re.test(cmd.additionalSearchTerms)) {
+  if (key.trim() === '' || re.test(cmd.text) || re.test(cmd.help) || re.test(cmd.cmdType) || re.test(cmd.additionalSearchTerms)) {
     return true
   }
   return false

@@ -54,7 +54,7 @@ chrome.storage.local.get(['activeTab', 'userAttemptedUpdate'], result => {
     $('.ui-tabs-tab a').get(activeTab).click()
   }
 
-  if(activeTab == 0){
+  if (activeTab == 0) {
     trackPageViews( $('.ui-tabs-tab a').get(activeTab) )
   }
 

@@ -21,6 +21,7 @@ const jqueryDeps = [
   ],
 
   mcmExt = [
+    'app/scripts/popup/ga-lib.js',
     'app/scripts/popup/analytics.js',
     'app/scripts/popup/custom-autocomplete.js',
     'app/scripts/lib/lib-open.js',

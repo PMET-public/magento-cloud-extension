@@ -201,6 +201,14 @@ const commands = [
     help: 'Add New Grocery vertical website to a Cloud environment.'
   },
   {
+    id: 'add-auto',
+    text: 'Add Auto',
+    scriptsInValue: ['lib.sh', 'add-auto.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh'],
+    cmdTypes: ['magento'],
+    envTypes: ['cloud', 'vm'],
+    help: 'Add New Automotive vertical website to a Cloud environment.'
+  },
+  {
     id: 'toggle-livesearch',
     text: 'Toggle Live Search',
     scriptsInValue: ['lib.sh', 'toggle-livesearch.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh'],

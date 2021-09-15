@@ -1,7 +1,7 @@
 {
   "name": "Magento Cloud Extension",
   "short_name": "mce",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "manifest_version": 2,
   "description": "Collection of tools to help Magento Solution Consultants",
   "icons": {
@@ -72,5 +72,6 @@
   },
   "web_accessible_resources": [
     "images/cloud-48.png"
-  ]
+  ],
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
 }

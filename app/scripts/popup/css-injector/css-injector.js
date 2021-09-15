@@ -25,17 +25,19 @@ fetch('https://api.github.com/repos/PMET-public/magento-sc-custom-demo-css/conte
 
 // user saved urls
 chrome.storage.local.get(['cssUrls'], function (result) {
-  const cssUrls = result['cssUrls']
-  if (typeof cssUrls === 'undefined') return
+  const [cssUrls] = result
+  if (typeof cssUrls === 'undefined') {
+    return
+  }
   let mostRecent = null
   Object.entries(cssUrls).forEach(([key, obj]) => {
-      if (mostRecent === null) {
-          mostRecent = key
-      } else {
-          if (obj.timestamp > cssUrls[mostRecent].timestamp) {
-              mostRecent = key
-          }
+    if (mostRecent === null) {
+      mostRecent = key
+    } else {
+      if (obj.timestamp > cssUrls[mostRecent].timestamp) {
+        mostRecent = key
       }
-  });
+    }
+  })
   jCssUrlInput[0].value = cssUrls[mostRecent].rawUrl
-});
+})

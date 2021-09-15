@@ -19,7 +19,7 @@ function handleCssInjector(ev, ui) {
         chrome.storage.local.set({curCssUrl: jCssUrlInput.val()})
       }
     } else if (ev.type === 'advautocompletechange') {
-      //curCssUrl = ui.item.value.replace(/.*?(https:\/\/)/, '$1')
+      // curCssUrl = ui.item.value.replace(/.*?(https:\/\/)/, '$1')
       if (typeof ui !== 'undefined' && typeof ui.item !== 'undefined') {
         chrome.storage.local.set({curCssUrl: ui.item.value})
         jCssUrlInput.val(ui.item.label).prop('disabled', true)

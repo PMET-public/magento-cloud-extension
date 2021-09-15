@@ -1,60 +1,61 @@
 // generated on 2018-05-08 using generator-chrome-extension 0.7.1
 
-const gulp = require('gulp')
-const gulpLoadPlugins = require('gulp-load-plugins')
+const gulp = require('gulp'),
+  gulpLoadPlugins = require('gulp-load-plugins')
 const $ = gulpLoadPlugins()
 const del = require('del')
 const wiredep = require('wiredep').stream
 const runSequence = require('gulp4-run-sequence')
 
 const jqueryDeps = [
-  'app/bower_components/jquery/dist/jquery.js',
-  'app/bower_components/jquery-ui/jquery-ui.js'
-]
+    'app/bower_components/jquery/dist/jquery.js',
+    'app/bower_components/jquery-ui/jquery-ui.js'
+  ],
 
-const imageDownloader = [
-  'app/image-downloader/lib/zepto.js',
-  'app/image-downloader/lib/jquery.nouislider/jquery.nouislider.js',
-  'app/image-downloader/lib/jss.js',
-  'app/image-downloader/scripts/defaults.js',
-  'app/image-downloader/scripts/popup.js'
-]
+  imageDownloader = [
+    'app/image-downloader/lib/zepto.js',
+    'app/image-downloader/lib/jquery.nouislider/jquery.nouislider.js',
+    'app/image-downloader/lib/jss.js',
+    'app/image-downloader/scripts/defaults.js',
+    'app/image-downloader/scripts/popup.js'
+  ],
 
-const mcmExt = [
-  'app/scripts/popup/custom-autocomplete.js',
-  'app/scripts/lib/lib-open.js',
-  'app/scripts/popup/css-injector/*.js',
-  'app/scripts/popup/commands-data.js',
-  'app/scripts/popup/commands.js',
-  'app/scripts/popup/mce-popup.js',
-  'app/scripts/lib/lib-close.js'
-]
+  mcmExt = [
+    'app/scripts/popup/analytics.js',
+    'app/scripts/popup/custom-autocomplete.js',
+    'app/scripts/lib/lib-open.js',
+    'app/scripts/popup/css-injector/*.js',
+    'app/scripts/popup/commands-data.js',
+    'app/scripts/popup/commands.js',
+    'app/scripts/popup/mce-popup.js',
+    'app/scripts/lib/lib-close.js'
+  ],
 
-const contentScripts = [
+  contentScripts = [
   // 'app/bower_components/tablesorter/dist/js/jquery.tablesorter.combined.js',
   // app/scripts/content/index.js',
-  'app/scripts/content/lib-for-document.js',
-  'app/scripts/content/document-start.js'
-]
+    'app/scripts/content/lib-for-document.js',
+    'app/scripts/content/document-start.js'
+  ],
 
-const distBackgroundScripts = [
-  'app/scripts/lib/lib-open.js',
-  'app/scripts/background/my-background.js',
-  'app/image-downloader/scripts/defaults.js',
-  'app/scripts/lib/lib-close.js'
-]
+  distBackgroundScripts = [
+    'app/scripts/lib/lib-open.js',
+    'app/scripts/background/my-background.js',
+    'app/image-downloader/scripts/defaults.js',
+    'app/scripts/lib/lib-close.js'
+  ],
 
-const devBackgroundScripts = ['app/crx-hotreload/hot-reload.js', ...distBackgroundScripts]
+  devBackgroundScripts = ['app/crx-hotreload/hot-reload.js', ...distBackgroundScripts],
 
-const devOpts = {
-  sourcemaps: 1,
-  minify: 0
-}
+  devOpts = {
+    sourcemaps: 1,
+    minify: 0
+  },
 
-const distOpts = {
-  sourcemaps: 0,
-  minify: 1
-}
+  distOpts = {
+    sourcemaps: 0,
+    minify: 1
+  }
 
 function lint(files, options) {
   return () =>
@@ -104,11 +105,11 @@ gulp.task('dev-js', gulp.series((done) => {
 
 gulp.task('dev-styles', () =>
   gulp.src([
-      'app/styles.scss/vendor.scss',
-      'app/styles.scss/main.scss',
-      'app/styles.scss/content.scss',
-      'app/styles.scss/import-cloud-ui.scss',
-    ])
+    'app/styles.scss/vendor.scss',
+    'app/styles.scss/main.scss',
+    'app/styles.scss/content.scss',
+    'app/styles.scss/import-cloud-ui.scss',
+  ])
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.sass.sync({
@@ -121,9 +122,8 @@ gulp.task('dev-styles', () =>
 )
 
 gulp.task('dev-build', gulp.series('clean', (cb) => {
-    runSequence('copy-remaining-to-dist', 'lint', 'dev-js', 'dev-styles', 'html', 'images', cb)
-  })
-)
+  runSequence('copy-remaining-to-dist', 'lint', 'dev-js', 'dev-styles', 'html', 'images', cb)
+}))
 
 gulp.task('dist-js', gulp.series((done) => {
   gulp.src(distBackgroundScripts)
@@ -143,21 +143,21 @@ gulp.task('dist-js', gulp.series((done) => {
 
 gulp.task('dist-styles', () =>
   gulp.src([
-      'app/styles.scss/vendor.scss',
-      'app/styles.scss/main.scss',
-      'app/styles.scss/content.scss',
-      'app/styles.scss/import-cloud-ui.scss',
-    ])
-    .pipe($.plumber())
-    .pipe($.sass.sync({
-      outputStyle: 'expanded',
-      precision: 10,
-      includePaths: ['.']
-    }).on('error', $.sass.logError))
-    .pipe(gulp.dest('dist/styles'))
+    'app/styles.scss/vendor.scss',
+    'app/styles.scss/main.scss',
+    'app/styles.scss/content.scss',
+    'app/styles.scss/import-cloud-ui.scss',
+  ])
+  .pipe($.plumber())
+  .pipe($.sass.sync({
+    outputStyle: 'expanded',
+    precision: 10,
+    includePaths: ['.']
+  }).on('error', $.sass.logError))
+  .pipe(gulp.dest('dist/styles'))
 )
 
-gulp.task('images', () => 
+gulp.task('images', () =>
   gulp.src('app/images/**/*')
     .pipe($.if($.if.isFile, $.imagemin({
       progressive: true,
@@ -185,12 +185,11 @@ gulp.task('html', () =>
 )
 
 gulp.task('watch', gulp.series('html', 'lint', 'dev-js', 'dev-styles', 'copy-remaining-to-dist', () => {
-    gulp.watch('app/html/**', gulp.series('html'))
-    gulp.watch('app/scripts/**/*.js', gulp.series('lint', 'dev-js'))
-    gulp.watch('app/styles.scss/**/*.scss', gulp.series('dev-styles'))
-    gulp.watch('app/image-downloader/**', gulp.series('copy-remaining-to-dist'))
-  })
-)
+  gulp.watch('app/html/**', gulp.series('html'))
+  gulp.watch('app/scripts/**/*.js', gulp.series('lint', 'dev-js'))
+  gulp.watch('app/styles.scss/**/*.scss', gulp.series('dev-styles'))
+  gulp.watch('app/image-downloader/**', gulp.series('copy-remaining-to-dist'))
+}))
 
 gulp.task('wiredep', () =>
   gulp.src('app/*.html')
@@ -205,10 +204,10 @@ gulp.task('dist-build', gulp.series('clean', 'copy-remaining-to-dist', 'lint', '
 gulp.task('package', gulp.series('dist-build', (done) => {
   const manifest = require('./dist/manifest.json')
   gulp.src([
-      'dist/**',
-      'sh-scripts/*.sh',
-      'sh-scripts/**/*.sh'
-    ])
+    'dist/**',
+    'sh-scripts/*.sh',
+    'sh-scripts/**/*.sh'
+  ])
     .pipe($.zip('mcm-chrome-ext.zip'))
     .pipe(gulp.dest('package'))
   done()

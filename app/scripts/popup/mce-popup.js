@@ -14,7 +14,7 @@ $('#mdm-tab').prepend(cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('m
 $('#prereqs-accordion').accordion({
   active: 1,
   collapsible: true,
-  heightStyle: "content"
+  heightStyle: 'content'
 })
 
 // attempt to provide a direct link to the environment in the cloud ui when on a specific storefront
@@ -25,13 +25,12 @@ fetch('https://master-7rqtwti-zajhc7u663lak.demo.magentosite.cloud/media/cloud-u
   .then(txt => {
     const subdomainMatches = tabUrl.match(/.*?:\/\/([^.]+)-[^-]*-([^-]*)\.demo\.magentosite\.cloud\/.*/)
     if (subdomainMatches) {
-      const environmentInSubdomain = subdomainMatches[1]
-      const projectInSubdomain = subdomainMatches[2]
-      const matchesFromCss = txt.match(new RegExp('"/projects/' + projectInSubdomain + '/environments/' +  environmentInSubdomain.replace(/-/g,'[_\.\-]') + '"', 'ig'))
+      const [environmentInSubdomain, projectInSubdomain] = subdomainMatches,
+        matchesFromCss = txt.match(new RegExp('"/projects/' + projectInSubdomain + '/environments/' + environmentInSubdomain.replace(/-/g,'[_.-]') + '"', 'ig'))
       if (matchesFromCss && matchesFromCss.length === 1) {
-        $('#cloud-ui-link')[0].href='https://demo.magento.cloud' + matchesFromCss[0].replace(/"/g,'')
+        $('#cloud-ui-link')[0].href = 'https://demo.magento.cloud' + matchesFromCss[0].replace(/"/g,'')
       } else {
-        $('#cloud-ui-link')[0].href='https://demo.magento.cloud/projects/' + projectInSubdomain + '/environments/master'
+        $('#cloud-ui-link')[0].href = 'https://demo.magento.cloud/projects/' + projectInSubdomain + '/environments/master'
       }
     }
   })
@@ -39,8 +38,9 @@ fetch('https://master-7rqtwti-zajhc7u663lak.demo.magentosite.cloud/media/cloud-u
 $('#tabs').tabs({
   activate: function (event, ui ) {
     // when a tab is clicked, store it as the current active one
-    $('.ui-tabs-tab').each(function (i) { 
-      if (this === ui.newTab[0]) { 
+    trackPageViews( ui.newTab[0] )
+    $('.ui-tabs-tab').each(function (i, v) {
+      if (this === ui.newTab[0]) {
         chrome.storage.local.set({activeTab: i})
       }
     })
@@ -52,6 +52,10 @@ chrome.storage.local.get(['activeTab', 'userAttemptedUpdate'], result => {
   const activeTab = result['activeTab'] || 0
   if ($('.ui-tabs-tab a').length) {
     $('.ui-tabs-tab a').get(activeTab).click()
+  }
+
+  if (activeTab == 0) {
+    trackPageViews( $('.ui-tabs-tab a').get(activeTab) )
   }
 
   // if user clicked the update cmd, reset the attempt flag and reload

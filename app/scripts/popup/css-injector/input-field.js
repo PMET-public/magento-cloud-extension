@@ -20,13 +20,13 @@ jCssUrlInput
     change: handleCssInjector,
     source: function (req, resp) {
       chrome.storage.local.get(['cssUrls'], result => {
-        const cssUrls = result['cssUrls'] || {}
-        const term = req.term.toLowerCase()
+        const cssUrls = result['cssUrls'] || {},
+          term = req.term.toLowerCase()
         chrome.storage.local.get(['repoCssFiles'], result => {
           const options = []
           // user urls
           Object.entries(cssUrls).forEach(([key, obj]) => {
-            if (obj.name.toLowerCase().indexOf(term) >= 0  || obj.rawUrl.toLowerCase().indexOf(term) >= 0) {
+            if (obj.name.toLowerCase().indexOf(term) >= 0 || obj.rawUrl.toLowerCase().indexOf(term) >= 0) {
               const label = obj.name + ' (saved: ' + new Date(obj.timestamp * 1000).toLocaleDateString(navigator.language) + ') ' + key
               options.push({label: label, value: obj.rawUrl})
             }
@@ -34,14 +34,14 @@ jCssUrlInput
           options.sort((a, b) => {
             return b.timestamp - a.timestamp
           })
-          var numSavedOptions = options.length
+          let numSavedOptions = options.length
           if (numSavedOptions) {
             options.unshift({label: 'Your saved CSS', value: 'placeholder'})
           }
           // repo urls
-          var repoUrlsAdded = false
+          let repoUrlsAdded = false
           Object.entries(result['repoCssFiles']).forEach(([key, obj]) => {
-            if (obj.name.toLowerCase().indexOf(term) >= 0  || obj.download_url.toLowerCase().indexOf(term) >= 0) {
+            if (obj.name.toLowerCase().indexOf(term) >= 0 || obj.download_url.toLowerCase().indexOf(term) >= 0) {
               options.push({label: obj.name.replace(/.css$/i, '').replace(/-/g, ' '), value: obj.html_url})
               repoUrlsAdded = true
             }

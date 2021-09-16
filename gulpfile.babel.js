@@ -21,9 +21,11 @@ const jqueryDeps = [
   ],
 
   mcmExt = [
+    'app/scripts/popup/ga-lib.js',
     'app/scripts/popup/analytics.js',
     'app/scripts/popup/custom-autocomplete.js',
     'app/scripts/lib/lib-open.js',
+    'app/scripts/lib/init.js',
     'app/scripts/popup/css-injector/*.js',
     'app/scripts/popup/commands-data.js',
     'app/scripts/popup/commands.js',
@@ -40,6 +42,7 @@ const jqueryDeps = [
 
   distBackgroundScripts = [
     'app/scripts/lib/lib-open.js',
+    'app/scripts/lib/init.js',
     'app/scripts/background/my-background.js',
     'app/image-downloader/scripts/defaults.js',
     'app/scripts/lib/lib-close.js'
@@ -94,7 +97,7 @@ gulp.task('dev-js', gulp.series((done) => {
     .pipe(gulp.dest('dist/scripts'))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('dist/scripts'))
-  gulp.src([...jqueryDeps, ...imageDownloader, ...mcmExt])
+  gulp.src([...jqueryDeps, ...imageDownloader, 'app/scripts/popup/ga-dev-mode.js', ...mcmExt,])
     .pipe($.sourcemaps.init())
     .pipe($.concat('popup.processed.js'))
     .pipe(gulp.dest('dist/scripts'))

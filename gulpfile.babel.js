@@ -97,7 +97,7 @@ gulp.task('dev-js', gulp.series((done) => {
     .pipe(gulp.dest('dist/scripts'))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('dist/scripts'))
-  gulp.src([...jqueryDeps, ...imageDownloader, ...mcmExt])
+  gulp.src([...jqueryDeps, ...imageDownloader, ...mcmExt, 'app/scripts/popup/ga-dev-mode.js'])
     .pipe($.sourcemaps.init())
     .pipe($.concat('popup.processed.js'))
     .pipe(gulp.dest('dist/scripts'))

@@ -1,9 +1,8 @@
-// Using localStorage to store the Client ID. In order to track users across sessions...
-// ...@see: https://developers.google.com/analytics/devguides/collection/analyticsjs/cookies-user-id#using_localstorage_to_store_the_client_id
-// ... will need to change this to our own style and to use chrome.storage.local instead of localStorage.
+// Using localStorage to store the client ID in order to track users across sessions
+// https://developers.google.com/analytics/devguides/collection/analyticsjs/cookies-user-id#using_localstorage_to_store_the_client_id
+// will need to change this to our own style and to use chrome.storage.local instead of localStorage.
 let GA_LOCAL_STORAGE_KEY = 'ga:clientId',
-  isDev = false,
-  trackingId = (isDev) ? 'UA-133691543-6' : 'UA-133691543-6'
+  trackingId = isDevForGA ? 'UA-133691543-6' : 'UA-133691543-6'
 
 if (window.localStorage) {
   ga('create', trackingId, {
@@ -22,7 +21,7 @@ ga('set', 'checkProtocolTask', null)
 
 ga('send', 'event', 'mceOpen', 'mceOpen', chrome.runtime.getManifest().version, {nonInteraction: true})
 
-// tracks simple click on buttons.
+// tracks simple click on buttons
 function trackEvent(element) {
 
   let parentId = element[0].parentElement.id,

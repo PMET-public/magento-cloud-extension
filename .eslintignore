@@ -1,1 +1,3 @@
-/app/scripts/jquery*
+/app/scripts/lib/lib-open.js
+/app/scripts/lib/lib-close.js
+/app/scripts/popup/ga-lib.js

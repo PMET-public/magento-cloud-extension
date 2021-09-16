@@ -2,7 +2,13 @@
 // https://developers.google.com/analytics/devguides/collection/analyticsjs/cookies-user-id#using_localstorage_to_store_the_client_id
 // will need to change this to our own style and to use chrome.storage.local instead of localStorage.
 let GA_LOCAL_STORAGE_KEY = 'ga:clientId',
-  trackingId = isDevForGA ? 'UA-133691543-6' : 'UA-133691543-6'
+  trackingId
+
+if (typeof isDevForGA === 'undefined') {
+  trackingId = 'UA-207749832-1'
+} else {
+  trackingId = 'UA-207749832-2'
+}
 
 if (window.localStorage) {
   ga('create', trackingId, {

@@ -25,6 +25,7 @@ const jqueryDeps = [
     'app/scripts/popup/analytics.js',
     'app/scripts/popup/custom-autocomplete.js',
     'app/scripts/lib/lib-open.js',
+    'app/scripts/lib/init.js',
     'app/scripts/popup/css-injector/*.js',
     'app/scripts/popup/commands-data.js',
     'app/scripts/popup/commands.js',
@@ -41,6 +42,7 @@ const jqueryDeps = [
 
   distBackgroundScripts = [
     'app/scripts/lib/lib-open.js',
+    'app/scripts/lib/init.js',
     'app/scripts/background/my-background.js',
     'app/image-downloader/scripts/defaults.js',
     'app/scripts/lib/lib-close.js'

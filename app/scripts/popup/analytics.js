@@ -25,7 +25,42 @@ if (window.localStorage) {
 // removes necessary check against http or https since the protocol is 'chrome-extension://'
 ga('set', 'checkProtocolTask', null)
 
-ga('send', 'event', 'mceOpen', 'mceOpen', chrome.runtime.getManifest().version, {nonInteraction: true})
+// get the clientId
+let clientId = function() {
+    try {
+      let trackers = ga.getAll(),
+        i, len
+      for (i = 0, len = trackers.length; i < len; i += 1) {
+        if (trackers[i].get('trackingId') === trackingId) {
+          return trackers[i].get('clientId')
+        }
+      }
+    } catch (e) {
+      console.log(e)
+    }
+    return false
+  },
+  // generate and return local time as ISO string with offset at the end
+  timestamp = function() {
+    let now = new Date(),
+      tzo = -now.getTimezoneOffset(),
+      dif = tzo >= 0 ? '+' : '-',
+      pad = function(num) {
+        let norm = Math.abs(Math.floor(num))
+        return (norm < 10 ? '0' : '') + norm
+      }
+    return now.getFullYear()
+      + '-' + pad(now.getMonth() + 1)
+      + '-' + pad(now.getDate())
+      + 'T' + pad(now.getHours())
+      + ':' + pad(now.getMinutes())
+      + ':' + pad(now.getSeconds())
+      + '.' + pad(now.getMilliseconds())
+      + dif + pad(tzo / 60)
+      + ':' + pad(tzo % 60)
+  }
+
+ga('send', 'event', 'mceOpen', 'mceOpen', chrome.runtime.getManifest().version)
 
 // tracks simple click on buttons
 function trackEvent(element) {
@@ -39,8 +74,10 @@ function trackEvent(element) {
   // gets command's button name
   [action, rest] = element[0].innerText.trim().split('\n')
 
-  // check if button belongs to the commands tab
-  if (parentId === 'cmds-container') {
-    ga('send', 'event', category, action, label)
+  if (parentId === 'cmds-container' && clientId() !== false ) {
+    ga('send', 'event', category, action, label, {
+      'dimension1': clientId(),
+      'dimension2': timestamp()
+    })
   }
 }

@@ -59,7 +59,7 @@ function renderCmdsGrid(ev) {
 $('body').on('click', '.cli-cmd-container', function (ev) {
   const jCmdInput = $(this).find('input')
   copyToClipboard(jCmdInput)
-  trackEvent($(this), '')
+  trackEvent($(this))
 })
 
 $('body').on('keyup', '#search-cmds', renderCmdsGrid)

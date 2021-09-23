@@ -1,7 +1,8 @@
 # shellcheck shell=bash
 : || source lib.sh # trick shellcheck into finding certain referenced vars
 
-msg "Creating new cloud env from backup ..."
+msg "No longer supported. Please use the cloud native snapshot and restore or MDM."
+exit
 
 # must use "declare -a" b/c some array items are quoted strings with spaces
 declare -a "projects=($($cli_path projects --format=tsv --no-header --columns=id,title | perl -pe 's/\t/\t\"/;s/\s+$/\"\n/'))"

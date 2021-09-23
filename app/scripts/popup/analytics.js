@@ -60,7 +60,10 @@ let clientId = function() {
       + ':' + pad(tzo % 60)
   }
 
-ga('send', 'event', 'mceOpen', 'mceOpen', chrome.runtime.getManifest().version)
+ga('send', 'event', 'mceOpen', 'mceOpen', chrome.runtime.getManifest().version, {
+  'dimension1': clientId(),
+  'dimension2': timestamp()
+})
 
 // tracks simple click on buttons
 function trackEvent(element) {

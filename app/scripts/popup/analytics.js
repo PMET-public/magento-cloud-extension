@@ -40,8 +40,8 @@ ga('send', 'event', 'mceOpen', 'mceOpen', chrome.runtime.getManifest().version, 
 // tracks simple click on buttons
 function trackEvent(jElement) {
 
-  let jParent = jElement[0].parentElement,
-    category = 'Commands - ' + jParent.ariaLabel,
+  let parent = jElement[0].parentElement,
+    category = 'Commands - ' + parent.ariaLabel,
     label = chrome.runtime.getManifest().version,
     action,
     rest
@@ -49,7 +49,7 @@ function trackEvent(jElement) {
   // gets command's button name
   [action, rest] = jElement[0].innerText.trim().split('\n')
 
-  if (jParent.id === 'cmds-container') {
+  if (parent.id === 'cmds-container') {
     ga('send', 'event', category, action, label, {
       'dimension1': clientId,
       'dimension2': new Date().toISOString()

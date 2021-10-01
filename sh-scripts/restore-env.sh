@@ -1,7 +1,8 @@
 # shellcheck shell=bash
 : || source lib.sh # trick shellcheck into finding certain referenced vars
 
-msg "Restoring env from backup ..."
+msg "No longer supported. Please use the cloud native snapshot and restore or MDM."
+exit
 
 if is_cloud; then
   local_tar_file=$(choose_backup "$project-$environment") || exit 1 

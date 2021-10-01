@@ -1,7 +1,8 @@
 # shellcheck shell=bash
 : || source lib.sh # trick shellcheck into finding certain referenced vars
 
-msg "Backing up env. Depending on the size, this may take a couple minutes ..."
+msg "No longer supported. Please use the cloud native snapshot and restore or MDM."
+exit
 
 tmp_git_dir="$(mktemp -d)"
 

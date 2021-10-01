@@ -290,12 +290,12 @@ const commands = [
     help: 'Cloud\'s delete only deactivates. Use this to actually delete.'
   },
   {
-    id: 'restore-env',
-    text: 'Restore env',
-    scriptsInValue: ['lib.sh', 'restore-env.sh', 'reindex.sh', 'cache-flush.sh', 'cache-warm.sh'],
+    id: 'redeploy-env',
+    text: 'Redeploy env',
+    scriptsInValue: ['lib.sh', 'redeploy-cloud-env.sh'],
     cmdTypes: ['maintenance'],
     envTypes: ['cloud', 'vm'],
-    help: 'Immediately restore database and media to previous state using local backup.'
+    help: 'Redeploying will renew certs and force some settings to be applied.'
   },
   {
     id: 'create-env-from-backup',

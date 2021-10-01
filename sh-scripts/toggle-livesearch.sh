@@ -1,0 +1,44 @@
+# shellcheck shell=bash
+: || source lib.sh # trick shellcheck into finding certain referenced vars
+
+echo "Switching search engine..."
+
+tmp_git_dir="$(mktemp -d)"
+
+git clone --branch "$environment" "$project@git.demo.magento.cloud:$project.git" "$tmp_git_dir"
+
+cd "$tmp_git_dir"
+filename="$tmp_git_dir"/app/etc/config.php
+if grep -q "'Magento_LiveSearch' => 1," $filename; then
+    message="Switching to ElasticSearch"
+    sed -i "s/'Magento_LiveSearch' => 1/'Magento_LiveSearch' => 0/" $filename
+    sed -i "s/'Magento_LiveSearchAdapter' => 1/'Magento_LiveSearchAdapter' => 0/" $filename
+    sed -i "s/'Magento_LiveSearchStorefrontPopover' => 1/'Magento_LiveSearchStorefrontPopover' => 0/" $filename
+    sed -i "s/'Magento_AdvancedSearch' => 0/'Magento_AdvancedSearch' => 1/" $filename
+    sed -i "s/'Magento_Elasticsearch' => 0/'Magento_Elasticsearch' => 1/" $filename
+    sed -i "s/'Magento_Elasticsearch6' => 0/'Magento_Elasticsearch6' => 1/" $filename
+    sed -i "s/'Magento_Elasticsearch7' => 0/'Magento_Elasticsearch7' => 1/" $filename
+    sed -i "s/'Magento_ElasticsearchCatalogPermissions' => 0/'Magento_ElasticsearchCatalogPermissions' => 1/" $filename
+    sed -i "s/'Magento_InventoryElasticsearch' => 0/'Magento_InventoryElasticsearch' => 1/" $filename
+else
+    message="Switching to LiveSearch"
+    sed -i "s/'Magento_LiveSearch' => 0/'Magento_LiveSearch' => 1/" $filename
+    sed -i "s/'Magento_LiveSearchAdapter' => 0/'Magento_LiveSearchAdapter' => 1/" $filename
+    sed -i "s/'Magento_LiveSearchStorefrontPopover' => 0/'Magento_LiveSearchStorefrontPopover' => 1/" $filename
+    sed -i "s/'Magento_AdvancedSearch' => 1/'Magento_AdvancedSearch' => 0/" $filename
+    sed -i "s/'Magento_Elasticsearch' => 1/'Magento_Elasticsearch' => 0/" $filename
+    sed -i "s/'Magento_Elasticsearch6' => 1/'Magento_Elasticsearch6' => 0/" $filename
+    sed -i "s/'Magento_Elasticsearch7' => 1/'Magento_Elasticsearch7' => 0/" $filename
+    sed -i "s/'Magento_ElasticsearchCatalogPermissions' => 1/'Magento_ElasticsearchCatalogPermissions' => 0/" $filename
+    sed -i "s/'Magento_InventoryElasticsearch' => 1/'Magento_InventoryElasticsearch' => 0/" $filename
+fi
+msg $message
+
+git config user.email "chrome-extension@email.com"
+git config user.name "chrome-extension"
+
+# commit changes and push
+git add $filename
+git commit -m "$message"
+git push
+rm -rf "$tmp_git_dir" # clean up

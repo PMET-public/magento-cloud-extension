@@ -71,7 +71,7 @@ Currently tested & built on node 10.x
 
 1. clone, install dependencies, and build
 ``` bash
-git git@github.com:PMET-public/magento-cloud-extension.git
+git clone --recurse-submodules git@github.com:PMET-public/magento-cloud-extension.git
 cd magento-cloud-extension
 npm install
 cd app

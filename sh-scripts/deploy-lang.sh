@@ -11,7 +11,7 @@ $cmd_prefix "
   "
 
 echo "
-^^ Which language code to deploy?"
+^^ Which language code to deploy? Must be entered EXACTLY as displayed."
 read lang_code < "$read_input_src"
 
 

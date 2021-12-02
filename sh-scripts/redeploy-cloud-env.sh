@@ -4,4 +4,4 @@
 msg "Redeploying env ..."
 
 
-"$cli_path" environment:redeploy -p "$project" -e -$environment"
+"$cli_path" environment:redeploy -p "$project" -e "$environment"

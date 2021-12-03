@@ -168,7 +168,7 @@ reindex_env() {
   msg "Reindexing env ..."
   local ssh_url="$1"
   ssh -n "$ssh_url" "
-    php $app_dir/bin/magento indexer:reset; php $app_dir/bin/magento indexer:reindex
+    php $app_dir/bin/magento indexer:reset; php -d memory_limit=-1 $app_dir/bin/magento indexer:reindex
   "
 }
 

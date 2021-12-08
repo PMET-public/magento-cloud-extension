@@ -27,7 +27,7 @@ msg() {
 read_input_src="/dev/tty"
 [[ "$GITHUB_WORKSPACE" ]] && read_input_src="/dev/stdin"
 
-cli_required_version="1.36.4"
+cli_required_version="1.38.1"
 if [[ "$HOME" == "/app" ]]; then
   error "You are probably attempting to run this command in a cloud env. Commands are intended to be run in a local terminal."
 fi

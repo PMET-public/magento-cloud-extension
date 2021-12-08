@@ -1,3 +1,4 @@
+/* eslint-disable one-var */
 // generated on 2018-05-08 using generator-chrome-extension 0.7.1
 
 const gulp = require('gulp'),
@@ -6,6 +7,7 @@ const $ = gulpLoadPlugins()
 const del = require('del')
 const wiredep = require('wiredep').stream
 const runSequence = require('gulp4-run-sequence')
+const sass = require('gulp-sass')(require('sass'))
 
 const jqueryDeps = [
     'app/bower_components/jquery/dist/jquery.js',
@@ -115,11 +117,7 @@ gulp.task('dev-styles', () =>
   ])
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
-    .pipe($.sass.sync({
-      outputStyle: 'expanded',
-      precision: 10,
-      includePaths: ['.']
-    }).on('error', $.sass.logError))
+    .pipe(sass().on('error', sass.logError))
     .pipe($.sourcemaps.write())
     .pipe(gulp.dest('dist/styles'))
 )
@@ -152,11 +150,7 @@ gulp.task('dist-styles', () =>
     'app/styles.scss/import-cloud-ui.scss',
   ])
   .pipe($.plumber())
-  .pipe($.sass.sync({
-    outputStyle: 'expanded',
-    precision: 10,
-    includePaths: ['.']
-  }).on('error', $.sass.logError))
+  .pipe(sass().on('error', sass.logError))
   .pipe(gulp.dest('dist/styles'))
 )
 

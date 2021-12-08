@@ -22,12 +22,13 @@
     "gulp-load-plugins": "^1.2.0",
     "gulp-minify": "^3.1.0",
     "gulp-plumber": "^1.2.1",
-    "gulp-sass": "^4.0.2",
+    "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-useref": "^3.1.6",
     "gulp-zip": "^4.2.0",
     "gulp4-run-sequence": "^1.0.0",
     "main-bower-files": "^2.13.3",
+    "sass": "^1.44.0",
     "wiredep": "^4.0.0"
   },
   "eslintConfig": {

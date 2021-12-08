@@ -17,4 +17,8 @@
 printf "\n\033[0;32mInstalling magento-cloud CLI ...\033[0m\n\n"
 
 curl -sS https://accounts.magento.cloud/cli/installer | php
-~/.magento-cloud/bin/magento-cloud login || :
+
+# attempt login only if osx
+if [[ "$(uname)" = "Darwin" ]]; then
+  ~/.magento-cloud/bin/magento-cloud login
+fi

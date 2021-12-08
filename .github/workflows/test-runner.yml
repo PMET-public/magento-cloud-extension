@@ -16,6 +16,9 @@ env:
 
 jobs:
 
+  mac-install:
+    runs-on: macos-latest
+
   build-install-update:
     runs-on: ubuntu-latest
     steps:

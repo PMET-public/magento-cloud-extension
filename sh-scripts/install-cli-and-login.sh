@@ -9,6 +9,8 @@
   }
   printf "\n\033[0;32mInstalling php ...\033[0m\n\n"
   brew install php@7.4
+  printf "\n\033[0;32mLinking php ...\033[0m\n\n"
+  brew link php@7.4
 }
 
 # remember lib.sh is not loaded

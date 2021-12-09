@@ -118,12 +118,12 @@ jobs:
       - name: bats tests
         run: |
           ./tests/libs/bats/bin/bats -T ./tests/new-branch-commands.bats
-      - name: delete branch
-        if: ${{ failure() || cancelled() }}
-        run: |
-          # does not actually fully delete unless run 2x (--delete-branch flag seems to have no effect)
-          ~/.magento-cloud/bin/magento-cloud environment:delete --delete-branch --no-wait --yes -p "$MCE_PROJECT_ID" -e "$GITHUB_RUN_ID"
-          ~/.magento-cloud/bin/magento-cloud environment:delete --delete-branch --no-wait --yes -p "$MCE_PROJECT_ID" -e "$GITHUB_RUN_ID"
+      # - name: delete branch
+      #   if: ${{ failure() || cancelled() }}
+      #   run: |
+      #     # does not actually fully delete unless run 2x (--delete-branch flag seems to have no effect)
+      #     ~/.magento-cloud/bin/magento-cloud environment:delete --delete-branch --no-wait --yes -p "$MCE_PROJECT_ID" -e "$GITHUB_RUN_ID"
+      #     ~/.magento-cloud/bin/magento-cloud environment:delete --delete-branch --no-wait --yes -p "$MCE_PROJECT_ID" -e "$GITHUB_RUN_ID"
       - name: keep alive to debug
         if: ${{ failure() }}
         uses: PMET-public/action-tmate@master

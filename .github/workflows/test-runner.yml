@@ -24,6 +24,8 @@ jobs:
           submodules: 'true'
       - name: install reqs & deploy
         run: |
+          # uninstall brew first
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/uninstall.sh)"
           ./sh-scripts/install-cli.sh
 
   build-install-update:

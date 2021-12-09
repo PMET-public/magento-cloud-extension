@@ -193,20 +193,12 @@ const commands = [
     help: 'Switch to Magento\'s "production" mode'
   },
   {
-    id: 'add-grocery',
-    text: 'Add grocery',
-    scriptsInValue: ['lib.sh', 'add-grocery.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh'],
+    id: 'add-vertical',
+    text: 'Add Vertical',
+    scriptsInValue: ['lib.sh', 'add-vertical.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh'],
     cmdTypes: ['magento'],
     envTypes: ['cloud', 'vm'],
-    help: 'Add New Grocery vertical website to a Cloud environment.'
-  },
-  {
-    id: 'add-auto',
-    text: 'Add Auto',
-    scriptsInValue: ['lib.sh', 'add-auto.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh'],
-    cmdTypes: ['magento'],
-    envTypes: ['cloud', 'vm'],
-    help: 'Add New Automotive vertical website to a Cloud environment.'
+    help: 'Add vertical website to a Cloud environment.'
   },
   {
     id: 'toggle-livesearch',

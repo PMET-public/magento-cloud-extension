@@ -111,7 +111,10 @@ jobs:
           echo "IdentityFile %d/.magento-cloud/.session/sess-cli-default/ssh/id_ed25519" >> ~/.ssh/config
       - name: create branch
         run: |
-          ~/.magento-cloud/bin/magento-cloud environment:branch --force -p "$MCE_PROJECT_ID" -e master "$GITHUB_RUN_ID"
+          # even if creation fails, it will still be caught by other tests so add `|| :`
+          ~/.magento-cloud/bin/magento-cloud environment:branch --force -p "$MCE_PROJECT_ID" -e master "$GITHUB_RUN_ID" || :
+          # add sleep to ensure creation of env but may fail due to timeout
+          sleep 300
       - name: bats tests
         run: |
           ./tests/libs/bats/bin/bats -T ./tests/new-branch-commands.bats

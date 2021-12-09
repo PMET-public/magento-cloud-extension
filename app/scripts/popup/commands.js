@@ -1,7 +1,13 @@
 const rawGitUrl = 'https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/',
   rawGitPrefix = `${rawGitUrl}${curManifestVersion}/sh-scripts/`,
   // if url is part of magento.cloud (not magentosite.cloud or VM), use full url else just base url
-  url = /magento\.cloud/.test(tabBaseUrl) ? tabUrl : tabBaseUrl
+  url = /magento\.cloud/.test(tabBaseUrl) ? tabUrl : tabBaseUrl,
+  // we want to prompt the user to login only if not already but the mc cli is pecular
+  // `mc login` attempts to detect non-interactive shells (poorly) so trigger must be a separate cmd
+  // `mc login` will prompt user if already logged in (undesired) and can't be optionally pre-answered with `-n` b/c above
+  // `mc project` without `--pipe` will trigger login if not already, but then writes to STDERR causing other issues
+  // so this is current cmd to optionally trigger a login when not already logged in and produce no undesired output
+  triggerLoginCmd = '~/.magento-cloud/bin/magento-cloud projects --pipe >/dev/null; '
 
 function copyToClipboard(el) {
   const copyClass = 'copied-to-clipboard-alert',
@@ -22,17 +28,25 @@ function matchCmd(cmd, key) {
   return false
 }
 
-function cmdsToHtml(cmds) {
+function cmdsToHtml(cmds, triggerLogin = false) {
   let html = ''
   cmds.forEach(cmd => html += `
     <div class="cli-cmd-container">
     ${cmd.text}
     ${cmd.help ? `<span class="cmd-help">${cmd.help}</span>` : ''}
     <input class="cli-cmd" type="text" readonly
-      value="curl -sS ${rawGitPrefix}{${cmd.scriptsInValue.join(',')}} | env ext_ver=${curManifestVersion} tab_url=${url} bash">
+      value="${triggerLogin ? triggerLoginCmd : ''}curl -sS ${rawGitPrefix}{${cmd.scriptsInValue.join(',')}} | env ext_ver=${curManifestVersion} tab_url=${url} bash">
     </div>
   `)
   return html
+}
+
+function appendLoginTriggerToCmd(el) {
+  el.value = `${el.value}; ${triggerLoginCmd}`
+}
+
+function prependLoginTriggerToCmd(el) {
+  el.value = `${triggerLoginCmd}${el.value}`
 }
 
 function cmdTypesToHtml(cmdTypes, keywordFilter = '') {
@@ -43,7 +57,7 @@ function cmdTypesToHtml(cmdTypes, keywordFilter = '') {
       .filter(cmd => cmd.cmdTypes.includes(cmdType))
       .filter(cmd => matchCmd(cmd, keywordFilter))
     html += `<div id="cmds-container" class="cmds-container grid-${cmdType}" aria-label="${cmdType}">
-        ${cmdsToHtml(cmds)}
+        ${cmdsToHtml(cmds, true)}
       </div>`
   })
   return html

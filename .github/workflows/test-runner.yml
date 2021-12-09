@@ -18,6 +18,13 @@ jobs:
 
   mac-install:
     runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: 'true'
+      - name: install reqs & deploy
+        run: |
+          ./sh-scripts/install-cli.sh
 
   build-install-update:
     runs-on: ubuntu-latest
@@ -30,7 +37,7 @@ jobs:
           # for connecting to cloud envs without interaction
           mkdir ~/.ssh && chmod 700 ~/.ssh
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
-          ./sh-scripts/install-cli-and-login.sh
+          ./sh-scripts/install-cli.sh
           # load the cert generated using the API token but do not add the config "--no"
           # manually add the config to ~/.ssh/config b/c incorrect or broken for ubuntu?
           # also mc cmd returns 1 even though successful?
@@ -62,7 +69,7 @@ jobs:
           # for connecting to cloud envs without interaction
           mkdir ~/.ssh && chmod 700 ~/.ssh
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
-          ./sh-scripts/install-cli-and-login.sh
+          ./sh-scripts/install-cli.sh
           # load the cert generated using the API token but do not add the config "--no"
           # manually add the config to ~/.ssh/config b/c incorrect or broken for ubuntu?
           # also mc cmd returns 1 even though successful?
@@ -94,7 +101,7 @@ jobs:
           # for connecting to cloud envs without interaction
           mkdir ~/.ssh && chmod 700 ~/.ssh
           echo "StrictHostKeyChecking no" >> ~/.ssh/config
-          ./sh-scripts/install-cli-and-login.sh
+          ./sh-scripts/install-cli.sh
           # load the cert generated using the API token but do not add the config "--no"
           # manually add the config to ~/.ssh/config b/c incorrect or broken for ubuntu?
           # also mc cmd returns 1 even though successful?

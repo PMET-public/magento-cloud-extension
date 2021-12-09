@@ -10,6 +10,8 @@ if (/\.magento\.cloud/.test(tabBaseUrl)) {
   $('#bw-link').after(`<span class="lighthouse">${cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('lighthouse')))}</span>`)
 }
 $('#prereqs-cmds').append(cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('prerequisite'))))
+appendLoginTriggerToCmd($('#prereqs-cmds input').get(0))
+prependLoginTriggerToCmd($('#prereqs-cmds input').get(1))
 $('#mdm-tab').prepend(cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('mdm'))))
 $('#prereqs-accordion').accordion({
   active: 1,

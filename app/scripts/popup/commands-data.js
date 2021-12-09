@@ -13,7 +13,7 @@ const commands = [
   {
     id: 'install-cli-and-login',
     text: '1) Install the Magento Cloud CLI',
-    scriptsInValue: ['install-cli-and-login.sh'],
+    scriptsInValue: ['install-cli.sh'],
     cmdTypes: ['prerequisite'],
     envTypes: ['cloud'],
     help: 'You should only need to run this command on your computer once.'

@@ -6,11 +6,11 @@ addGrocery(){
   msg "Attempting legacy install"
   
   $cmd_prefix "
-  php $app_dir/bin/magento gxd:datainstall StoryStore_Grocery --load=website
+    php $app_dir/bin/magento gxd:datainstall StoryStore_Grocery --load=website
   "
   msg "Attempting updated install"
   $cmd_prefix "
-   php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataGrocery
+    php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataGrocery
   "
   msg "Fresh Market website available at ${base_url}fresh"
 }
@@ -19,7 +19,8 @@ addAuto(){
   msg "Adding Carvelo Autoparts website..."
 
   $cmd_prefix "
-   php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataAuto;php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataAuto -r --files=msi_inventory.csv;
+    php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataAuto
+    php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataAuto -r --files=msi_inventory.csv
   "
   msg "Carvelo Auto Parts website available at ${base_url}auto"
 }
@@ -28,7 +29,8 @@ addHealthBeauty(){
   msg "Adding Anaïs Clément website ..."
 
   $cmd_prefix "
-   php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataHealthBeauty;php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataHealthBeauty -r --files=msi_inventory.csv;
+    php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataHealthBeauty
+    php $app_dir/bin/magento gxd:datainstall MagentoEse_VerticalDataHealthBeauty -r --files=msi_inventory.csv
   "
   msg "Anaïs Clément website available at ${base_url}healthbeauty"
 }
@@ -51,12 +53,5 @@ case $REPLY in
     ;;
   *)
     msg "\033[0;31mInvalid Selection"
-    exit
     ;;
-esac          
-
-# if [[ "$REPLY" =~ ^[1]$ ]]; then
-#   addGrocery
-# elsif
-#   exit
-# fi
+esac

@@ -198,7 +198,7 @@ const commands = [
     scriptsInValue: ['lib.sh', 'add-vertical.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh'],
     cmdTypes: ['magento'],
     envTypes: ['cloud', 'vm'],
-    help: 'Add vertical website to a Cloud environment.'
+    help: 'Add vertical(s) to cloud env (e.g. grocery, auto, health & beauty).'
   },
   {
     id: 'toggle-livesearch',

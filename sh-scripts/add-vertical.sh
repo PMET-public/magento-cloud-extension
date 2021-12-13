@@ -53,5 +53,6 @@ case $REPLY in
     ;;
   *)
     msg "\033[0;31mInvalid Selection"
+    exit
     ;;
 esac

@@ -91,7 +91,7 @@ jobs:
         # sample ref, demo, b2b pids with branches named test-env-for-mce
         MCE_PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
         # MCE_PROJECT_ID: [xy4itwbmg2khk]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-18.04
     env:
       MCE_PROJECT_ID: ${{ matrix.MCE_PROJECT_ID }}
     steps:

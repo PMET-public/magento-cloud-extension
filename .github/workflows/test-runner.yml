@@ -114,7 +114,7 @@ jobs:
           # even if creation fails, it will still be caught by other tests so add `|| :`
           ~/.magento-cloud/bin/magento-cloud environment:branch --force -p "$MCE_PROJECT_ID" -e master "$GITHUB_RUN_ID" || :
           # add sleep to ensure creation of env but may fail due to timeout
-          # sleep 300
+          sleep 300
       # bash 5.0 doesn't properly read multiline input from stdin
       - name: update bash
         run: |

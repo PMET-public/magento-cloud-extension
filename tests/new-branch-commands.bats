@@ -35,11 +35,11 @@ RESPONSES
   assert_output -e "created.*user"
 }
 
-# @test 'delete-env' {
-#   script="$(create_script_from_command_id delete-env)"
-#   run "$script" 3>&- << RESPONSES
-# y
-# RESPONSES
-#   assert_success
-#   assert_output -e "deleted.*branch"
-# }
+@test 'delete-env' {
+  script="$(create_script_from_command_id delete-env)"
+  run "$script" 3>&- << RESPONSES
+y
+RESPONSES
+  assert_success
+  assert_output -e "deleted.*branch"
+}

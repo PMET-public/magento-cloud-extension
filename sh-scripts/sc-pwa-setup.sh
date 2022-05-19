@@ -1,9 +1,12 @@
 # shellcheck shell=bash
 : || source lib.sh # trick shellcheck into finding certain referenced vars
 
+msg "PWA recently changed. Please ask the slack channel for support."
+exit
+
 printf "\nSetting up PWA Studio ...\n"
 
-NODE_VERSION="v10.15.0"
+NODE_VERSION="v16.13.0"
 
 declare -a "pwa_backend_urls=(
   '1. Cloud Backend ' 'https://pwa-sc-s6uhy2i-u3uh6xofiwzu2.demo.magentosite.cloud/'

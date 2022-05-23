@@ -41,5 +41,5 @@ RESPONSES
 y
 RESPONSES
   assert_success
-  assert_output -e "deleted.*branch"
+  assert_output -e "deleted.*branch|building.*deleted.*wait"
 }

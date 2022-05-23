@@ -17,9 +17,6 @@ setup() {
 @test 'dev-build' {
   cd "$GITHUB_WORKSPACE"
   npm install
-  cd app
-  ../node_modules/bower/bin/bower install
-  cd ..
   run ./node_modules/gulp/bin/gulp.js dev-build
   assert_success
   assert_output -e "finished.*dev-build"

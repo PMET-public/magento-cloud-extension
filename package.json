@@ -1,17 +1,9 @@
 {
   "name": "mcm-chrome-ext",
   "private": true,
-  "engines": {
-    "node": ">=0.8.0"
-  },
   "devDependencies": {
-    "@babel/core": "^7.2.2",
-    "@babel/plugin-proposal-object-rest-spread": "^7.3.1",
-    "@babel/preset-env": "^7.3.1",
-    "bower": "^1.8.8",
     "del": "^3.0.0",
     "gulp": "^4.0.2",
-    "gulp-babel": "^8.0.0",
     "gulp-clean-css": "^3.10.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^5.0.0",
@@ -24,12 +16,12 @@
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^5.0.0",
     "gulp-sourcemaps": "^2.6.4",
-    "gulp-useref": "^3.1.6",
+    "gulp-useref": "^3.1",
     "gulp-zip": "^4.2.0",
     "gulp4-run-sequence": "^1.0.0",
-    "main-bower-files": "^2.13.3",
-    "sass": "^1.44.0",
-    "wiredep": "^4.0.0"
+    "jquery": "^3.6.0",
+    "jquery-ui-dist": "^1.13.1",
+    "sass": "^1.44.0"
   },
   "eslintConfig": {
     "env": {

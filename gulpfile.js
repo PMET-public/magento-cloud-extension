@@ -5,13 +5,12 @@ const gulp = require('gulp'),
   gulpLoadPlugins = require('gulp-load-plugins')
 const $ = gulpLoadPlugins()
 const del = require('del')
-const wiredep = require('wiredep').stream
 const runSequence = require('gulp4-run-sequence')
 const sass = require('gulp-sass')(require('sass'))
 
 const jqueryDeps = [
-    'app/bower_components/jquery/dist/jquery.js',
-    'app/bower_components/jquery-ui/jquery-ui.js'
+    'node_modules/jquery/dist/jquery.js',
+    'node_modules/jquery-ui-dist/jquery-ui.js'
   ],
 
   imageDownloader = [
@@ -187,14 +186,6 @@ gulp.task('watch', gulp.series('html', 'lint', 'dev-js', 'dev-styles', 'copy-rem
   gulp.watch('app/styles.scss/**/*.scss', gulp.series('dev-styles'))
   gulp.watch('app/image-downloader/**', gulp.series('copy-remaining-to-dist'))
 }))
-
-gulp.task('wiredep', () =>
-  gulp.src('app/*.html')
-    .pipe(wiredep({
-      ignorePath: /^(\.\.\/)*\.\./
-    }))
-    .pipe(gulp.dest('app'))
-)
 
 gulp.task('dist-build', gulp.series('clean', 'copy-remaining-to-dist', 'lint', 'dist-js', 'dist-styles', 'html', 'images'))
 

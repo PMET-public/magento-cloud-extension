@@ -14,6 +14,7 @@ if grep -q "'Magento_LiveSearch' => 1," $filename; then
     perl -i -pe "s/'Magento_LiveSearch' => 1/'Magento_LiveSearch' => 0/" $filename
     perl -i -pe "s/'Magento_LiveSearchAdapter' => 1/'Magento_LiveSearchAdapter' => 0/" $filename
     perl -i -pe "s/'Magento_LiveSearchStorefrontPopover' => 1/'Magento_LiveSearchStorefrontPopover' => 0/" $filename
+    perl -i -pe "s/'Magento_LiveSearchMetrics' => 1/'Magento_LiveSearchMetrics' => 0/" $filename
     perl -i -pe "s/'Magento_AdvancedSearch' => 0/'Magento_AdvancedSearch' => 1/" $filename
     perl -i -pe "s/'Magento_Elasticsearch' => 0/'Magento_Elasticsearch' => 1/" $filename
     perl -i -pe "s/'Magento_Elasticsearch6' => 0/'Magento_Elasticsearch6' => 1/" $filename
@@ -25,6 +26,7 @@ else
     perl -i -pe "s/'Magento_LiveSearch' => 0/'Magento_LiveSearch' => 1/" $filename
     perl -i -pe "s/'Magento_LiveSearchAdapter' => 0/'Magento_LiveSearchAdapter' => 1/" $filename
     perl -i -pe "s/'Magento_LiveSearchStorefrontPopover' => 0/'Magento_LiveSearchStorefrontPopover' => 1/" $filename
+    perl -i -pe "s/'Magento_LiveSearchMetrics' => 0/'Magento_LiveSearchMetrics' => 1/" $filename
     perl -i -pe "s/'Magento_AdvancedSearch' => 1/'Magento_AdvancedSearch' => 0/" $filename
     perl -i -pe "s/'Magento_Elasticsearch' => 1/'Magento_Elasticsearch' => 0/" $filename
     perl -i -pe "s/'Magento_Elasticsearch6' => 1/'Magento_Elasticsearch6' => 0/" $filename

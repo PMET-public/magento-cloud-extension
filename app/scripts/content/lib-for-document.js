@@ -13,7 +13,12 @@ const MCExt = {
     // if url is a github.com url, use raw github instead of API to avoid limits
     url = url.replace(/\/\/github.com(.*?)\/blob\/(.*)/, '//raw.githubusercontent.com$1/$2')
     this.removeCSS()
-    fetch(url).then(function (response) {
+    fetch(url, {
+      referrerPolicy: 'no-referrer',
+      headers: {
+        'origin': url.replace(/(^https?:\/\/[^/]+).*/,'$1')
+      }
+    }).then(function (response) {
       return response.text()
     }).then(function (txt) {
       const styleEl = document.createElement('style')

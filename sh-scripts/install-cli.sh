@@ -6,6 +6,10 @@
   [[ -z "$(which brew)" ]] && {
     printf "\n\033[0;32mInstalling Homebrew ...\033[0m\n\n"
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    [[ "$0" = "zsh" ]] && {
+      echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zprofile"
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+    }
   }
   printf "\n\033[0;32mInstalling php ...\033[0m\n\n"
   brew install php@7.4

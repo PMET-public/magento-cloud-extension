@@ -32,6 +32,18 @@ if [[ "$HOME" == "/app" ]]; then
   error "You are probably attempting to run this command in a cloud env. Commands are intended to be run in a local terminal."
 fi
 
+php_version="$(php --version | perl -ne 's/^PHP\s+(\d\.\d).*/\1/ and print')"
+php_changed=false
+if [[ "$php_version" != "7.4" ]]; then
+  if [[ -z "$php_version" ]]; then
+    brew install php@7.4
+  else
+    php_changed=true
+    msg "Temporarily changing php to v7.4 ..."
+    brew unlink php
+  fi
+  brew link php@7.4
+fi
 cli_path="$HOME/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("$cli_path" --version | perl -pe 's/.*?([\d\.]+)/\1/')
 if [[ "$cli_actual_version" != "$cli_required_version" ]]; then

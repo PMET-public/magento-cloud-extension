@@ -35,13 +35,10 @@ fi
 php_version="$(php --version | perl -ne 's/^PHP\s+(\d\.\d).*/\1/ and print')"
 php_changed=false
 if [[ "$php_version" != "7.4" ]]; then
-  if [[ -z "$php_version" ]]; then
-    brew install php@7.4
-  else
-    php_changed=true
-    msg "Temporarily changing php to v7.4 ..."
-    brew unlink php
-  fi
+  php_changed=true
+  msg "Temporarily changing php to v7.4 ..."
+  brew unlink php
+  brew install php@7.4
   brew link php@7.4
 fi
 cli_path="$HOME/.magento-cloud/bin/magento-cloud"

@@ -24,6 +24,13 @@ msg() {
   printf "\n$green$@$no_color\n\n"
 }
 
+is_mac() {
+  # [[ "$(uname)" = "Darwin" ]]
+  # matching against uname is relatively slow compared to checking for safari and the users dir
+  # and if this funct is called 20x to render the menu, it makes a diff
+  [[ -d /Applications/Safari.app && -d /Users ]]
+}
+
 read_input_src="/dev/tty"
 [[ "$GITHUB_WORKSPACE" ]] && read_input_src="/dev/stdin"
 
@@ -35,11 +42,15 @@ fi
 php_version="$(php --version | perl -ne 's/^PHP\s+(\d\.\d).*/\1/ and print')"
 php_changed=false
 if [[ "$php_version" != "7.4" ]]; then
-  php_changed=true
-  msg "Temporarily changing php to v7.4 ..."
-  brew unlink php
-  brew install php@7.4
-  brew link php@7.4
+  if is_mac; then
+    php_changed=true
+    msg "Temporarily changing php to v7.4 ..."
+    brew unlink php
+    brew install php@7.4
+    brew link php@7.4
+  else
+    sudo bash -c " apt-get purge php8.*; add-apt-repository --yes ppa:ondrej/php; apt-get update; apt-get install --yes php7.4;"
+  fi
 fi
 cli_path="$HOME/.magento-cloud/bin/magento-cloud"
 cli_actual_version=$("$cli_path" --version | perl -pe 's/.*?([\d\.]+)/\1/')

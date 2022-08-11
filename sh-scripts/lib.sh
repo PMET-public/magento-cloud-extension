@@ -45,7 +45,7 @@ if [[ "$php_version" != "7.4" ]]; then
   if is_mac; then
     php_changed=true
     msg "Temporarily changing php to v7.4 ..."
-    brew unlink php
+    brew unlink php || :
     brew install php@7.4
     brew link php@7.4
   else

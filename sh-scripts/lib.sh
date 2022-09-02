@@ -34,22 +34,22 @@ is_mac() {
 read_input_src="/dev/tty"
 [[ "$GITHUB_WORKSPACE" ]] && read_input_src="/dev/stdin"
 
-cli_required_version="1.38.1"
+cli_required_version="1.40.0"
 if [[ "$HOME" == "/app" ]]; then
   error "You are probably attempting to run this command in a cloud env. Commands are intended to be run in a local terminal."
 fi
 
 php_version="$(php --version | perl -ne 's/^PHP\s+(\d\.\d).*/\1/ and print')"
 php_changed=false
-if [[ "$php_version" != "7.4" ]]; then
+if [[ "$php_version" != "8.1" ]]; then
   if is_mac; then
     php_changed=true
-    msg "Temporarily changing php to v7.4 ..."
+    msg "Upgraded php to v8.1 ..."
     brew unlink php || :
-    brew install php@7.4
-    brew link php@7.4
+    brew install php@8.1
+    brew link php@8.1
   else
-    sudo bash -c " apt-get purge php8.*; add-apt-repository --yes ppa:ondrej/php; apt-get update; apt-get install --yes php7.4;"
+    sudo bash -c " apt-get purge php8.*; add-apt-repository --yes ppa:ondrej/php; apt-get update; apt-get install --yes php8.1;"
   fi
 fi
 cli_path="$HOME/.magento-cloud/bin/magento-cloud"

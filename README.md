@@ -73,12 +73,13 @@ Currently tested & built on node 10.x
 ``` bash
 git clone --recurse-submodules git@github.com:PMET-public/magento-cloud-extension.git
 cd magento-cloud-extension
-npm install
-./node_modules/gulp/bin/gulp.js dev-build
+fnm use
+npm i
+./node_modules/gulp/bin/gulp.js -f gulpfile.mjs dev-build
 ```
 2. install extension as above
 
-See the `package` gulp task for publishing.
+See the `zip` gulp task for publishing.
 
 ## Troubleshooting
 

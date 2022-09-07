@@ -96,7 +96,6 @@ export const devJs = (cb) => runSequence(
       .pipe(gulp.dest('dist/scripts'))
       .pipe(sourcemaps.write())
       .pipe(gulp.dest('dist/scripts')),
-
     () => gulp.src([...jqueryDeps, ...contentScripts])
       .pipe(sourcemaps.init())
       .pipe(concat('content.processed.js'))
@@ -148,7 +147,7 @@ export const distJs = (cb) => runSequence(
     .pipe(concat('popup.processed.js'))
     .pipe(minify({noSource: true, ext: {min: '.js'}}))
     .pipe(gulp.dest('dist/scripts')),
-  () => gulp.src([...jqueryDeps, ...injectedScripts])
+  () => gulp.src(['node_modules/jquery/dist/jquery.js', ...injectedScripts])
     .pipe(concat('injected.processed.js'))
     .pipe(minify({noSource: true, ext: {min: '.js'}}))
     .pipe(gulp.dest('dist/scripts')),
@@ -172,7 +171,7 @@ export const images = () => gulp.src('app/images/**/*')
     gifsicle({interlaced: true}),
     mozjpeg({quality: 75, progressive: true}),
     optipng({optimizationLevel: 5}),
-    // usage diff from READMD; see https://github.com/sindresorhus/gulp-imagemin/pull/359
+    // usage diff from README; see https://github.com/sindresorhus/gulp-imagemin/pull/359
     svgo({
       plugins: [
         {
@@ -184,7 +183,7 @@ export const images = () => gulp.src('app/images/**/*')
   ]))
   .pipe(gulp.dest('dist/images'))
 
-export const html = () =>gulp.src('app/html/*.html')
+export const html = () => gulp.src('app/html/*.html')
   .pipe(fileinclude())
   .pipe(htmlmin({
     collapseWhitespace: true,

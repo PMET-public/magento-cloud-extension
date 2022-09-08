@@ -3,6 +3,7 @@
 - [How to Manually Update - 1 min video (for older versions)](#how-to-manually-update---1-min-video-for-older-versions)
 - [Recommended IDE & Extensions](#recommended-ide--extensions)
 - [Developer Setup](#developer-setup)
+- [Publishing](#publishing)
 - [Troubleshooting](#troubleshooting)
 
 ## Installation (how to update below)
@@ -79,7 +80,17 @@ npm i
 ```
 2. install extension as above
 
-See the `zip` gulp task for publishing.
+See the `zip` gulp task for packaging.
+
+## Publishing
+
+When changes on a versioned branch are ready for release, tag that release with the version # locally and push the tag. GitHub UI currently no longer allows creating tags with the same name a branch.
+
+`git tag 0.0.38; git push origin refs/tags/0.0.38`
+
+Create a release from the GitHub releases page and upload the packaged zip. Finally, merge the branch into master (which will cause the master's manifest version to update and be detected by the chrome extensions).
+
+Note: by using "versioned" branches, we can continue to update the scripts on that version without re-releasing the chrome extension for minor changes.
 
 ## Troubleshooting
 

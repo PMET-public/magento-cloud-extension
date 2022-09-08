@@ -1,5 +1,3 @@
-#! /usr/bin/env node
-
 /* eslint-disable one-var */
 
 import gulp from 'gulp'

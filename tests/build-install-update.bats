@@ -35,9 +35,9 @@ setup() {
 }
 
 @test 'package' {
-  run ./node_modules/gulp/bin/gulp.js package
+  run ./node_modules/gulp/bin/gulp.js zip
   assert_success
-  assert_output -e "finished.*package"
+  assert_output -e "finished.*zip"
   assert_file_exist ./package/mcm-chrome-ext.zip
 }
 

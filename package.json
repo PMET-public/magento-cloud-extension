@@ -13,7 +13,6 @@
     "gulp-sass": "^5.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-zip": "^5.1.0",
-    "gulp4-run-sequence": "^1.0.1",
     "jquery": "^3.6.0",
     "jquery-ui-dist": "^1.13.1",
     "sass": "^1.54.8"

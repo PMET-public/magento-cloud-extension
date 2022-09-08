@@ -12,17 +12,14 @@ import htmlmin from 'gulp-htmlmin'
 import dartSass from 'sass'
 import gulpSass from 'gulp-sass'
 import concat from 'gulp-concat'
-import runSequence from 'gulp4-run-sequence'
 import minify from 'gulp-minify'
 import GulpZip from 'gulp-zip'
 import fileinclude from 'gulp-file-include'
 
 const sass = gulpSass(dartSass)
 
-const jqueryDeps = [
-    'node_modules/jquery/dist/jquery.js',
-    'node_modules/jquery-ui-dist/jquery-ui.js'
-  ],
+const jqueryPath = 'node_modules/jquery/dist/jquery.js',
+  jqueryUIPath = 'node_modules/jquery-ui-dist/jquery-ui.js',
 
   imageDownloader = [
     'app/image-downloader/lib/zepto.js',
@@ -84,87 +81,20 @@ export const copyRemainingToDist = () => gulp.src([
   }).pipe(gulp.dest('dist'))
 copyRemainingToDist.displayName = 'copy-remaining-to-dist'
 
-export const clean = (cb) => { 
+export const clean = function clean(cb) {
   deleteSync(['.tmp', 'dist'])
   cb()
 }
 
-export const devJs = (cb) => runSequence(
-    () => gulp.src(devBackgroundScripts)
-      .pipe(sourcemaps.init())
-      .pipe(concat('background.processed.js'))
-      .pipe(gulp.dest('dist/scripts'))
-      .pipe(sourcemaps.write())
-      .pipe(gulp.dest('dist/scripts')),
-    () => gulp.src([...jqueryDeps, ...contentScripts])
-      .pipe(sourcemaps.init())
-      .pipe(concat('content.processed.js'))
-      .pipe(gulp.dest('dist/scripts'))
-      .pipe(sourcemaps.write())
-      .pipe(gulp.dest('dist/scripts')),
-    () => gulp.src([...jqueryDeps, ...imageDownloader, 'app/scripts/popup/ga-dev-mode.js', ...mcmExt,])
-      .pipe(sourcemaps.init())
-      .pipe(concat('popup.processed.js'))
-      .pipe(gulp.dest('dist/scripts'))
-      .pipe(sourcemaps.write())
-      .pipe(gulp.dest('dist/scripts')),
-    () => gulp.src([...jqueryDeps, ...injectedScripts])
-      .pipe(sourcemaps.init())
-      .pipe(concat('injected.processed.js'))
-      .pipe(gulp.dest('dist/scripts'))
-      .pipe(sourcemaps.write())
-      .pipe(gulp.dest('dist/scripts')),
-    cb
-  )
-devJs.displayName = 'dev-js'
-
-export const devStyles = () => gulp.src([
-    'app/styles.scss/vendor.scss',
-    'app/styles.scss/main.scss',
-    'app/styles.scss/content.scss',
-    'app/styles.scss/import-cloud-ui.scss',
-  ])
-    .pipe(gulpPlumber())
-    .pipe(sourcemaps.init())
-    .pipe(sass().on('error', sass.logError))
-    .pipe(sourcemaps.write())
-    .pipe(gulp.dest('dist/styles'))
-devStyles.displayName = 'dev-styles'
-
-export const devBuild = (cb) => runSequence('copy-remaining-to-dist', 'dev-js', 'dev-styles', 'html', 'images', cb)
-devBuild.displayName = 'dev-build'
-
-export const distJs = (cb) => runSequence(
-  () => gulp.src(distBackgroundScripts)
-    .pipe(concat('background.processed.js'))
-    .pipe(minify({noSource: true, ext: {min: '.js'}}))
-    .pipe(gulp.dest('dist/scripts')),
-  () => gulp.src([...jqueryDeps, ...contentScripts])
-    .pipe(concat('content.processed.js'))
-    .pipe(minify({noSource: true, ext: {min: '.js'}}))
-    .pipe(gulp.dest('dist/scripts')),
-  () => gulp.src([...jqueryDeps, ...imageDownloader, ...mcmExt])
-    .pipe(concat('popup.processed.js'))
-    .pipe(minify({noSource: true, ext: {min: '.js'}}))
-    .pipe(gulp.dest('dist/scripts')),
-  () => gulp.src(['node_modules/jquery/dist/jquery.js', ...injectedScripts])
-    .pipe(concat('injected.processed.js'))
-    .pipe(minify({noSource: true, ext: {min: '.js'}}))
-    .pipe(gulp.dest('dist/scripts')),
-  cb()
-)
-distJs.displayName = 'dist-js'
-
-export const distStyles = () => gulp.src([
-    'app/styles.scss/vendor.scss',
-    'app/styles.scss/main.scss',
-    'app/styles.scss/content.scss',
-    'app/styles.scss/import-cloud-ui.scss',
-  ])
-  .pipe(gulpPlumber())
-  .pipe(sass().on('error', sass.logError))
-  .pipe(gulp.dest('dist/styles'))
-distStyles.displayName = 'dist-styles'
+export const html = () => gulp.src('app/html/*.html')
+  .pipe(fileinclude())
+  .pipe(htmlmin({
+    collapseWhitespace: true,
+    minifyCSS: true,
+    minifyJS: true,
+    removeComments: true
+  }))
+  .pipe(gulp.dest('dist/html/'))
 
 export const images = () => gulp.src('app/images/**/*')
   .pipe(imagemin([
@@ -183,15 +113,80 @@ export const images = () => gulp.src('app/images/**/*')
   ]))
   .pipe(gulp.dest('dist/images'))
 
-export const html = () => gulp.src('app/html/*.html')
-  .pipe(fileinclude())
-  .pipe(htmlmin({
-    collapseWhitespace: true,
-    minifyCSS: true,
-    minifyJS: true,
-    removeComments: true
-  }))
-  .pipe(gulp.dest('dist/html/'))
+export const devJs = gulp.series(
+    () => gulp.src(devBackgroundScripts)
+      .pipe(sourcemaps.init())
+      .pipe(concat('background.processed.js'))
+      .pipe(gulp.dest('dist/scripts'))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('dist/scripts')),
+    () => gulp.src([jqueryPath, ...contentScripts])
+      .pipe(sourcemaps.init())
+      .pipe(concat('content.processed.js'))
+      .pipe(gulp.dest('dist/scripts'))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('dist/scripts')),
+    () => gulp.src([jqueryPath, jqueryUIPath, ...imageDownloader, 'app/scripts/popup/ga-dev-mode.js', ...mcmExt,])
+      .pipe(sourcemaps.init())
+      .pipe(concat('popup.processed.js'))
+      .pipe(gulp.dest('dist/scripts'))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('dist/scripts')),
+    () => gulp.src([jqueryPath, ...injectedScripts])
+      .pipe(sourcemaps.init())
+      .pipe(concat('injected.processed.js'))
+      .pipe(gulp.dest('dist/scripts'))
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest('dist/scripts'))
+  )
+devJs.displayName = 'dev-js'
+
+export const devStyles = () => gulp.src([
+    'app/styles.scss/vendor.scss',
+    'app/styles.scss/main.scss',
+    'app/styles.scss/content.scss',
+    'app/styles.scss/import-cloud-ui.scss',
+  ])
+    .pipe(gulpPlumber())
+    .pipe(sourcemaps.init())
+    .pipe(sass().on('error', sass.logError))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('dist/styles'))
+devStyles.displayName = 'dev-styles'
+
+export const devBuild = gulp.series(copyRemainingToDist, devJs, devStyles, html, images)
+devBuild.displayName = 'dev-build'
+
+export const distJs = gulp.series(
+  () => gulp.src(distBackgroundScripts)
+    .pipe(concat('background.processed.js'))
+    .pipe(minify({noSource: true, ext: {min: '.js'}}))
+    .pipe(gulp.dest('dist/scripts')),
+  () => gulp.src([jqueryPath, ...contentScripts])
+    .pipe(concat('content.processed.js'))
+    .pipe(minify({noSource: true, ext: {min: '.js'}}))
+    .pipe(gulp.dest('dist/scripts')),
+  () => gulp.src([jqueryPath, jqueryUIPath, ...imageDownloader, ...mcmExt])
+    .pipe(concat('popup.processed.js'))
+    .pipe(minify({noSource: true, ext: {min: '.js'}}))
+    .pipe(gulp.dest('dist/scripts')),
+  () => gulp.src([jqueryPath, ...injectedScripts])
+    .pipe(concat('injected.processed.js'))
+    .pipe(minify({noSource: true, ext: {min: '.js'}}))
+    .pipe(gulp.dest('dist/scripts'))
+)
+distJs.displayName = 'dist-js'
+
+export const distStyles = () => gulp.src([
+    'app/styles.scss/vendor.scss',
+    'app/styles.scss/main.scss',
+    'app/styles.scss/content.scss',
+    'app/styles.scss/import-cloud-ui.scss',
+  ])
+  .pipe(gulpPlumber())
+  .pipe(sass().on('error', sass.logError))
+  .pipe(gulp.dest('dist/styles'))
+distStyles.displayName = 'dist-styles'
 
 // gulp.task('watch', gulp.series('html', 'lint', 'dev-js', 'dev-styles', 'copy-remaining-to-dist', () => {
 //   gulp.watch('app/html/**', gulp.series('html'))
@@ -200,20 +195,18 @@ export const html = () => gulp.src('app/html/*.html')
 //   gulp.watch('app/image-downloader/**', gulp.series('copy-remaining-to-dist'))
 // }))
 
-export const distBuild = (cb) => runSequence('clean', 'copy-remaining-to-dist', 'dist-js', 'dist-styles', 'html', 'images', cb)
+export const distBuild = gulp.series(clean, copyRemainingToDist, distJs, distStyles, html, images)
 distBuild.displayName = 'dist-build'
 
-export const bundle = (cb) => runSequence(
-  'dist-build',
+export const zip = gulp.series(
+  distBuild,
   () => gulp.src([
       'dist/**',
       'sh-scripts/*.sh',
       'sh-scripts/**/*.sh'
     ])
     .pipe(GulpZip('mcm-chrome-ext.zip'))
-    .pipe(gulp.dest('package')),
-  cb()
+    .pipe(gulp.dest('package'))
 )
-
 
 // // gulp.task('default', ['dev-build'])

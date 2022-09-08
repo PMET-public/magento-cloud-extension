@@ -16,4 +16,9 @@ if (MCExt.isCurrentTabCloudProjects()) {
   console.log('cloud env')
 } else {
   console.log('not cloud')
+  if (/:4440\/project\/mcm/.test(window.location.href)) {
+    var s = document.createElement('script')
+    s.src = chrome.runtime.getURL('scripts/injected.processed.js')
+    document.documentElement.appendChild(s)
+  }
 }

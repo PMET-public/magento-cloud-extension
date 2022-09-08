@@ -34,7 +34,7 @@ setup() {
   assert_output -e "finished.*dist-build"
 }
 
-@test 'package' {
+@test 'zip' {
   run ./node_modules/gulp/bin/gulp.js zip
   assert_success
   assert_output -e "finished.*zip"

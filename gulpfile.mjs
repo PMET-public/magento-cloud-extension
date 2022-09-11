@@ -45,10 +45,6 @@ const jqueryPath = 'node_modules/jquery/dist/jquery.js',
     'app/scripts/content/document-start.js',
   ],
 
-  injectedScripts = [
-    'app/scripts/injected/rundeck.js'
-  ],
-
   distBackgroundScripts = [
     'app/scripts/lib/lib-open.js',
     'app/scripts/lib/init.js',
@@ -129,12 +125,6 @@ export const devJs = gulp.series(
       .pipe(concat('popup.processed.js'))
       .pipe(gulp.dest('dist/scripts'))
       .pipe(sourcemaps.write())
-      .pipe(gulp.dest('dist/scripts')),
-    () => gulp.src([jqueryPath, ...injectedScripts])
-      .pipe(sourcemaps.init())
-      .pipe(concat('injected.processed.js'))
-      .pipe(gulp.dest('dist/scripts'))
-      .pipe(sourcemaps.write())
       .pipe(gulp.dest('dist/scripts'))
   )
 devJs.displayName = 'dev-js'
@@ -166,10 +156,6 @@ export const distJs = gulp.series(
     .pipe(gulp.dest('dist/scripts')),
   () => gulp.src([jqueryPath, jqueryUIPath, ...imageDownloader, ...mcmExt])
     .pipe(concat('popup.processed.js'))
-    .pipe(minify({noSource: true, ext: {min: '.js'}}))
-    .pipe(gulp.dest('dist/scripts')),
-  () => gulp.src([jqueryPath, ...injectedScripts])
-    .pipe(concat('injected.processed.js'))
     .pipe(minify({noSource: true, ext: {min: '.js'}}))
     .pipe(gulp.dest('dist/scripts'))
 )

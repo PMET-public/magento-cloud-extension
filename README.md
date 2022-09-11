@@ -88,7 +88,7 @@ When changes on a versioned branch are ready for release, tag that release with 
 
 `git tag 0.0.38; git push origin refs/tags/0.0.38`
 
-Create a release from the GitHub releases page and upload the packaged zip. Finally, merge the branch into master (which will cause the master's manifest version to update and be detected by the chrome extensions).
+Create a release from the GitHub releases page and upload the packaged zip and publish it. Finally, merge the branch into master (which will cause the master's manifest version to update and be detected by the chrome extensions).
 
 Note: by using "versioned" branches, we can continue to update the scripts on that version without re-releasing the chrome extension for minor changes.
 

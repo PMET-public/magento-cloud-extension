@@ -10,6 +10,6 @@ is_cloud &&
   access_log=/var/log/nginx/access.log
 
 # ignore simple GET requests from the access log that return 200
-$cmd_prefix "stdbuf -oL tail -n 3 -f $access_log $app_dir/var/log/system.log $app_dir/var/log/exception.log
-  | grep -E -v 'GET .* 200 '
+$cmd_prefix "stdbuf -oL tail -n 3 -f $access_log $app_dir/var/log/system.log $app_dir/var/log/exception.log |
+  grep -E -v 'GET .* 200 '
 "

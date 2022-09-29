@@ -1,5 +1,14 @@
 $('.current-domain').text(appliedDomain)
 $('#manifest-version').text('(ver: ' + curManifestVersion + ')')
+$('#extension-link').click(function () {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    // have to use chrome.tabs.create b/c direct link via href is not allowed
+    chrome.tabs.create({
+      index: tabs[0].index + 1,
+      url: `chrome://extensions/?id=${chrome.runtime.id}`,
+      active: true})
+  })
+})
 $('#download_button').after(`<span class="image-copy">${cmdsToHtml(commands.filter(cmd => cmd.cmdTypes.includes('image-copy')))}</span>`)
 if (/\.magento\.cloud/.test(tabBaseUrl)) {
   $('.target-env').text(`Env id: ${tabUrl.replace(/.*environments\/([^/]*).*/,'$1')}`)

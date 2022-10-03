@@ -10,7 +10,7 @@ cd "$tmp_git_dir"
 config_file="$tmp_git_dir/app/etc/config.php"
 grep -q "'Magento_LiveSearch' => 1," "$config_file" && ls_enabled="true"
 git merge --abort || :
-git merge --strategy-option theirs origin/master
+git merge --strategy-option theirs "origin/$("$cli_path" environment:info -p "$project" -e "$environment" parent)"
 
 if "$ls_enabled"; then
     perl -i -pe "s/'Magento_LiveSearch' => 1/'Magento_LiveSearch' => 0/" "$config_file"

@@ -209,6 +209,14 @@ const commands = [
     help: 'Switch between Elasticsearch and Live Search'
   },
   {
+    id: 'sync-with-livesearch',
+    text: 'Sync with Live Search On',
+    scriptsInValue: ['lib.sh', 'sync-with-livesearch.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh', 'post-cmds.sh'],
+    cmdTypes: ['magento'],
+    envTypes: ['cloud', 'vm'],
+    help: 'Replaces the normal cloud sync when Live Search has been enabled'
+  },
+  {
     id: 'run-all-consumers',
     text: 'Run consumers',
     scriptsInValue: ['lib.sh', 'run-all-consumers.sh', 'post-cmds.sh'],

@@ -10,7 +10,8 @@ cd "$tmp_git_dir"
 config_file="$tmp_git_dir/app/etc/config.php"
 grep -q "'Magento_LiveSearch' => 1," "$config_file" && ls_enabled="true"
 git merge --abort || :
-git merge --strategy-option theirs "origin/$("$cli_path" environment:info -p "$project" -e "$environment" parent)"
+parent="$("$cli_path" environment:info -p "$project" -e "$environment" parent)"
+git merge --strategy-option theirs "origin/$parent"
 
 if "$ls_enabled"; then
   perl -i -pe "s/'Magento_LiveSearch' => 0/'Magento_LiveSearch' => 1/" "$config_file"
@@ -30,6 +31,6 @@ git config user.name "chrome-extension"
 
 # commit changes and push
 git add "$config_file"
-git commit -m "merged with master and re-enabled LS from chrome extension"
+git commit -m "merged with $parent and re-enabled LS from chrome extension"
 git push
 rm -rf "$tmp_git_dir" # clean up

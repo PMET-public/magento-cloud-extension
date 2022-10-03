@@ -1,7 +1,8 @@
 # shellcheck shell=bash
 : || source lib.sh # trick shellcheck into finding certain referenced vars
 
-echo "Switching search engine..."
+parent="$("$cli_path" environment:info -p "$project" -e "$environment" parent)"
+echo "Syncing from $parent ..."
 
 tmp_git_dir="$(mktemp -d)"
 
@@ -10,7 +11,6 @@ cd "$tmp_git_dir"
 config_file="$tmp_git_dir/app/etc/config.php"
 grep -q "'Magento_LiveSearch' => 1," "$config_file" && ls_enabled="true"
 git merge --abort || :
-parent="$("$cli_path" environment:info -p "$project" -e "$environment" parent)"
 git merge --strategy-option theirs "origin/$parent"
 
 if "$ls_enabled"; then

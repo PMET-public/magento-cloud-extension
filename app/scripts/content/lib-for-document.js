@@ -22,7 +22,7 @@ const MCExt = {
       return response.text()
     }).then(function (txt) {
       const styleEl = document.createElement('style')
-      styleEl.id = 'css-url'
+      styleEl.id = url === MCExt.cloudUiCss ? 'css-cloud' :'css-url'
       styleEl.innerText = txt
       document.head.appendChild(styleEl)
     })

@@ -25,7 +25,7 @@ fetch('https://api.github.com/repos/PMET-public/magento-sc-custom-demo-css/conte
 
 // user saved urls
 chrome.storage.local.get(['cssUrls'], function (result) {
-  const [cssUrls] = result
+  let {cssUrls} = result
   if (typeof cssUrls === 'undefined') {
     return
   }

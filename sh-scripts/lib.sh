@@ -1,16 +1,27 @@
 #!/usr/bin/env bash
 
-if [[ ! -z "$debug" ]]; then
-  set -x
-fi
-
-# stop on errors
-set -e
+err_log="$(mktemp)"
+exec 2>> "$err_log"
+set -xeE -o pipefail
+trap handle_script_err ERR
 
 red='\033[0;31m'
 green='\033[0;32m'
 yellow='\033[1;33m'
 no_color='\033[0m'
+
+handle_script_err() {
+  echo "Command $BASH_COMMAND failed with exit code $?.
+
+See $err_log for complete output. 
+Copy it to the clipboard with 'cat $err_log | pbcopy'"
+
+  if grep -q 'port 22.*timed' $err_log; then
+    error "Are you in an Adobe office?
+If so, ssh may be blocked. Enable it here: https://adobe.service-now.com/sc?id=kb_article&sys_id=3f763f391bd3b41064ef37ff034bcb0d"
+  fi
+
+}
 
 error() {
   printf "\n$red$@$no_color\n\n" && exit 1

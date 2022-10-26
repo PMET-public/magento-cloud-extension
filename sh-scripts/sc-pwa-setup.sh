@@ -45,7 +45,7 @@ fi
 cd "${HOME}/pwa-studio/"
 
 if [ "$(git rev-parse @)" != $(git rev-parse @{u}) ]; then
-  read -r -n 1 -p "There is an update to PWA. It may contain breaking changes. Upgrade? (y/n): " < "$read_input_src"
+  read -r -n 1 -p "There is an update to PWA. It may contain breaking changes. Upgrade? (y/n): " < "$read_input_src" 2>/dev/tty
   if [[ "$REPLY" =~ ^[Yy]$ ]]
   then
     git pull

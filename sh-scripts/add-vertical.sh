@@ -39,7 +39,7 @@ msg "Choose Website to add to project: $project environment: $environment\n*note
 msg "1) Fresh Market - Grocery (2.4.1+)\n2) Carvelo Auto Parts - Auto Parts (2.4.3+)\n3) Anaïs Clément - Health & Beauty (2.4.3-p1+)"
 
 
-read -r -n 1 -p "Enter Number: " < "$read_input_src"
+read -r -n 1 -p "Enter Number: " < "$read_input_src" 2>/dev/tty
 
 case $REPLY in
   1)

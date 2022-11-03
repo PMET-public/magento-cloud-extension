@@ -16,7 +16,8 @@ handle_script_err() {
 See $err_log for complete output. 
 Copy it to the clipboard with 'cat $err_log | pbcopy'"
 
-  if grep -q 'port 22.*timed' $err_log; then
+  # use [p] to prevent matching self in log
+  if grep -q '[p]ort 22.*timed' $err_log; then
     error "Are you in an Adobe office?
 If so, ssh may be blocked. Enable it here: https://adobe.service-now.com/sc?id=kb_article&sys_id=3f763f391bd3b41064ef37ff034bcb0d"
   fi

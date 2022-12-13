@@ -3,9 +3,9 @@
 
 msg "Diagnosing, attempting to repair, and reporting ..."
 
-# fetch the mcm version of the diagnose, repair, report script
+# fetch the diagnose, repair, report script from the master branch
 # and turn off debugging (by default, debugging is on)
-$cmd_prefix "curl -s https://raw.githubusercontent.com/PMET-public/magento-cloud-manager/diagnose-repair-report/cli/bin/env-scripts/diagnose-repair-report.sh |
+$cmd_prefix "curl -s https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/diagnose-repair-report.sh |
   env debug=${debug:=0} bash" |
   tee /dev/tty |
   # copy report to clipboard and strip color characters

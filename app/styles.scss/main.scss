@@ -62,9 +62,19 @@ input {
   top: 0.1em;
 }
 
-#slack-link-logo {
+#slack-link-logo, #zendesk-link-logo, #psh-link-logo {
   height: 1.5em;
   width: 1.5em;
+}
+
+#zendesk-link-logo {
+  position: relative;
+  top: 0.25em;
+}
+
+#psh-link-logo {
+  position: relative;
+  top: 0.20em;
 }
 
 #manifest-version {

@@ -23,7 +23,9 @@ const MCExt = {
     }).then(function (txt) {
       const styleEl = document.createElement('style')
       styleEl.id = url === MCExt.cloudUiCss ? 'css-cloud' :'css-url'
-      styleEl.innerText = txt
+      styleEl.type = 'text/css'
+      styleEl.rel = 'stylesheet'
+      styleEl.textContent = txt
       document.head.appendChild(styleEl)
     })
   },

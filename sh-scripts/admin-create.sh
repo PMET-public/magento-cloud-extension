@@ -28,8 +28,8 @@ if [[ -z "$email" ]]; then
 fi
 
 $cmd_prefix "php $app_dir/bin/magento admin:user:create \
-  --admin-user=${user} \
-  --admin-password=${password} \
-  --admin-email=${email} \
+  --admin-user='$user' \
+  --admin-password='$password' \
+  --admin-email='$email' \
   --admin-firstname=Admin \
   --admin-lastname=Username"

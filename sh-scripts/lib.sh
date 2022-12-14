@@ -45,6 +45,11 @@ is_mac() {
   [[ -d /Applications/Safari.app && -d /Users ]]
 }
 
+decode_URI() {
+  # see https://stackoverflow.com/questions/28309728/decode-url-in-bash
+  printf "%b\n" "$(sed 's/+/ /g; s/%\([0-9a-f][0-9a-f]\)/\\x\1/gi;')"
+}
+
 read_input_src="/dev/tty"
 [[ "$GITHUB_WORKSPACE" ]] && read_input_src="/dev/stdin"
 
@@ -368,9 +373,9 @@ if is_cloud; then
 
   # determine relevant project and environment
   if [[ "$tab_url" =~ .magento.cloud/projects/.*/environments ]]; then
-    project=$(echo "$tab_url" | perl -pe "s!.*?projects/!!;s!/environments/.*!!;")
-    environment=$(echo "$tab_url" | perl -pe "s!.*?environments/!!;s!/.*!!;")
-    base_url=$(get_cloud_base_url "$project" "$environment")
+    project="$(echo "$tab_url" | perl -pe "s!.*?projects/!!;s!/environments/.*!!;")"
+    environment="$(echo "$tab_url" | perl -pe "s!.*?environments/!!;s!/.*!!;" | decode_URI)"
+    base_url="$(get_cloud_base_url "$project" "$environment")"
   else
     project=$(echo "$tab_url" | perl -pe "s/.*-//;s/\..*//;")
     environments=$("$cli_path" environments -I -p "$project" --pipe)

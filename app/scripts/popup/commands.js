@@ -35,7 +35,7 @@ function cmdsToHtml(cmds, triggerLogin = false) {
     ${cmd.text}
     ${cmd.help ? `<span class="cmd-help">${cmd.help}</span>` : ''}
     <input class="cli-cmd" type="text" readonly
-      value="${triggerLogin ? triggerLoginCmd : ''}curl -sS ${rawGitPrefix}{${cmd.scriptsInValue.join(',')}} | env ext_ver=${curManifestVersion} tab_url=${url} bash">
+      value="${triggerLogin ? triggerLoginCmd : ''}curl -sS ${rawGitPrefix}{${cmd.scriptsInValue.join(',')}} | env ext_ver=&quot;${curManifestVersion}&quot; tab_url=&quot;${url}&quot; bash">
     </div>
   `)
   return html

@@ -57,8 +57,8 @@ jobs:
     strategy:
       matrix:
         # sample ref, demo, b2b pids with branches named test-env-for-mce
-        # MCE_PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
-        MCE_PROJECT_ID: [xy4itwbmg2khk]
+        MCE_PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
+        # MCE_PROJECT_ID: [xy4itwbmg2khk]
     runs-on: ubuntu-latest
     env:
       MCE_PROJECT_ID: ${{ matrix.MCE_PROJECT_ID }}
@@ -89,8 +89,8 @@ jobs:
     strategy:
       matrix:
         # sample ref, demo, b2b pids with branches named test-env-for-mce
-        # MCE_PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
-        MCE_PROJECT_ID: [xy4itwbmg2khk]
+        MCE_PROJECT_ID: [xy4itwbmg2khk,a6terwtbk67os,unkfuvjhn2nss]
+        # MCE_PROJECT_ID: [xy4itwbmg2khk]
     runs-on: ubuntu-latest
     env:
       MCE_PROJECT_ID: ${{ matrix.MCE_PROJECT_ID }}

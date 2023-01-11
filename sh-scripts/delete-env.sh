@@ -18,6 +18,7 @@ if [[ "$REPLY" =~ ^[Yy]$ ]]; then
   while [[ "$("$cli_path" environment:delete -p "$project" -e "$environment" --delete-branch --no-wait --yes 2>&1)" =~ "currently building" ]]; do
     sleep 60
   done
+  Echo "Branch '$environment' deleted."
 else
   exit
 fi

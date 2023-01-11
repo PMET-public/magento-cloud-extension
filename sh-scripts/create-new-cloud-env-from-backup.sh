@@ -18,7 +18,7 @@ project=$(dialog --clear \
   --title "Your Project(s)" \
   --menu "Choose a project for the new env:" \
   $menu_height $menu_width $num_visible_choices "${projects[@]}" \
-  2>&1 >/dev/tty)
+  2>&1 > "$output_src")
 clear
 
 # clone new environment from master (~5-10 min)

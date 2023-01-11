@@ -1,7 +1,7 @@
 - [Installation (how to update below)](#installation-how-to-update-below)
 - [Automatic Updates](#automatic-updates)
 - [How to Manually Update - 1 min video (for older versions)](#how-to-manually-update---1-min-video-for-older-versions)
-- [Recommended IDE & Extensions](#recommended-ide--extensions)
+- [Recommended IDE \& Extensions](#recommended-ide--extensions)
 - [Developer Setup](#developer-setup)
 - [Publishing](#publishing)
 - [Troubleshooting](#troubleshooting)
@@ -108,7 +108,7 @@ curl -sS https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/0
 + green='\033[0;32m'
 + yellow='\033[1;33m'
 + no_color='\033[0m'
-+ read_input_src=/dev/tty
++ input_src=/dev/tty
 + [[ -n '' ]]
 + cli_required_version=1.36.4
 + [[ /Users/kbentrup == \/\a\p\p ]]

@@ -50,8 +50,9 @@ decode_URI() {
   printf "%b\n" "$(sed 's/+/ /g; s/%\([0-9a-f][0-9a-f]\)/\\x\1/gi;')"
 }
 
-read_input_src="/dev/tty"
-[[ "$GITHUB_WORKSPACE" ]] && read_input_src="/dev/stdin"
+input_src="/dev/tty"
+output_src="/dev/tty"
+[[ "$GITHUB_WORKSPACE" ]] && input_src="/dev/stdin" && output_src="/dev/stdout"
 
 cli_required_version="1.40.0"
 if [[ "$HOME" == "/app" ]]; then
@@ -172,7 +173,7 @@ get_cmd_prefix() {
 }
 
 get_interactive_ssh_cmd() {
-  echo "ssh -A $(get_ssh_url $*) < /dev/tty"
+  echo "ssh -A $(get_ssh_url $*) < $input_src"
 }
 
 choose_backup() {

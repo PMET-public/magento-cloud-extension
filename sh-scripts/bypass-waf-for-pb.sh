@@ -14,7 +14,7 @@ select project in "${projects[@]}"; do
   fi
   project=$(echo $project | perl -pe 's/.*\(//;s/\).*//')
   break
-done < /dev/tty
+done < "$input_src"
 
 echo "
 
@@ -35,7 +35,7 @@ select environment in "${environments[@]}"; do
   fi
   environment=$(echo $environment | perl -pe 's/.*\(//;s/\).*//')
   break
-done < /dev/tty
+done < "$input_src"
 
 echo "
 
@@ -46,7 +46,7 @@ echo "
 read -r -n 1 -p "Choose an option:
 1) Use ssh to bypass url restrictions and access 1 of your envs at http://demo.the1umastory.com
 2) Revert a previous url change and set your env back to its original url
-" < "$read_input_src" 2>/dev/tty
+" < "$input_src" 2> "$output_src"
 echo ""
 case ${REPLY} in
 1)

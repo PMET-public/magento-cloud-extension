@@ -19,7 +19,7 @@ selection=$(dialog --clear \
   --menu "Choose which server the PWA should access:" \
   $menu_height $menu_width $num_visible_choices \
   "${pwa_backend_urls[@]}" \
-  2>&1 >/dev/tty)
+  2>&1 > "$output_src")
 selection=$(echo "${selection}" | perl -pe 's/\..*//')
 pwa_backend_url="${pwa_backend_urls[$(( (${selection} - 1) * 2 + 1))]}"
 
@@ -45,7 +45,7 @@ fi
 cd "${HOME}/pwa-studio/"
 
 if [ "$(git rev-parse @)" != $(git rev-parse @{u}) ]; then
-  read -r -n 1 -p "There is an update to PWA. It may contain breaking changes. Upgrade? (y/n): " < "$read_input_src" 2>/dev/tty
+  read -r -n 1 -p "There is an update to PWA. It may contain breaking changes. Upgrade? (y/n): " < "$input_src" 2> "$output_src"
   if [[ "$REPLY" =~ ^[Yy]$ ]]
   then
     git pull

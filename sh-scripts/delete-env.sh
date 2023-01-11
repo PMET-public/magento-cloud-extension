@@ -3,7 +3,7 @@
 
 msg "Deleting env ..."
 
-read -r -n 1 -p "Confirm deletion of project: $project environment: $environment (y/n): " < "$read_input_src" 2>/dev/tty
+read -r -n 1 -p "Confirm deletion of project: $project environment: $environment (y/n): " < "$input_src" 2> "$output_src"
 if [[ "$REPLY" =~ ^[Yy]$ ]]; then
 
   # account for already inactive envs

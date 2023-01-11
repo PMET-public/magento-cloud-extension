@@ -16,7 +16,7 @@ selection=$(dialog --clear \
   --title "Your Image Dir(s) From Store Scraper" \
   --menu "Choose a dir to copy:" \
   $menu_height $menu_width $num_visible_choices "${img_dirs[@]}" \
-  2>&1 >/dev/tty)
+  2>&1 > "$output_src")
 clear
 img_dir="${img_dirs[$(( (${selection} - 1) * 2 + 1))]}"
 

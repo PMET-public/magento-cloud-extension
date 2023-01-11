@@ -7,7 +7,7 @@ msg "Diagnosing, attempting to repair, and reporting ..."
 # and turn off debugging (by default, debugging is on)
 $cmd_prefix "curl -s https://raw.githubusercontent.com/PMET-public/magento-cloud-extension/master/sh-scripts/diagnose-repair-report.sh |
   env debug=${debug:=0} bash" |
-  tee /dev/tty |
+  tee "$output_src" |
   # copy report to clipboard and strip color characters
   perl -pe 's/\e\[\d+(?>(;\d+)*)m//g;' | pbcopy
 

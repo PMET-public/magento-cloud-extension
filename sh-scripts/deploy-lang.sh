@@ -12,14 +12,14 @@ $cmd_prefix "
 
 echo "
 ^^ Which language code to deploy? Must be entered EXACTLY as displayed."
-read lang_code < "$read_input_src"
+read lang_code < "$input_src"
 
 
 $cmd_prefix "php bin/magento store:list"
 
 echo "
 ^^ Which store code to deploy? (Must be 'Code' not 'ID' - e.g. default)"
-read store_code < "$read_input_src"
+read store_code < "$input_src"
 
 if [[ "$lang_code" =~ ^[a-zA-Z] && "$store_code" =~ ^[a-zA-Z] ]]; then
   $cmd_prefix "

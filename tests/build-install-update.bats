@@ -17,9 +17,9 @@ setup() {
 @test 'dev-build' {
   cd "$GITHUB_WORKSPACE"
   npm install
-  run ./node_modules/gulp/bin/gulp.js dev-build
+  run ./node_modules/gulp/bin/gulp.js dev
   assert_success
-  assert_output -e "finished.*dev-build"
+  assert_output -e "finished.*dev"
 }
 
 @test 'clean' {
@@ -29,9 +29,9 @@ setup() {
 }
 
 @test 'dist-build' {
-  run ./node_modules/gulp/bin/gulp.js dist-build
+  run ./node_modules/gulp/bin/gulp.js dist
   assert_success
-  assert_output -e "finished.*dist-build"
+  assert_output -e "finished.*dist"
 }
 
 @test 'zip' {

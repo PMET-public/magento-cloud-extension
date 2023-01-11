@@ -32,5 +32,6 @@ git config user.name "chrome-extension"
 # commit changes and push
 git add "$config_file"
 git commit -m "merged with $parent and re-enabled LS (if enabled) from chrome extension" || :
+echo "Pushing any changes. This may take a few min. You can monitor the progress on your cloud projects page."
 git push
 rm -rf "$tmp_git_dir" # clean up

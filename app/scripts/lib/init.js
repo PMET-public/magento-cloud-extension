@@ -1,8 +1,8 @@
 function handleExtensionIcon() {
   chrome.storage.local.get(['isCssInjectorOn'], function (result) {
     const isOn = result['isCssInjectorOn']
-    chrome.browserAction.setBadgeText({text: isOn ? 'on' : ''})
-    chrome.browserAction.setIcon({
+    chrome.action.setBadgeText({text: isOn ? 'on' : ''})
+    chrome.action.setIcon({
       path: {
         '16': '../images/cloud-' + (isOn ? '' : 'disabled-') + '16.png',
         '24': '../images/cloud-' + (isOn ? '' : 'disabled-') + '24.png',
@@ -12,7 +12,7 @@ function handleExtensionIcon() {
     })
     checkExtUpdateAvailable().then(available => {
       if (available) {
-        chrome.browserAction.setBadgeText({text: 'up ⇪'})
+        chrome.action.setBadgeText({text: 'up ⇪'})
       }
     })
   })

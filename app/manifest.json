@@ -2,7 +2,7 @@
   "name": "Magento Cloud Extension",
   "short_name": "mce",
   "version": "0.0.40",
-  "manifest_version": 2,
+  "manifest_version": 3,
   "description": "Collection of tools to help Magento Solution Consultants",
   "icons": {
     "16": "images/cloud-16.png",
@@ -10,9 +10,7 @@
   },
   "default_locale": "en",
   "background": {
-    "scripts": [
-      "scripts/background.processed.js"
-    ]
+    "service_worker": "scripts/background.processed.js"
   },
   "permissions": [
     "management",
@@ -23,10 +21,12 @@
     "contentSettings",
     "declarativeContent",
     "downloads",
-    "https://*.magentosite.cloud/*",
-    "https://github.com/*",
     "storage",
     "tabs"
+  ],
+  "host_permissions": [
+    "https://*.magentosite.cloud/*",
+    "https://github.com/*"
   ],
   "content_scripts": [
     {
@@ -60,19 +60,26 @@
       "all_frames": false
     }
   ],
-  "browser_action": {
-    "default_icon": {
-      "16": "images/cloud-disabled-16.png",
-      "24": "images/cloud-disabled-24.png",
-      "32": "images/cloud-disabled-32.png",
-      "48": "images/cloud-disabled-48.png"
-    },
-    "default_title": "Magento Cloud",
-    "default_popup": "html/popup.html"
+  "action": {
+      "default_title": "Magento Cloud",
+      "default_icon": {
+        "16": "images/cloud-disabled-16.png",
+        "24": "images/cloud-disabled-24.png",
+        "32": "images/cloud-disabled-32.png",
+        "48": "images/cloud-disabled-48.png"
+      },
+      "default_popup": "html/popup.html"
   },
-  "web_accessible_resources": [
-    "images/cloud-48.png",
-    "scripts/injected.processed.js"
-  ],
-  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
+  "web_accessible_resources": [{
+    "resources": [
+      "images/cloud-48.png",
+      "scripts/injected.processed.js"
+    ],
+    "matches": [
+      "<all_urls>"
+    ]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
 }

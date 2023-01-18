@@ -22,9 +22,11 @@
     "declarativeContent",
     "downloads",
     "storage",
-    "tabs"
+    "tabs",
+    "scripting"
   ],
   "host_permissions": [
+    "https://demo.magento.cloud/*",
     "https://*.magentosite.cloud/*",
     "https://github.com/*"
   ],

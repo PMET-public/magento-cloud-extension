@@ -91,7 +91,8 @@ export const setDistMode = (cb) => {
 export const copyRemainingToDist = () => gulp.src([
     'app/manifest.json',
     'app/_locales/**',
-    'app/image-downloader/**'
+    'app/image-downloader/**',
+    'app/scripts/lib/analytics.js'
   ], {
     base: 'app',
     dot: true

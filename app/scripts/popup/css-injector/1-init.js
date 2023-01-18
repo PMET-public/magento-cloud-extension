@@ -40,14 +40,18 @@ function handleCssInjector(ev, ui) {
   }
 
   // always remove but possibly load changed css
-  chrome.storage.local.get(['isCssInjectorOn', 'curCssUrl'], function (result) {
-    chrome.tabs.executeScript({file: 'scripts/content.processed.js'}, function () {
-      chrome.tabs.executeScript({code: 'MCExt.removeCSS()'})
-      if (result['isCssInjectorOn']) {
-        if (result['curCssUrl']) {
-          chrome.tabs.executeScript({code: 'MCExt.loadCSS(\'' + result['curCssUrl'] + '\')'})
-        }
-      }
+  chrome.windows.getCurrent(function (currentWindow) {
+    chrome.tabs.query({ active: true, windowId: currentWindow.id }, function (activeTabs) {
+      chrome.storage.local.get(['isCssInjectorOn', 'curCssUrl'], function (result) {
+        chrome.scripting.executeScript({target: {tabId: activeTabs[0].id}, files: ['scripts/content.processed.js']}, function () {
+          chrome.scripting.executeScript({target: {tabId: activeTabs[0].id}, function: function () { MCExt.removeCSS() }})
+          if (result['isCssInjectorOn']) {
+            if (result['curCssUrl']) {
+              chrome.scripting.executeScript({target: {tabId: activeTabs[0].id}, function: function (css) { MCExt.loadCSS(css) }, args: [result['curCssUrl']]})
+            }
+          }
+        })
+      })
     })
   })
 }

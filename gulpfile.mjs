@@ -52,8 +52,6 @@ const jqueryPath = 'node_modules/jquery/dist/jquery.js',
     'app/scripts/lib/lib-close.js'
   ],
 
-  devBackgroundScripts = ['app/crx-hotreload/hot-reload.js', ...distBackgroundScripts],
-
   appScss = [
     'app/styles.scss/vendor.scss',
     'app/styles.scss/main.scss',
@@ -63,7 +61,7 @@ const jqueryPath = 'node_modules/jquery/dist/jquery.js',
 
   devOpts = {
     mode: "dev",
-    backgroundScripts: devBackgroundScripts,
+    backgroundScripts: distBackgroundScripts,
     popupScripts: [jqueryPath, jqueryUIPath, ...imageDownloader, 'app/scripts/popup/ga-dev-mode.js', ...mcmExt],
     sourcemaps: true,
     minify: false
@@ -73,11 +71,12 @@ const jqueryPath = 'node_modules/jquery/dist/jquery.js',
     mode: "dist",
     backgroundScripts: distBackgroundScripts,
     popupScripts: [jqueryPath, jqueryUIPath, ...imageDownloader, ...mcmExt],
-    sourcemaps: false,
+    // sourcemaps: false,
+    sourcemaps: true,
     minify: false
   }
 
-let gulpOpts = {}
+let gulpOpts = distOpts
 
 export const setDevMode = (cb) => {
   gulpOpts = devOpts
@@ -148,6 +147,7 @@ export const js = gulp.series(
     .pipe(gulpif(gulpOpts.minify, minify({noSource: true, ext: {min: '.js'}})))
     .pipe(gulp.dest('dist/scripts', {sourcemaps: gulpOpts.sourcemaps}))
 )
+
 let sharedTasks = [copyRemainingToDist, js, styles, html, images]
 export const dev = gulp.series(setDevMode, ...sharedTasks)
 export const dist = gulp.series(setDistMode, clean, ...sharedTasks)
@@ -163,11 +163,8 @@ export const zip = gulp.series(
     .pipe(gulp.dest('package'))
 )
 
-// gulp.task('watch', gulp.series('html', 'lint', 'dev-js', 'styles', 'copy-remaining-to-dist', () => {
-//   gulp.watch('app/html/**', gulp.series('html'))
-//   gulp.watch('app/scripts/**/*.js', gulp.series('lint', 'dev-js'))
-//   gulp.watch('app/styles.scss/**/*.scss', gulp.series('styles'))
-//   gulp.watch('app/image-downloader/**', gulp.series('copy-remaining-to-dist'))
-// }))
-
-// gulp.task('default', ['dev'])
+export const watcher = function() {
+  gulp.watch('app/html/**/*.html', html)
+  gulp.watch('app/**/*.js', js)
+  gulp.watch('app/styles.scss/*.scss', styles)
+}

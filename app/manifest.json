@@ -75,7 +75,8 @@
   "web_accessible_resources": [{
     "resources": [
       "images/cloud-48.png",
-      "scripts/injected.processed.js"
+      "scripts/injected.processed.js",
+      "scripts/lib/analytics.js"
     ],
     "matches": [
       "<all_urls>"

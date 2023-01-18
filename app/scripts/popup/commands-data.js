@@ -210,11 +210,11 @@ const commands = [
   },
   {
     id: 'sync-with-livesearch',
-    text: 'Sync with Live Search On',
+    text: 'Improved sync',
     scriptsInValue: ['lib.sh', 'sync-with-livesearch.sh', 'reindex-on-schedule.sh', 'reindex.sh', 'cache-flush.sh', 'post-cmds.sh'],
     cmdTypes: ['magento'],
     envTypes: ['cloud', 'vm'],
-    help: 'Replaces the normal cloud sync when Live Search has been enabled'
+    help: 'Replaces the normal cloud sync with some merging capabilities'
   },
   {
     id: 'run-all-consumers',

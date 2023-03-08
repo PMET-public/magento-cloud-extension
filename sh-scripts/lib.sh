@@ -54,7 +54,7 @@ input_src="/dev/tty"
 output_src="/dev/tty"
 [[ "$GITHUB_WORKSPACE" ]] && input_src="/dev/stdin" && output_src="/dev/stdout"
 
-cli_required_version="1.40.0"
+cli_required_version="1.42.0"
 if [[ "$HOME" == "/app" ]]; then
   error "You are probably attempting to run this command in a cloud env. Commands are intended to be run in a local terminal."
 fi

@@ -90,6 +90,14 @@ const commands = [
     envTypes: ['cloud', 'vm'],
   },
   {
+    id: 'debug-cron',
+    text: 'Debug cron',
+    scriptsInValue: ['lib.sh', 'debug-cron.sh', 'post-cmds.sh'],
+    cmdTypes: ['magento'],
+    envTypes: ['cloud', 'vm'],
+    help: 'Run each job separately with output',
+  },
+  {
     id: 'run-cron-repeatedly',
     text: 'Run cron repeatedly',
     scriptsInValue: ['lib.sh', 'run-cron-repeatedly.sh', 'post-cmds.sh'],

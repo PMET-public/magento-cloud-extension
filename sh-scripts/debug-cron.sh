@@ -7,7 +7,7 @@ $cmd_prefix -tt '
     vendor/bin/mr sys:cron:list --format=csv |
     grep -v -E "^cron_test_job" |
     grep -v -E "^paradoxlabs_authnetcim_account_updater" |
-    sed "1d;s/,.*//" |
+    sed "1d;s/,.*//" \
   ); do
     echo "Running: vendor/bin/mr sys:cron:run $i"
     vendor/bin/mr sys:cron:run $i

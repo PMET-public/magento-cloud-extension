@@ -19,6 +19,7 @@ if "$ls_enabled"; then
   perl -i -pe "s/'Magento_LiveSearchStorefrontPopover' => 0/'Magento_LiveSearchStorefrontPopover' => 1/" "$config_file"
   perl -i -pe "s/'Magento_LiveSearchMetrics' => 0/'Magento_LiveSearchMetrics' => 1/" "$config_file"
   perl -i -pe "s/'Magento_LiveSearchTerms' => 0/'Magento_LiveSearchTerms' => 1/" "$config_file"
+  perl -i -pe "s/'Magento_LiveSearchProductListing' => 0/'Magento_LiveSearchProductListing' => 1/" "$config_file"
   perl -i -pe "s/'Magento_Elasticsearch' => 1/'Magento_Elasticsearch' => 0/" "$config_file"
   perl -i -pe "s/'Magento_Elasticsearch6' => 1/'Magento_Elasticsearch6' => 0/" "$config_file"
   perl -i -pe "s/'Magento_Elasticsearch7' => 1/'Magento_Elasticsearch7' => 0/" "$config_file"

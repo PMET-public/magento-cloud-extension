@@ -14,9 +14,9 @@
 # https://developer.apple.com/forums/thread/681907
 [[ -z "$(which php)" ]] && {
   printf "\n\033[0;32mInstalling php ...\033[0m\n\n"
-  brew install php@8.1
+  brew install php@8.2
   printf "\n\033[0;32mLinking php ...\033[0m\n\n"
-  brew link php@8.1
+  brew link php@8.2
 }
 
 # remember lib.sh is not loaded

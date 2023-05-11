@@ -61,10 +61,10 @@ fi
 
 php_version="$(php --version | perl -ne 's/^PHP\s+(\d\.\d).*/\1/ and print')"
 php_changed=false
-if [[ "$php_version" != "8.1" ]]; then
+if [[ "$php_version" != "8.2" ]]; then
   if is_mac; then
     php_changed=true
-    msg "Upgraded php to v8.1 ..."
+    msg "Upgraded php to v8.2 ..."
     brew unlink php || :
     brew install php@8.1
     brew link php@8.1

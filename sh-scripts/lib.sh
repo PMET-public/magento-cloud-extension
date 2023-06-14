@@ -54,7 +54,7 @@ input_src="/dev/tty"
 output_src="/dev/tty"
 [[ "$GITHUB_WORKSPACE" ]] && input_src="/dev/stdin" && output_src="/dev/stdout"
 
-cli_required_version="1.42.0"
+cli_required_version="1.43.0"
 if [[ "$HOME" == "/app" ]]; then
   error "You are probably attempting to run this command in a cloud env. Commands are intended to be run in a local terminal."
 fi
@@ -66,10 +66,10 @@ if [[ "$php_version" != "8.2" ]]; then
     php_changed=true
     msg "Upgraded php to v8.2 ..."
     brew unlink php || :
-    brew install php@8.1
-    brew link php@8.1
+    brew install php@8.2
+    brew link php@8.2
   else
-    sudo bash -c " apt-get purge php8.*; add-apt-repository --yes ppa:ondrej/php; apt-get update; apt-get install --yes php8.1;"
+    sudo bash -c " apt-get purge php8.*; add-apt-repository --yes ppa:ondrej/php; apt-get update; apt-get install --yes php8.2;"
   fi
 fi
 cli_path="$HOME/.magento-cloud/bin/magento-cloud"

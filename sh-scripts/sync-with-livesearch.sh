@@ -36,3 +36,11 @@ git commit -m "merged with $parent and re-enabled LS (if enabled) from chrome ex
 echo "Pushing any changes. This may take a few min. You can monitor the progress on your cloud projects page."
 git push
 rm -rf "$tmp_git_dir" # clean up
+
+echo "Code sync complete."
+read -r -n 1 -p "Sync data? This should only take a couple miniutes,$red BUT WILL OVERWRITE CUSTOMIZATIONS THAT YOU'VE MADE.$no_color"
+if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+  "$cli_path" environment:synchronize -p "$project" -e "$environment" -y data
+else
+  echo "Data sync skipped. If you later decide to overwrite just data, you can still use the cloud UI."
+fi

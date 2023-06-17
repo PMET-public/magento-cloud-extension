@@ -11,7 +11,7 @@ cd "$tmp_git_dir"
 config_file="$tmp_git_dir/app/etc/config.php"
 grep -q "'Magento_LiveSearch' => 1," "$config_file" && ls_enabled="true"
 git merge --abort || :
-git merge --strategy-option theirs "origin/$parent"
+git merge --strategy-option theirs "origin/$parent" --allow-unrelated-histories
 
 if "$ls_enabled"; then
   perl -i -pe "s/'Magento_LiveSearch' => 0/'Magento_LiveSearch' => 1/" "$config_file"

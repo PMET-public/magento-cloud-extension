@@ -39,7 +39,7 @@ rm -rf "$tmp_git_dir" # clean up
 
 echo "Code sync complete."
 printf "Sync data? This should only take a couple miniutes,$red BUT WILL OVERWRITE CUSTOMIZATIONS THAT YOU'VE MADE.$no_color"
-read -r -n 1 -p "y/n?" < "$input_src" 2> "$output_src"
+read -r -n 1 -p "Yes/[No]?" < "$input_src" 2> "$output_src"
 if [[ "$REPLY" =~ ^[Yy]$ ]]; then
   "$cli_path" environment:synchronize -p "$project" -e "$environment" -y data
 else
